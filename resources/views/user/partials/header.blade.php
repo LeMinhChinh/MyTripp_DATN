@@ -1,0 +1,64 @@
+<div class="top-nav">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <ul class="tn-left">
+                    <li><i class="fa fa-phone"></i> (+84) 32 777 5252</li>
+                    <li><i class="fa fa-envelope"></i> mytripp@gmail.com</li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <div class="tn-right">
+                    <div class="top-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-google"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                    </div>
+                    <!-- <a href="#" class="bk-btn">Booking Now</a> -->
+                    <div class="language-option">
+                        <img src="{{ asset('user/img/vietnam-flag-square-icon-16.png')}}" alt="">
+                        <span>VN <i class="fa fa-angle-down"></i></span>
+                        <div class="flag-dropdown">
+                            {{-- <ul>
+                                <li><a href="#">Zi</a></li>
+                                <li><a href="#">Fr</a></li>
+                            </ul> --}}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="nav-menu">
+                    <button class="btn btn-primary" id="menu-login"><a href="{{ route('login') }}">Đăng kí</a></button>
+                    <button class="btn btn-primary" id="menu-register"><a href="{{ route('login') }}">Đăng nhập</a></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="menu-item">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="logo">
+                    <a href="{{ route('homepage') }}">
+                        {{-- <img src="{{ asset('/user/img/logo.png')}}" alt=""> --}}
+                        MyTripp<span>.Com</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="nav-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Bạn muốn đến đâu? Hãy nhập địa điểm hoặc tên khách sạn" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="input-group-text btn btn-primary" id="basic-addon2">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
