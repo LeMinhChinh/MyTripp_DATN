@@ -19,7 +19,10 @@ Route::get('/', function () {
 
 Route::get('homepage','User\UserController@homepage')->name('homepage');
 Route::get('login', 'User\UserController@login')->name('login');
+Route::post('handle-login', 'User\UserController@handleLogin')->name('handleLogin');
 Route::get('register', 'User\UserController@register')->name('register');
+Route::post('handle-register', 'User\UserController@handleRegister')->name('handleRegister');
+Route::get('handle-logout','User\UserController@handleLogout')->name('handleLogout');
 
 Route::group([
     'prefix' => 'user',

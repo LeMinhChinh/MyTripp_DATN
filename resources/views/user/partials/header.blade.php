@@ -1,7 +1,7 @@
 <div class="top-nav">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <ul class="tn-left">
                     <li><i class="fa fa-phone"></i> (+84) 32 777 5252</li>
                     <li><i class="fa fa-envelope"></i> mytripp@gmail.com</li>
@@ -29,11 +29,31 @@
 
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="nav-menu">
-                    <button class="btn btn-primary" id="menu-login"><a href="{{ route('login') }}">Đăng kí</a></button>
-                    <button class="btn btn-primary" id="menu-register"><a href="{{ route('login') }}">Đăng nhập</a></button>
-                </div>
+            <div class="col-lg-4">
+                @if(null!==Session::get('emailSession'))
+                    <div class="nav-menu">
+                        <button class="btn btn-primary" id="menu-name">
+                            <a href="{{ route('user.personal') }}">
+                                @if (Session::get('genderSession') === 0)
+                                    <i class="fas fa-female"></i>
+                                @endif
+                                @if (Session::get('genderSession') === 1)
+                                    <i class="fas fa-male"></i>
+                                @endif
+                                @if (Session::get('genderSession') === null)
+                                    <i class="fas fa-user"></i>
+                                @endif
+                                Xin chào {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
+                            </a>
+                        </button>
+                        <button class="btn btn-primary" id="menu-logout"><a href="{{ route('handleLogout') }}">Đăng xuất</a></button>
+                    </div>
+                @else()
+                    <div class="nav-menu">
+                        <button class="btn btn-primary" id="menu-login"><a href="{{ route('register') }}">Đăng kí</a></button>
+                        <button class="btn btn-primary" id="menu-register"><a href="{{ route('login') }}">Đăng nhập</a></button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

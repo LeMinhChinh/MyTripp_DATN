@@ -946,3 +946,10 @@ input.form-control::placeholder {
 .ts-item h4 {
     font-size: 20px;
 }
+
+button#menu-logout {
+    width: 30%;
+}
+button#menu-name{
+    width: 60%;
+}
