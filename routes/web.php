@@ -33,6 +33,7 @@ Route::group([
 
     Route::get('resting-place','UserController@restingplace')->name('restingplace');
     Route::get('search-resting-place','UserController@searchrestingplace')->name('searchrestingplace');
+    Route::get('list-resting-place/{id}','UserController@listRestingPlace')->name('listRestingPlace');
 
     Route::get('personal','UserController@personal')->name('personal');
 

@@ -61,49 +61,59 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <div class="blog-item set-bg" data-setbg="{{ asset('user/img/blog/blog-1.jpg')}}">
-                    <div class="bi-text">
-                        {{-- <span class="b-tag">Travel Trip</span> --}}
-                        <h4><a href="#">Thành phố Hồ Chí Minh</a></h4>
-                        <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                <a href="{{ route('user.listRestingPlace',['id' => 45 ]) }}">
+                    <div class="blog-item set-bg" data-setbg="{{ asset('user/img/tphcm.jpg')}}">
+                        <div class="bi-text">
+                            {{-- <span class="b-tag">Travel Trip</span> --}}
+                            <h4>Thành phố Hồ Chí Minh</h4>
+                            <div class="b-time">1500 chỗ ở</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-lg-4">
-                <div class="blog-item set-bg" data-setbg="{{ asset('user/img/blog/blog-2.jpg')}}">
-                    <div class="bi-text">
-                        {{-- <span class="b-tag">Camping</span> --}}
-                        <h4><a href="#">Vũng Tàu</a></h4>
-                        <div class="b-time"><i class="icon_clock_alt"></i> 15th April, 2019</div>
+                <a href="{{ route('user.listRestingPlace',['id' => 46]) }}">
+                    <div class="blog-item set-bg" data-setbg="{{ asset('user/img/vungtau.jfif')}}">
+                        <div class="bi-text">
+                            {{-- <span class="b-tag">Camping</span> --}}
+                            <h4>Vũng Tàu</h4>
+                            <div class="b-time">1500 chỗ ở</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="col-lg-4">
-                <div class="blog-item set-bg" data-setbg="{{ asset('user/img/blog/blog-3.jpg')}}">
-                    <div class="bi-text">
-                        {{-- <span class="b-tag">Event</span> --}}
-                        <h4><a href="#">Đà Nẵng</a></h4>
-                        <div class="b-time"><i class="icon_clock_alt"></i> 21th April, 2019</div>
+                <a href="{{ route('user.listRestingPlace',['id' => 32]) }}">
+                    <div class="blog-item set-bg" data-setbg="{{ asset('user/img/danang.jpeg')}}">
+                        <div class="bi-text">
+                            {{-- <span class="b-tag">Event</span> --}}
+                            <h4>Đà Nẵng</h4>
+                            <div class="b-time">1500 chỗ ở</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-lg-8">
-                <div class="blog-item small-size set-bg" data-setbg="{{ asset('user/img/blog/blog-wide.jpg')}}">
-                    <div class="bi-text">
-                        {{-- <span class="b-tag">Event</span> --}}
-                        <h4><a href="#">Hà Nội</a></h4>
-                        <div class="b-time"><i class="icon_clock_alt"></i> 08th April, 2019</div>
+            <div class="col-lg-7">
+                <a href="{{ route('user.listRestingPlace',['id' => 1]) }}">
+                    <div class="blog-item small-size set-bg" data-setbg="{{ asset('user/img/hanoi.jpg')}}">
+                        <div class="bi-text">
+                            {{-- <span class="b-tag">Event</span> --}}
+                            <h4>Hà Nội</h4>
+                            <div class="b-time">1500 chỗ ở</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
-            <div class="col-lg-4">
-                <div class="blog-item small-size set-bg" data-setbg="{{ asset('user/img/blog/blog-10.jpg')}}">
-                    <div class="bi-text">
-                        {{-- <span class="b-tag">Travel</span> --}}
-                        <h4><a href="#">Huế</a></h4>
-                        <div class="b-time"><i class="icon_clock_alt"></i> 12th April, 2019</div>
+            <div class="col-lg-5">
+                <a href="{{ route('user.listRestingPlace',['id' => 31]) }}">
+                    <div class="blog-item small-size set-bg" data-setbg="{{ asset('user/img/hue.jpg')}}">
+                        <div class="bi-text">
+                            {{-- <span class="b-tag">Travel</span> --}}
+                            <h4>Huế</h4>
+                            <div class="b-time">1500 chỗ ở</div>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

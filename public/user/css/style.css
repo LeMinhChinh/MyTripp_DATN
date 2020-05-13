@@ -1570,14 +1570,14 @@ section.testimonial-section.spad {
 	margin-top: 18px;
 	margin-bottom: 18px;
 }
-.blog-item .bi-text h4 a {
+.blog-item .bi-text h4{
 	color: #ffffff;
 }
 .blog-item .bi-text .b-time {
 	font-size: 12px;
 	color: #ffffff;
 	text-transform: uppercase;
-	letter-spacing: 3px;
+	letter-spacing: 1px;
 }
 .load-more {
 	text-align: center;

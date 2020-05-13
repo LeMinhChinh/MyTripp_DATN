@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Account;
+use App\Models\RestingPlace;
+use App\Models\Type;
+use App\Models\Place;
 use Log;
 
 class UserController extends Controller
@@ -128,6 +131,24 @@ class UserController extends Controller
 
     public function searchrestingplace(Request $request){
         return view('user/search-restingplace');
+    }
+
+    public function listRestingPlace(Request $request, $id, RestingPlace $rp)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+
+        $inforRP = $rp->getInforRPById($id);
+        $inforRP = \json_decode(\json_encode($inforRP),true);
+
+        $place = Place::select('name')->where('id',$id)->first();
+
+        // dd($inforRP);
+        if($inforRP){
+            $data['inforRP'] = $inforRP;
+            $data['place'] = $place;
+            return view('user.list-restingplace',$data);
+        }
     }
 
     // Personal
