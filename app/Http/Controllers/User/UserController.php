@@ -41,6 +41,8 @@ class UserController extends Controller
             $request->session()->put('fnameSession', $inforAccount['surname']);
             $request->session()->put('lnameSession', $inforAccount['name']);
             $request->session()->put('genderSession', $inforAccount['gender']);
+            $request->session()->put('avatarSession', $inforAccount['avatar']);
+            // dd(Session::get('avatarSession'));
 
             if(Session::get('roleSession') == 1){
                 return view("Owner");
@@ -109,6 +111,7 @@ class UserController extends Controller
         $request->session()->forget('fnameSession');
         $request->session()->forget('lnameSession');
         $request->session()->forget('genderSession');
+        $request->session()->forget('avatarSession');
         return redirect()->route('login');
     }
 
@@ -145,44 +148,27 @@ class UserController extends Controller
 
     public function listRestingPlace(Request $request, $idp, $idt, RestingPlace $rp)
     {
-        // $type = $request->input('type');
-        // $place = $request->input('place');
         $idp = $request->idp;
         $idt = $request->idt;
 
-        // dd($idp, $idt);
-        // if($idt == 0){
-            $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt);
-            $inforListRP = \json_decode(\json_encode($inforListRP),true);
-            // dd($inforListRP);
-        // }
-
-        // if($idp == 0){
-        //     $inforListRP = $rp->getInforListRPById($idp);
-        //     $inforListRP = \json_decode(\json_encode($inforListRP),true);
-        // }
-
-        if($idp > 0){
-            $place = Place::where('id',$idp)->first();
-        }
-        // dd($place);
-
-        // dd($inforRP);
+        $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt);
+        $data['paginate'] = $inforListRP;
+        $inforListRP = \json_decode(\json_encode($inforListRP),true);
+        
+        $place = Place::where('id',$idp)->first();
+        $type = Type::where('id', $idt)->first();
+        // dd($place, $type);
         if($inforListRP){
-            $data['inforListRP'] = $inforListRP;
+            $data['inforListRP'] = $inforListRP['data'] ?? [];
             $data['place'] = $place;
+            $data['type'] = $type;
             return view('user.list-restingplace',$data);
         }
     }
 
-    // public function listTypeRestingPlace(Request $request, $id, RestingPlace $rp)
-    // {
-
-    // }
-
     // Personal
 
-    public function personal(Request $request){
-        return view('user/personal');
+    public function personalInformation(Request $request){
+        return view('user/personal-information');
     }
 }

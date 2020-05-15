@@ -32,7 +32,7 @@ class RestingPlace extends Model
                     if($idp == 0){
                         $data = $data->where('rp.type', $idt);
                     }
-                    $data = $data->get();
+                    $data = $data->paginate(6);
         return $data;
     }
 }

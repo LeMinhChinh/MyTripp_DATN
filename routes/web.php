@@ -36,6 +36,8 @@ Route::group([
     Route::get('list-resting-place/{idp}~{idt}','UserController@listRestingPlace')->name('listRestingPlace');
     // Route::get('list-type-resting-place/{id}','UserController@listTypeRestingPlace')->name('listTypeRestingPlace');
 
-    Route::get('personal','UserController@personal')->name('personal');
-
+    Route::get('personal-information','UserController@personalInformation')->name('personalInformation');
+    Route::get('personal-booking','UserController@personalInformation')->name('personalBooking');
+    Route::get('personal-update','UserController@personalInformation')->name('personalUpdate');
+    Route::get('personal-request','UserController@personalInformation')->name('personalRequest');
 });

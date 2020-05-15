@@ -792,6 +792,8 @@ img.ps-left-img {
     border: 3px solid #fff;
     display: inline-block;
     vertical-align: middle;
+    width: 70px;
+    height: 70px;
 }
 
 .ps-left-info {
@@ -955,4 +957,19 @@ button#menu-name{
 }
 div#ttt {
     margin-bottom: 10px;
+}
+.pagination-page {
+    display: flex;
+    justify-content: center;
+}
+ul.pagination > li > span, ul.pagination > li > a {
+    padding: 10px 15px;
+}
+
+.hotel-main a:focus{
+    color: #007bff!important;
+}
+
+.rp-name > p {
+    color: #07c!important;
 }

@@ -473,7 +473,7 @@
                         </div>
                         <div class="review-item">
                             <div class="ri-pic">
-                                <img src="img/room/avatar/avatar-1.jpg" alt="">
+                            <img src="{{ asset('user/img/room/avatar/avatar-1.jpg') }}" alt="">
                             </div>
                             <div class="ri-text">
                                 <span>27 Aug 2019</span>
@@ -485,7 +485,7 @@
                         </div>
                         <div class="review-item">
                             <div class="ri-pic">
-                                <img src="img/room/avatar/avatar-2.jpg" alt="">
+                                <img src="{{ asset('user/img/room/avatar/avatar-2.jpg') }}" alt="">
                             </div>
                             <div class="ri-text">
                                 <span>27 Aug 2019</span>

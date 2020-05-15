@@ -5,7 +5,7 @@
 <main class="hotel-main">
     <div class="container">
         <div class="rp-title">
-            <a href="{{ route('homepage') }}">Trang chủ</a><span>></span>@if($place['id'] !== null) <a href="{{ route('user.listRestingPlace',['idp' => $place['id'], 'idt' => 0]) }}" class="main-active">Khách sạn (homestay, ...) {{ $place['name'] }}</a> @endif
+            <a href="{{ route('homepage') }}">Trang chủ</a><span>></span>@if($place) <a href="{{ route('user.listRestingPlace',['idp' => $place['id'], 'idt' => 0]) }}" class="main-active">Khách sạn (homestay, ...) {{ $place['name'] }}</a> @endif @if($type) <a href="{{ route('user.listRestingPlace',['idp' => 0, 'idt' => $type['id']]) }}" class="main-active">Danh sách {{ $type['name'] }}</a> @endif
         </div>
         <hr>
         <div class="rp-content">
@@ -13,7 +13,7 @@
                 @include('user/partials/filter_rp')
                 <div class="col-9">
                    <div class="list-hotel">
-                        <p class="hotel-notification">Hãy lựa chọn cho mình nơi ở tốt nhất tại<span class="main-active"> {{ $place['name'] }}</span></p>
+                        <p class="hotel-notification">Hãy lựa chọn cho mình nơi ở tốt nhất @if($place) <span class="main-active">tại {{ $place['name'] }}</span> @endif</p>
                        <div class="list-hotel-item">
                             @foreach ($inforListRP as $key => $value)
                                 <div class="rp-result-item" data-toggle="modal" data-target="#detailRoom">
@@ -66,6 +66,7 @@
                                 </div>
                             @endforeach
                        </div>
+                       <div class="pagination-page fix-top">{!! $paginate->links() !!}</div>
                    </div>
                 </div>
             </div>

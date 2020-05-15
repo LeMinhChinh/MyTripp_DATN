@@ -24,18 +24,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="r-people fix-top">
-                    <div class="r-place-title r-title-2">
-                        <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-2 disabledIcon"></i><i class="fas fa-angle-down r-down-2"></i></p><p class="r-time-title-text">Địa điểm ( Khách sạn )</p>
-                   </div>
-                    <div class="r-place-content r-content-2 fix-top">
-                        <div class="r-child r-people">
-                            <input type="text" class="booking-input" placeholder="Nhập vào địa điểm bạn muốn đến">
-                        </div>
-                    </div>
-                </div>
-                <div class="clear-fix"></div>
-                <hr class="fix-section"> --}}
                 <div class="r-filter-convenients r-people fix-top">
                     <div class="r-prices-title r-title-4">
                         <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-4 disabledIcon"></i><i class="fas fa-angle-down r-down-4"></i></p><p class="r-time-title-text">Đánh giá sao</p>

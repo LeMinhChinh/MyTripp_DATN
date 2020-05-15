@@ -21,4 +21,18 @@ $(document).ready(function(){
             }
         })
     }
+
+    var url = window.location.href
+    if(url === 'http://localhost:8000/user/personal-information'){
+        $('.nav-item:eq(0) > a').addClass('active')
+    }
+    if(url === 'http://localhost:8000/user/personal-booking'){
+        $('.nav-item:eq(1) > a').addClass('active')
+    }
+    if(url === 'http://localhost:8000/user/personal-update'){
+        $('.nav-item:eq(2) > a').addClass('active')
+    }
+    if(url === 'http://localhost:8000/user/personal-request'){
+        $('.nav-item:eq(3) > a').addClass('active')
+    }
 })
