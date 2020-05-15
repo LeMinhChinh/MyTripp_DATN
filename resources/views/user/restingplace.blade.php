@@ -5,7 +5,7 @@
 <main class="rp-main booking-main">
     <div class="container">
         <div class="rp-title">
-            <a href="">Trang chủ</a><span>></span><a href="">Khách sạn</a><span>></span><a href="">Hà Nội</a><span>></span><a href="" class="main-active">Khách sạn Fusion Suites Saigon</a>
+            <a href="{{ route('homepage') }}">Trang chủ</a><span>></span><a href="{{ route('user.listRestingPlace',['idp' => 0,'idt' => $inforRP['type']]) }}">{{ $inforRP['tname'] }}</a><span>></span><a href="{{ route('user.listRestingPlace',['idp' => $inforRP['place'], 'idt' => 0]) }}">{{ $inforRP['pname'] }}</a><span>></span><a href="" class="main-active">{{ $inforRP['tname'] }} {{ $inforRP['name'] }}</a>
         </div>
         <hr>
         <div class="rp-content">
@@ -26,7 +26,7 @@
                     </div>
                     <div id="ttt" class="rp-infor">
                         <div class="rp-name">
-                            <p><small>Khách sạn </small>Fusion Suites Saigon <span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span></p>
+                            <p><small>{{ $inforRP['tname'] }} </small>{{ $inforRP['name'] }} @for($i = 1; $i <= $inforRP['rate'] ; $i++) <span><i class="fa fa-star"></i></span> @endfor</p>
                         </div>
                         <div class="rp-book">
                             <span class="rp-wishlist"><i class="fa fa-heart"></i></span>
@@ -34,7 +34,7 @@
                         </div>
                         <div class="clear-fix"></div>
                         <div class="rp-map">
-                            <span class="glyphicon glyphicon-map-marker"></span><p>24 Phạm Tuấn Tài, Nghĩa Tân, Cầu Giấy, Hà Nội - <a href="" class="rp-click-map" data-toggle="modal" data-target="#popupMap">Xem trên bản đồ</a></p>
+                            <span class="glyphicon glyphicon-map-marker"></span><p>{{ $inforRP['address'] }} - <a href="" class="rp-click-map" data-toggle="modal" data-target="#popupMap">Xem trên bản đồ</a></p>
                         </div>
                         <div class="modal fade" id="popupMap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -55,29 +55,29 @@
                         <ol class="carousel-indicators">
                             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
                                 <div class="img-active">
-                                    <img src="img/summer-trip-hồ-cốc-1.jpg" alt="" >
+                                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="" >
                                 </div>
                             </li>
                             <li data-target="#carouselExampleIndicators" data-slide-to="1">
                                 <div class="img-active">
-                                    <img src="img/summer-trip-hồ-cốc-1.jpg" alt="" >
+                                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="" >
                                 </div>
                             </li>
                             <li data-target="#carouselExampleIndicators" data-slide-to="2">
                                 <div class="img-active">
-                                    <img src="img/summer-trip-hồ-cốc-1.jpg" alt="" >
+                                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="" >
                                 </div>
                             </li>
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100" src="img/summer-trip-hồ-cốc-1.jpg" alt="First slide">
+                                <img class="d-block w-100" src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="First slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="img/summer-trip-hồ-cốc-1.jpg" alt="Second slide">
+                                <img class="d-block w-100" src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="Second slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="img/summer-trip-hồ-cốc-1.jpg" alt="Third slide">
+                                <img class="d-block w-100" src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="Third slide">
                             </div>
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

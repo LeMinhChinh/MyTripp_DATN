@@ -5,7 +5,7 @@
 <main class="hotel-main">
     <div class="container">
         <div class="rp-title">
-            <a href="">Trang chủ</a><span>></span><a href="" class="main-active">Khách sạn (homestay, ...) {{ $place['name'] }}</a>
+            <a href="{{ route('homepage') }}">Trang chủ</a><span>></span>@if($place['id'] !== null) <a href="{{ route('user.listRestingPlace',['idp' => $place['id'], 'idt' => 0]) }}" class="main-active">Khách sạn (homestay, ...) {{ $place['name'] }}</a> @endif
         </div>
         <hr>
         <div class="rp-content">
@@ -15,21 +15,21 @@
                    <div class="list-hotel">
                         <p class="hotel-notification">Hãy lựa chọn cho mình nơi ở tốt nhất tại<span class="main-active"> {{ $place['name'] }}</span></p>
                        <div class="list-hotel-item">
-                            @foreach ($inforRP as $key => $value)
+                            @foreach ($inforListRP as $key => $value)
                                 <div class="rp-result-item" data-toggle="modal" data-target="#detailRoom">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="rp-item-img">
-                                                <img src="{{  asset('user/img/146006268.jpg') }}" alt="">
+                                                <a href="{{ route('user.restingplace',['id' => $value['id']]) }}"><img src="{{  asset('user/img/146006268.jpg') }}" alt=""></a>
                                             </div>
                                         </div>
                                         <div class="col-5">
                                             <div class="rp-item-infor">
                                                 <div class="rp-name">
-                                                    <p><small>{{ $value['tname'] }} </small><a href="">{{ $value['name'] }}</a> <span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span><span><i class="fa fa-star"></i></span></p>
+                                                    <p><small>{{ $value['tname'] }} </small><a href="{{ route('user.restingplace',['id' => $value['id']]) }}">{{ $value['name'] }}</a> @for($i = 1; $i <= $value['rate'] ; $i++) <span><i class="fa fa-star"></i></span> @endfor </p>
                                                 </div>
                                                 <div class="rp-map">
-                                                    <span class="glyphicon glyphicon-map-marker"></span><p>24 Phạm Tuấn Tài, Nghĩa Tân, Cầu Giấy, Hà Nội - <a href="" class="rp-click-map" data-toggle="modal" data-target="#popupMap">Xem trên bản đồ</a></p>
+                                                    <span class="glyphicon glyphicon-map-marker"></span><p>{{ $value['address'] }} - <a href="" class="rp-click-map" data-toggle="modal" data-target="#popupMap">Xem trên bản đồ</a></p>
                                                 </div>
                                                 <div class="rp-description">
                                                     <p>Lakeside 1 Hotel Nam Định cung cấp chỗ nghỉ tại Như Thức. Khách sạn 3 sao này có lễ tân 24 giờ, dịch vụ phòng và WiFi miễn phí. Chỗ nghỉ có thể bố trí chỗ đỗ xe riêng với một khoản phụ phí.</p>

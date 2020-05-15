@@ -31,9 +31,10 @@ Route::group([
 ], function () {
     Route::get('room','UserController@room')->name('room');
 
-    Route::get('resting-place','UserController@restingplace')->name('restingplace');
+    Route::get('resting-place/{id}','UserController@restingplace')->name('restingplace');
     Route::get('search-resting-place','UserController@searchrestingplace')->name('searchrestingplace');
-    Route::get('list-resting-place/{id}','UserController@listRestingPlace')->name('listRestingPlace');
+    Route::get('list-resting-place/{idp}~{idt}','UserController@listRestingPlace')->name('listRestingPlace');
+    // Route::get('list-type-resting-place/{id}','UserController@listTypeRestingPlace')->name('listTypeRestingPlace');
 
     Route::get('personal','UserController@personal')->name('personal');
 

@@ -61,7 +61,7 @@
         </div>
         <div class="row">
             <div class="col-lg-4">
-                <a href="{{ route('user.listRestingPlace',['id' => 45 ]) }}">
+                <a href="{{ route('user.listRestingPlace',['idp' => 45 , 'idt' => 0]) }}">
                     <div class="blog-item set-bg" data-setbg="{{ asset('user/img/tphcm.jpg')}}">
                         <div class="bi-text">
                             {{-- <span class="b-tag">Travel Trip</span> --}}
@@ -72,7 +72,7 @@
                 </a>
             </div>
             <div class="col-lg-4">
-                <a href="{{ route('user.listRestingPlace',['id' => 46]) }}">
+                <a href="{{ route('user.listRestingPlace',['idp' => 46, 'idt' => 0]) }}">
                     <div class="blog-item set-bg" data-setbg="{{ asset('user/img/vungtau.jfif')}}">
                         <div class="bi-text">
                             {{-- <span class="b-tag">Camping</span> --}}
@@ -83,7 +83,7 @@
                 </a>
             </div>
             <div class="col-lg-4">
-                <a href="{{ route('user.listRestingPlace',['id' => 32]) }}">
+                <a href="{{ route('user.listRestingPlace',['idp' => 32, 'idt' => 0]) }}">
                     <div class="blog-item set-bg" data-setbg="{{ asset('user/img/danang.jpeg')}}">
                         <div class="bi-text">
                             {{-- <span class="b-tag">Event</span> --}}
@@ -94,7 +94,7 @@
                 </a>
             </div>
             <div class="col-lg-7">
-                <a href="{{ route('user.listRestingPlace',['id' => 1]) }}">
+                <a href="{{ route('user.listRestingPlace',['idp' => 1, 'idt' => 0]) }}">
                     <div class="blog-item small-size set-bg" data-setbg="{{ asset('user/img/hanoi.jpg')}}">
                         <div class="bi-text">
                             {{-- <span class="b-tag">Event</span> --}}
@@ -105,7 +105,7 @@
                 </a>
             </div>
             <div class="col-lg-5">
-                <a href="{{ route('user.listRestingPlace',['id' => 31]) }}">
+                <a href="{{ route('user.listRestingPlace',['idp' => 31, 'idt' => 0]) }}">
                     <div class="blog-item small-size set-bg" data-setbg="{{ asset('user/img/hue.jpg')}}">
                         <div class="bi-text">
                             {{-- <span class="b-tag">Travel</span> --}}

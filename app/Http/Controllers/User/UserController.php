@@ -125,31 +125,60 @@ class UserController extends Controller
 
     // Resting place
 
-    public function restingplace(Request $request){
-        return view('user/restingplace');
+    public function restingplace(Request $request, $id, RestingPlace $rp)
+    {
+        $id = $request->id;
+        $id = \is_numeric($id) ? $id : 0;
+
+        $inforRP = $rp->getInforRPById($id);
+        $inforRP = \json_decode(json_encode($inforRP),true);
+
+        if($inforRP){
+            $data['inforRP'] = $inforRP;
+            return view('user/restingplace', $data);
+        }
     }
 
     public function searchrestingplace(Request $request){
         return view('user/search-restingplace');
     }
 
-    public function listRestingPlace(Request $request, $id, RestingPlace $rp)
+    public function listRestingPlace(Request $request, $idp, $idt, RestingPlace $rp)
     {
-        $id = $request->id;
-        $id = is_numeric($id) ? $id : 0;
+        // $type = $request->input('type');
+        // $place = $request->input('place');
+        $idp = $request->idp;
+        $idt = $request->idt;
 
-        $inforRP = $rp->getInforRPById($id);
-        $inforRP = \json_decode(\json_encode($inforRP),true);
+        // dd($idp, $idt);
+        // if($idt == 0){
+            $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt);
+            $inforListRP = \json_decode(\json_encode($inforListRP),true);
+            // dd($inforListRP);
+        // }
 
-        $place = Place::select('name')->where('id',$id)->first();
+        // if($idp == 0){
+        //     $inforListRP = $rp->getInforListRPById($idp);
+        //     $inforListRP = \json_decode(\json_encode($inforListRP),true);
+        // }
+
+        if($idp > 0){
+            $place = Place::where('id',$idp)->first();
+        }
+        // dd($place);
 
         // dd($inforRP);
-        if($inforRP){
-            $data['inforRP'] = $inforRP;
+        if($inforListRP){
+            $data['inforListRP'] = $inforListRP;
             $data['place'] = $place;
             return view('user.list-restingplace',$data);
         }
     }
+
+    // public function listTypeRestingPlace(Request $request, $id, RestingPlace $rp)
+    // {
+
+    // }
 
     // Personal
 
