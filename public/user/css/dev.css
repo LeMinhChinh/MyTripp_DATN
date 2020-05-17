@@ -139,8 +139,8 @@ i.fa.fa-window-close{
     display: none;
 }
 .carousel-indicators li{
-    height: 100px;
-    width: 100px;
+    height: 50px;
+    width: 50px;
 }
 .carousel-indicators li .img-active{
     height: 100%;
@@ -150,7 +150,7 @@ i.fa.fa-window-close{
     float: left;
 }
 .carousel-indicators{
-    bottom: -120px;
+    bottom: -70px;
     left: 0;
     justify-content: inherit;
     margin: 0;
@@ -160,7 +160,7 @@ i.fa.fa-window-close{
 }
 
 .rp-description{
-    margin-top: 130px;
+    margin-top: 100px;
 }
 
 .rp-description p{
@@ -972,4 +972,7 @@ ul.pagination > li > span, ul.pagination > li > a {
 
 .rp-name > p {
     color: #07c!important;
+}
+.carousel-item {
+    height: 460px!important;
 }

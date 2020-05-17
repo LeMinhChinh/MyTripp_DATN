@@ -9,6 +9,7 @@ use App\Models\Account;
 use App\Models\RestingPlace;
 use App\Models\Type;
 use App\Models\Place;
+use App\Models\FeedbackRP;
 use Log;
 
 class UserController extends Controller
@@ -128,16 +129,23 @@ class UserController extends Controller
 
     // Resting place
 
-    public function restingplace(Request $request, $id, RestingPlace $rp)
+    public function restingplace(Request $request, $id, RestingPlace $rp, FeedbackRP $fb)
     {
         $id = $request->id;
         $id = \is_numeric($id) ? $id : 0;
 
         $inforRP = $rp->getInforRPById($id);
         $inforRP = \json_decode(json_encode($inforRP),true);
+        $image = \explode(";", $inforRP['image']);
+
+        $feedback = $fb->getDataFeedback($id);
+        $feedback = \json_decode(json_encode($feedback),true);
+        // dd($feedback);
 
         if($inforRP){
             $data['inforRP'] = $inforRP;
+            $data['image'] = $image;
+            $data['feedback'] = $feedback;
             return view('user/restingplace', $data);
         }
     }
@@ -154,10 +162,10 @@ class UserController extends Controller
         $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt);
         $data['paginate'] = $inforListRP;
         $inforListRP = \json_decode(\json_encode($inforListRP),true);
-        
+
         $place = Place::where('id',$idp)->first();
         $type = Type::where('id', $idt)->first();
-        // dd($place, $type);
+
         if($inforListRP){
             $data['inforListRP'] = $inforListRP['data'] ?? [];
             $data['place'] = $place;

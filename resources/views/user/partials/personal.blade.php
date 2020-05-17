@@ -7,9 +7,15 @@
         <div class="row">
             <div class="col-3">
                 <div class="ps-welcome-left">
-                    @if(Session::get('avatarSession') !== null) <img src="{{ Session::get('avatarSession') }} }}" alt="" class="ps-left-img"> @endif
-                    @if(Session::get('avatarSession') === null && Session::get('genderSession') === 1) <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-left-img"> @endif
-                    @if(Session::get('avatarSession') === null && Session::get('genderSession') === 0) <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-left-img"> @endif
+                    @if(Session::get('avatarSession') !== null)
+                        <img src="{{ Session::get('avatarSession') }} }}" alt="" class="ps-left-img">
+                    @endif
+                    @if(Session::get('avatarSession') === null && Session::get('genderSession') === 1)
+                        <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-left-img">
+                    @endif
+                    @if(Session::get('avatarSession') === null && Session::get('genderSession') === 0)
+                        <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-left-img">
+                    @endif
                     <div class="ps-left-info">
                     <p class="ps-left-name">{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}</p>
                         <a href="">Cập nhật hồ sơ của bạn</a>

@@ -53,32 +53,25 @@
                     </div>
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
-                                <div class="img-active">
-                                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="" >
-                                </div>
-                            </li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1">
-                                <div class="img-active">
-                                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="" >
-                                </div>
-                            </li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2">
-                                <div class="img-active">
-                                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="" >
-                                </div>
-                            </li>
+                            @foreach ($image as $key => $img)
+                                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" class="active">
+                                    <div class="img-active">
+                                        <img src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $img }}" alt="" >
+                                    </div>
+                                </li>
+                            @endforeach
                         </ol>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img class="d-block w-100" src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="First slide">
+                                <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $image[0] }}" >
                             </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="Second slide">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="d-block w-100" src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg') }}" alt="Third slide">
-                            </div>
+                            @foreach ($image as $key => $img)
+                                @if($key > 0)
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $img }}" alt="{{ $key }} slide">
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -101,22 +94,30 @@
                             <p>Các tiện nghi</p>
                         </div>
                         <div class="rp-convenient-content">
-                            <div class="rp-content-pool rpc-content">
-                                <svg class="bk-icon -iconset-pool hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M8.7 79.2a3.8 3.8 0 0 1 5.5-1.3c21 15 34.5 9 50 2.2 14.5-6.5 30.8-13.7 53.6-1.4a4.5 4.5 0 0 1 1.8 5.9 3.9 3.9 0 0 1-5.4 2c-19.5-10.7-32.8-4.8-47 1.5-8.7 3.9-17.6 7.9-28 7.9A50 50 0 0 1 9.9 85.2a4.6 4.6 0 0 1-1.2-6zm109 15.5c-22.7-12.4-39-5-53.5 1.4-15.5 6.9-29 12.9-50-2.2a3.8 3.8 0 0 0-5.6 1.3 4.6 4.6 0 0 0 1.2 6A50 50 0 0 0 39.3 112c10.3 0 19.2-4 28-7.9 14-6.3 27.4-12.2 46.9-1.6a3.9 3.9 0 0 0 5.4-2 4.5 4.5 0 0 0-1.8-5.8zM100 56a12 12 0 1 0-12-12 12 12 0 0 0 12 12zM64.2 72c7.2-3.3 15.2-7 23.8-8.2 0 0-4-8.8-6.8-13.9l-18-29.2c-2.5-4.3-7.5-6-13.5-3.6L27.9 26a6.2 6.2 0 0 0-3.5 7.8 6 6 0 0 0 8 3.4L50 29.7a4 4 0 0 1 5 1.7l6 13.2L24 72c17.6 9.8 26.3 6.3 40.3 0z"></path></svg>
-                                Hồ bơi
-                            </div>
-                            <div class="rp-content-parking rpc-content">
-                                <svg class="bk-icon -iconset-parking_sign hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M70.8 44H58v16h12.8a8 8 0 0 0 0-16z"></path><path d="M108 8H20A12 12 0 0 0 8 20v88a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12V20a12 12 0 0 0-12-12zM70 76H58v24H42V28h28a24 24 0 0 1 0 48z"></path></svg>
-                                Bãi đậu xe miễn phí
-                            </div>
-                            <div class="rp-content-wifi rpc-content">
-                                <svg class="bk-icon -iconset-wifi hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><circle cx="64" cy="100" r="12"></circle><path d="M118.3 32.7A94.9 94.9 0 0 0 64 16 94.9 94.9 0 0 0 9.7 32.7a4 4 0 1 0 4.6 6.6A87 87 0 0 1 64 24a87 87 0 0 1 49.7 15.3 4 4 0 1 0 4.6-6.6zM87.7 68.4a54.9 54.9 0 0 0-47.4 0 4 4 0 0 0 3.4 7.2 47 47 0 0 1 40.6 0 4 4 0 0 0 3.4-7.2z"></path><path d="M104 50.5a81.2 81.2 0 0 0-80 0 4 4 0 0 0 4 7 73.2 73.2 0 0 1 72 0 4 4 0 0 0 4-7z"></path></svg>
-                                Wifi miễn phí
-                            </div>
-                            <div class="rp-content-smoke rpc-content">
-                                <svg class="bk-icon -iconset-nosmoking hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M64 8a56 56 0 1 0 56 56A56 56 0 0 0 64 8zm0 104a48 48 0 0 1-36.6-79l31 31H28v8h38.3L95 100.6A47.8 47.8 0 0 1 64 112zm36.6-17l-23-23H84v-8H69.7L33 27.4A48 48 0 0 1 100.6 95zM92 64h8v8h-8zm0-10c0-7.7-5.9-14-13.2-14H78a2 2 0 0 1-2-2 10 10 0 0 0-10-10h-8a2 2 0 0 1 0-4h8a14 14 0 0 1 13.8 12c9 .6 16.2 8.4 16.2 18a2 2 0 0 1-4 0zm-8 0a2 2 0 0 1-4 0 2 2 0 0 0-2-2h-3a15 15 0 0 1-15-15 2 2 0 0 1 4 0 11 11 0 0 0 11 11h3a6 6 0 0 1 6 6z"></path></svg>
-                                Phòng không hút thuốc
-                            </div>
+                            @if($inforRP['pool'])
+                                <div class="rp-content-pool rpc-content">
+                                    <svg class="bk-icon -iconset-pool hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M8.7 79.2a3.8 3.8 0 0 1 5.5-1.3c21 15 34.5 9 50 2.2 14.5-6.5 30.8-13.7 53.6-1.4a4.5 4.5 0 0 1 1.8 5.9 3.9 3.9 0 0 1-5.4 2c-19.5-10.7-32.8-4.8-47 1.5-8.7 3.9-17.6 7.9-28 7.9A50 50 0 0 1 9.9 85.2a4.6 4.6 0 0 1-1.2-6zm109 15.5c-22.7-12.4-39-5-53.5 1.4-15.5 6.9-29 12.9-50-2.2a3.8 3.8 0 0 0-5.6 1.3 4.6 4.6 0 0 0 1.2 6A50 50 0 0 0 39.3 112c10.3 0 19.2-4 28-7.9 14-6.3 27.4-12.2 46.9-1.6a3.9 3.9 0 0 0 5.4-2 4.5 4.5 0 0 0-1.8-5.8zM100 56a12 12 0 1 0-12-12 12 12 0 0 0 12 12zM64.2 72c7.2-3.3 15.2-7 23.8-8.2 0 0-4-8.8-6.8-13.9l-18-29.2c-2.5-4.3-7.5-6-13.5-3.6L27.9 26a6.2 6.2 0 0 0-3.5 7.8 6 6 0 0 0 8 3.4L50 29.7a4 4 0 0 1 5 1.7l6 13.2L24 72c17.6 9.8 26.3 6.3 40.3 0z"></path></svg>
+                                    Hồ bơi
+                                </div>
+                            @endif
+                            @if($inforRP['parking'])
+                                <div class="rp-content-parking rpc-content">
+                                    <svg class="bk-icon -iconset-parking_sign hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M70.8 44H58v16h12.8a8 8 0 0 0 0-16z"></path><path d="M108 8H20A12 12 0 0 0 8 20v88a12 12 0 0 0 12 12h88a12 12 0 0 0 12-12V20a12 12 0 0 0-12-12zM70 76H58v24H42V28h28a24 24 0 0 1 0 48z"></path></svg>
+                                    Bãi đậu xe miễn phí
+                                </div>
+                            @endif
+                            @if($inforRP['wifi'])
+                                <div class="rp-content-wifi rpc-content">
+                                    <svg class="bk-icon -iconset-wifi hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><circle cx="64" cy="100" r="12"></circle><path d="M118.3 32.7A94.9 94.9 0 0 0 64 16 94.9 94.9 0 0 0 9.7 32.7a4 4 0 1 0 4.6 6.6A87 87 0 0 1 64 24a87 87 0 0 1 49.7 15.3 4 4 0 1 0 4.6-6.6zM87.7 68.4a54.9 54.9 0 0 0-47.4 0 4 4 0 0 0 3.4 7.2 47 47 0 0 1 40.6 0 4 4 0 0 0 3.4-7.2z"></path><path d="M104 50.5a81.2 81.2 0 0 0-80 0 4 4 0 0 0 4 7 73.2 73.2 0 0 1 72 0 4 4 0 0 0 4-7z"></path></svg>
+                                    Wifi miễn phí
+                                </div>
+                            @endif
+                            @if($inforRP['smoke'] == 0)
+                                <div class="rp-content-smoke rpc-content">
+                                    <svg class="bk-icon -iconset-nosmoking hp__important_facility_icon" height="20" width="20" viewBox="0 0 128 128" role="presentation" aria-hidden="true" focusable="false"><path d="M64 8a56 56 0 1 0 56 56A56 56 0 0 0 64 8zm0 104a48 48 0 0 1-36.6-79l31 31H28v8h38.3L95 100.6A47.8 47.8 0 0 1 64 112zm36.6-17l-23-23H84v-8H69.7L33 27.4A48 48 0 0 1 100.6 95zM92 64h8v8h-8zm0-10c0-7.7-5.9-14-13.2-14H78a2 2 0 0 1-2-2 10 10 0 0 0-10-10h-8a2 2 0 0 1 0-4h8a14 14 0 0 1 13.8 12c9 .6 16.2 8.4 16.2 18a2 2 0 0 1-4 0zm-8 0a2 2 0 0 1-4 0 2 2 0 0 0-2-2h-3a15 15 0 0 1-15-15 2 2 0 0 1 4 0 11 11 0 0 0 11 11h3a6 6 0 0 1 6 6z"></path></svg>
+                                    Phòng không hút thuốc
+                                </div>
+                            @endif
                             <div class="clear-fix"></div>
                         </div>
                     </div>
@@ -240,7 +241,12 @@
                                     </div>
                                     <div class="col-9">
                                         <div class="rp-rule-child">
-                                            <p>Không có yêu cầu về độ tuổi khi nhận phòng</p>
+                                            @if($inforRP['age'] == 0)
+                                                <p>Không có yêu cầu về độ tuổi khi nhận phòng</p>
+                                            @endif
+                                            @if($inforRP['age'] > 0)
+                                                <p>{{ $inforRP['age'] }} tuổi</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +259,12 @@
                                     </div>
                                     <div class="col-9">
                                         <div class="rp-rule-child">
-                                            <p>Không cho phép hút thuốc.</p>
+                                            @if($inforRP['smoke'] == 0)
+                                                <p>Không cho phép hút thuốc</p>
+                                            @endif
+                                            @if($inforRP['age'] == 1)
+                                                <p>Có phòng hút thuốc</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +277,12 @@
                                     </div>
                                     <div class="col-9">
                                         <div class="rp-rule-child">
-                                            <p>Vật nuôi không được phép.</p>
+                                            @if($inforRP['animal'] == 0)
+                                                <p>Vật nuôi không được phép</p>
+                                            @endif
+                                            @if($inforRP['animal'] == 1)
+                                                <p>Được mang theo vật nuôi</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -471,34 +487,43 @@
                         <div class="rp-search-header">
                             <p>Đánh giá của khách hàng</p>
                         </div>
-                        <div class="review-item">
-                            <div class="ri-pic">
-                            <img src="{{ asset('user/img/room/avatar/avatar-1.jpg') }}" alt="">
-                            </div>
-                            <div class="ri-text">
-                                <span>27 Aug 2019</span>
-                                <h5>Brandon Kelley</h5>
-                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                    adipisci velit, sed quia non numquam eius modi tempora. incidunt ut labore et dolore
-                                    magnam.</p>
-                            </div>
-                        </div>
-                        <div class="review-item">
-                            <div class="ri-pic">
-                                <img src="{{ asset('user/img/room/avatar/avatar-2.jpg') }}" alt="">
-                            </div>
-                            <div class="ri-text">
-                                <span>27 Aug 2019</span>
-                                <h5>Brandon Kelley</h5>
-                                <p>Neque porro qui squam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-                                    adipisci velit, sed quia non numquam eius modi tempora. incidunt ut labore et dolore
-                                    magnam.</p>
-                            </div>
-                        </div>
+                        @if($feedback)
+                            @foreach ($feedback as $fb)
+                                <div class="review-item">
+                                    <div class="ri-pic">
+                                        @if($fb['avatar'] !== null)
+                                            <img src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $fb['avatar'] }}" alt="" class="ps-left-img">
+                                        @endif
+                                        @if($fb['avatar'] === null && $fb['gender'] === 1)
+                                            <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-left-img">
+                                        @endif
+                                        @if($fb['avatar'] === null && $fb['gender'] === 0)
+                                            <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-left-img">
+                                        @endif
+                                    </div>
+                                    <div class="ri-text">
+                                        <span>{{ $fb['created_at'] }}</span>
+                                        <h5>
+                                            @if($fb['username'] === null)
+                                                {{ $fb['surname'] }} {{ $fb['name'] }}
+                                            @elseif($fb['username'] !== null)
+                                                {{ $fb['username'] }}
+                                            @endif
+                                        </h5>
+                                        <p>{{ $fb['content'] }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                        @empty($feedback)
+                            <h5>
+                                Hiện tại chưa có phản hồi từ khách hàng!!!
+                            </h5>
+                        @endempty
                     </div>
                     <div class="review-add">
                         <div class="rp-search-header">
-                            <p>Đánh giá của khách hàng</p>
+                            <p>Đánh giá của bạn</p>
                         </div>
                         <div class="rp-request-login">
                             <h5 style="display: none">Vui lòng <a href="" data-toggle="modal" data-target="#formLogin">đăng nhập</a> để đánh giá</h5>
