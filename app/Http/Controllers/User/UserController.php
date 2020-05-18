@@ -140,7 +140,6 @@ class UserController extends Controller
 
         $feedback = $fb->getDataFeedback($id);
         $feedback = \json_decode(json_encode($feedback),true);
-        // dd($feedback);
 
         if($inforRP){
             $data['inforRP'] = $inforRP;
@@ -162,14 +161,23 @@ class UserController extends Controller
         $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt);
         $data['paginate'] = $inforListRP;
         $inforListRP = \json_decode(\json_encode($inforListRP),true);
+        $inforListRP = $inforListRP['data'] ?? [];
+        $images = [];
+        foreach ($inforListRP as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
 
         $place = Place::where('id',$idp)->first();
         $type = Type::where('id', $idt)->first();
 
         if($inforListRP){
-            $data['inforListRP'] = $inforListRP['data'] ?? [];
+            $data['inforListRP'] = $inforListRP;
             $data['place'] = $place;
             $data['type'] = $type;
+            $data['images'] = $images;
             return view('user.list-restingplace',$data);
         }
     }

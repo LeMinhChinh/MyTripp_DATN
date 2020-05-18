@@ -20,7 +20,14 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="rp-item-img">
-                                                <a href="{{ route('user.restingplace',['id' => $value['id']]) }}"><img src="{{  asset('user/img/146006268.jpg') }}" alt=""></a>
+                                                <a href="{{ route('user.restingplace',['id' => $value['id']]) }}">
+                                                    @foreach($images as $k => $v)
+                                                        @if($key == $k)
+                                                            <img src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $v['0'] }}" alt="">
+                                                        @endif
+                                                    @endforeach
+                                                </a>
+                                                {{-- {{ URL::to('/') }}/user/uploads/resting_place/{{ $image[0] }} --}}
                                             </div>
                                         </div>
                                         <div class="col-5">
