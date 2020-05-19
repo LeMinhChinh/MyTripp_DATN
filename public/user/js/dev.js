@@ -35,4 +35,15 @@ $(document).ready(function(){
     if(url === 'http://localhost:8000/user/personal-request'){
         $('.nav-item:eq(3) > a').addClass('active')
     }
+
+    var dtIndex = $(".rp-result-item[data-index]").length
+    console.log(dtIndex)
+    for (let i = 0; i < dtIndex; i++) {
+        if($(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-down.enabled-feedback").length){
+            $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-down.disabled-feedback").addClass('hideEvaluate')
+            $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-up").addClass('showEvaluate')
+            $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-number > .hotel-fb-number").addClass('showEvaluate')
+            $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-number > .hotel-fb-number-default").addClass('hideEvaluate')
+        }
+    }
 })

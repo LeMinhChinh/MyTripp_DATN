@@ -153,7 +153,7 @@ class UserController extends Controller
         return view('user/search-restingplace');
     }
 
-    public function listRestingPlace(Request $request, $idp, $idt, RestingPlace $rp)
+    public function listRestingPlace(Request $request, $idp, $idt, RestingPlace $rp,FeedbackRP $fb)
     {
         $idp = $request->idp;
         $idt = $request->idt;
@@ -170,6 +170,10 @@ class UserController extends Controller
             }
         }
 
+        $count = $rp->countFBListRP($idp, $idt);
+        $count = \json_decode(\json_encode($count),true);
+        // dd($count);  
+
         $place = Place::where('id',$idp)->first();
         $type = Type::where('id', $idt)->first();
 
@@ -178,6 +182,7 @@ class UserController extends Controller
             $data['place'] = $place;
             $data['type'] = $type;
             $data['images'] = $images;
+            $data['count'] = $count;
             return view('user.list-restingplace',$data);
         }
     }

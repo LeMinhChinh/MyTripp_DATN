@@ -35,4 +35,15 @@ class RestingPlace extends Model
                     $data = $data->paginate(6);
         return $data;
     }
+
+    public function countFBListRP($idp, $idt)
+    {
+        $data = DB::table('resting_places as rp')
+                    ->join('feedback_rp as fb','rp.id','=','fb.id_rp')
+                    ->select(DB::raw('count(fb.id) as count_id, rp.id'))
+                    ->groupby('rp.id');
+                    $data = $data->get();
+        return $data;
+    }
+
 }

@@ -660,7 +660,7 @@ i.fas.fa-angle-down {
 }
 
 .list-hotel .rp-name small{
-    font-size: 75%;
+    font-size: 85%;
 }
 
 .list-hotel .rp-description{
@@ -688,9 +688,9 @@ i.fas.fa-angle-down {
     -webkit-justify-content: center;
     justify-content: center;
     vertical-align: baseline;
-    border-radius: 6px 6px 6px 0;
-    height: 32px;
-    width: 32px;
+    border-radius: 12px 6px 12px 0;
+    height: 38px;
+    width: 38px;
     min-width: 32px;
 }
 
@@ -705,7 +705,7 @@ i.fas.fa-angle-down {
 
 .hotel-fb-user-text-down{
     color: #707070;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     line-height: 1;
     margin: 4px 15px 0 0;
@@ -975,4 +975,16 @@ ul.pagination > li > span, ul.pagination > li > a {
 }
 .carousel-item {
     height: 460px!important;
+}
+.hideEvaluate{
+    display: none;
+}
+.showEvaluate{
+    display: block!important;
+}
+
+p.hotel-fb-number, p.hotel-fb-number-default{
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
 }
