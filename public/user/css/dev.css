@@ -992,3 +992,39 @@ p.hotel-fb-number, p.hotel-fb-number-default{
 p.hotel-fb-user-text-up-deafault {
     color: #fff;
 }
+
+.hr-text > p {
+    font-size: 24px;
+    color: #ffffff;
+    line-height: 40px;
+}
+
+td.r-o > span {
+    margin-right: 15px;
+    float: right;
+}
+
+img.ps-right-img {
+    width: 60px;
+    float: right;
+}
+
+ul.rv-emotion-list {
+    list-style: none;
+    display: inline-block;
+}
+
+li.rv-emotion-item {
+    display: inline-block;
+    margin: 0 25px;
+}
+
+li.rv-emotion-item > input {
+    display: none;
+}
+
+img.rv-emotion {
+    width: 60px;
+}
+
+

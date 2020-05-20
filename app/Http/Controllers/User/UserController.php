@@ -16,8 +16,27 @@ class UserController extends Controller
 {
     // Homepage
 
-    public function homepage(){
-        return view('user/home');
+    public function homepage(RestingPlace $rp){
+        $inforFB = $rp->getMaxCountEmotion();
+        $inforFB = \json_decode(\json_encode($inforFB),true);
+
+        $inforRP = $rp->getInforListRP();
+        $inforRP = \json_decode(\json_encode($inforRP),true);
+
+        $images = [];
+
+        foreach ($inforRP as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
+
+        $data['inforRP'] = $inforRP;
+        $data['inforFB'] = $inforFB;
+        $data['images'] = $images;
+
+        return view('user/home',$data);
     }
 
     // Login
@@ -163,37 +182,18 @@ class UserController extends Controller
         $inforListRP = \json_decode(\json_encode($inforListRP),true);
         $inforListRP = $inforListRP['data'] ?? [];
         $images = [];
-        $ids = [];
-        
+
         foreach ($inforListRP as $key => $value) {
             if(!empty($value['image'])){
                 $image = \explode(";", $value['image']);
                 array_push($images,$image);
             }
-            array_push($ids,$value['id']);
         }
-        // dd($ids);
-        $fb = FeedbackRP::get();
-        $fb = \json_decode(\json_encode($fb),true);
-
-        // dd($ids, $fb);
-        $percent = [];
-        $percent_emotion = [];
-        foreach ($ids as $key => $value) {
-            foreach ($fb as $k => $v) {
-                if($value == $v['id_rp']){
-                    array_push($percent, $v['emotion']);
-                }
-            }
-            dd($percent); 
-            array_push($percent_emotion, $percent);
-        }
-        // dd($percent);
-        // dd($percent_emotion);
 
         $count = $rp->countFBListRP($idp, $idt);
         $count = \json_decode(\json_encode($count),true);
-        // dd($count);  
+
+        // dd($count);
 
         $place = Place::where('id',$idp)->first();
         $type = Type::where('id', $idt)->first();

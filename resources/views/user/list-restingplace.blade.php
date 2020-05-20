@@ -51,21 +51,37 @@
                                             <div class="hotel-fb-price">
                                                 <div class="hotel-list-feedback">
                                                     <div class="hotel-feedback-user">
-                                                        <div class="hotel-fb-user-number">
-                                                            <p class="hotel-fb-number hideEvaluate">9.1</p>
-                                                            <p class="hotel-fb-number-default">...</p>
-                                                        </div>
-                                                        <div class="hotel-fb-user-text">
-                                                            <p class="hotel-fb-user-text-up hideEvaluate">Tuyệt hảo</p>
-                                                            <p class="hotel-fb-user-text-up-deafault">Tuyệt hảo</p>
-                                                            @foreach ($count as $c)
-                                                                @if($value['id'] == $c['id'])
-                                                                    <p class="hotel-fb-user-text-down enabled-feedback">{{ $c['count_id'] }} đánh giá </p>
-                                                                @endif
-                                                                
-                                                            @endforeach
-                                                            <p class="hotel-fb-user-text-down disabled-feedback">Chưa có đánh giá</p>
-                                                        </div>
+                                                        @foreach ($count as $c)
+                                                            @if($value['id'] == $c['id'])
+                                                                <div class="hotel-fb-user-number">
+                                                                    @if($c['count_id'] > 0)
+                                                                        <p class="hotel-fb-number">{{ round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) }}</p>
+                                                                    @else
+                                                                        <p class="hotel-fb-number-default">...</p>
+                                                                    @endif
+                                                                </div>
+                                                                <div class="hotel-fb-user-text">
+                                                                        @if($c['count_id'] > 0)
+                                                                            @if(round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) > 9 || round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) == 9)
+                                                                                <p class="hotel-fb-user-text-up">Tuyệt hảo</p>
+                                                                            @endif
+                                                                            @if(9 > round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) && round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) > 8 || round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) == 8)
+                                                                                <p class="hotel-fb-user-text-up">Tốt</p>
+                                                                            @endif
+                                                                            @if( 8 > round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) && round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) > 7 || round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2) == 7)
+                                                                                <p class="hotel-fb-user-text-up">Hài lòng</p>
+                                                                            @endif
+                                                                            @if(7 > round(($c['sum_emotion'] *10 / ($c['count_id'] * 5)),2))
+                                                                                <p class="hotel-fb-user-text-up">Không hài lòng</p>
+                                                                            @endif
+                                                                            <p class="hotel-fb-user-text-down">{{ $c['count_id'] }} đánh giá </p>
+                                                                        @else
+                                                                            <p class="hotel-fb-user-text-up-deafault">Tuyệt hảo</p>
+                                                                            <p class="hotel-fb-user-text-down">Chưa có đánh giá</p>
+                                                                        @endif
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
                                                         <div class="clear-fix"></div>
                                                     </div>
                                                 </div>

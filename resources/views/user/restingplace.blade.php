@@ -509,7 +509,22 @@
                                             @elseif($fb['username'] !== null)
                                                 {{ $fb['username'] }}
                                             @endif
+                                            <span>
+                                                @if($fb['emotion'] == 1)
+                                                    <img src="{{ asset('user/img/emotion_1.gif') }}" alt="" class="ps-right-img">
+                                                @endif
+                                                @if($fb['emotion'] == 2)
+                                                    <img src="{{ asset('user/img/emotion_2.gif') }}" alt="" class="ps-right-img">
+                                                @endif
+                                                @if($fb['emotion'] == 3)
+                                                    <img src="{{ asset('user/img/emotion_3.gif') }}" alt="" class="ps-right-img">
+                                                @endif
+                                                @if($fb['emotion'] == 4)
+                                                    <img src="{{ asset('user/img/emotion_4.gif') }}" alt="" class="ps-right-img">
+                                                @endif
+                                            </span>
                                         </h5>
+
                                         <p>{{ $fb['content'] }}</p>
                                     </div>
                                 </div>
@@ -553,7 +568,26 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div>
-                                            <h5>Mức độ hài lòng :</h5>
+                                            <h5>Mức độ hài lòng :
+                                                <ul class="rv-emotion-list">
+                                                    <li class="rv-emotion-item">
+                                                        <input type="radio" name="" id="emotio-1">
+                                                        <label for="emotio-1"><img src="{{ asset('user/img/emotion_1.gif') }}" alt="" class="rv-emotion"></label>
+                                                    </li>
+                                                    <li class="rv-emotion-item">
+                                                        <input type="radio" name="" id="emotio-2">
+                                                        <label for="emotio-2"><img src="{{ asset('user/img/emotion_2.gif') }}" alt="" class="rv-emotion"></label>
+                                                    </li>
+                                                    <li class="rv-emotion-item">
+                                                        <input type="radio" name="" id="emotio-3">
+                                                        <label for="emotio-3"><img src="{{ asset('user/img/emotion_3.gif') }}" alt="" class="rv-emotion"></label>
+                                                    </li>
+                                                    <li class="rv-emotion-item">
+                                                        <input type="radio" name="" id="emotio-4">
+                                                        <label for="emotio-4"><img src="{{ asset('user/img/emotion_4.gif') }}" alt="" class="rv-emotion"></label>
+                                                    </li>
+                                                </ul>
+                                            </h5>
                                             <div class="rating">
                                                 <i class="icon_star"></i>
                                                 <i class="icon_star"></i>

@@ -197,122 +197,72 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="hp-room-item set-bg" data-setbg="{{ asset('user/img/room/room-b1.jpg')}}">
-                        <div class="hr-text">
-                            <h3>Double Room</h3>
-                            <h2>199$<span>/Pernight</span></h2>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="r-o">Size:</td>
-                                        <td>30 ft</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Capacity:</td>
-                                        <td>Max persion 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Bed:</td>
-                                        <td>King Beds</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Services:</td>
-                                        <td>Wifi, Television, Bathroom,...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="#" class="primary-btn">More Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="hp-room-item set-bg" data-setbg="{{ asset('user/img/room/room-b2.jpg')}}">
-                        <div class="hr-text">
-                            <h3>Premium King Room</h3>
-                            <h2>159$<span>/Pernight</span></h2>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="r-o">Size:</td>
-                                        <td>30 ft</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Capacity:</td>
-                                        <td>Max persion 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Bed:</td>
-                                        <td>King Beds</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Services:</td>
-                                        <td>Wifi, Television, Bathroom,...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="#" class="primary-btn">More Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="hp-room-item set-bg" data-setbg="{{ asset('user/img/room/room-b3.jpg')}}">
-                        <div class="hr-text">
-                            <h3>Deluxe Room</h3>
-                            <h2>198$<span>/Pernight</span></h2>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="r-o">Size:</td>
-                                        <td>30 ft</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Capacity:</td>
-                                        <td>Max persion 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Bed:</td>
-                                        <td>King Beds</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Services:</td>
-                                        <td>Wifi, Television, Bathroom,...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="#" class="primary-btn">More Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="hp-room-item set-bg" data-setbg="{{ asset('user/img/room/room-b4.jpg')}}">
-                        <div class="hr-text">
-                            <h3>Family Room</h3>
-                            <h2>299$<span>/Pernight</span></h2>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td class="r-o">Size:</td>
-                                        <td>30 ft</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Capacity:</td>
-                                        <td>Max persion 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Bed:</td>
-                                        <td>King Beds</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="r-o">Services:</td>
-                                        <td>Wifi, Television, Bathroom,...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <a href="#" class="primary-btn">More Details</a>
-                        </div>
-                    </div>
-                </div>
+                @foreach ($inforRP as $key => $value)
+                    @foreach ($inforFB as $v)
+                        @if($value['id'] == $v['id'])
+                            <div class="col-lg-3 col-md-6">
+                                <a href="{{ route('user.restingplace',['id' => $value['id']]) }}">
+                                    <div class="hp-room-item set-bg"
+                                        @foreach($images as $k => $img)
+                                            @if($key == $k)
+                                                data-setbg="{{ URL::to('/') }}/user/uploads/resting_place/{{ $img['0'] }}"
+                                            @endif
+                                        @endforeach
+                                    >
+                                        <div class="hr-text">
+                                            <h3>{{ $value['name'] }}</h3>
+                                            <p>{{ $value['type_name'] }} @for($i = 1; $i <= $value['rate'] ; $i++) <i class="fa fa-star"></i> @endfor</p>
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="r-o">Đánh giá <span>:</span></td>
+                                                        <td>
+                                                            @if($v['count_id'] > 0)
+                                                                @if(round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) > 9 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) == 9)
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Tuyệt hảo
+                                                                @endif
+                                                                @if(9 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) && round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) > 8 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) == 8)
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Tốt
+                                                                @endif
+                                                                @if( 8 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) && round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) > 7 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) == 7)
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Hài lòng
+                                                                @endif
+                                                                @if(7 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2))
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Không hài lòng
+                                                                @endif
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="r-o">Giá trung bình/đêm <span>:</span></td>
+                                                        <td>2.524.952 VND</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="r-o">Tiện nghi <span>:</span></td>
+                                                        <td>
+                                                            @if($value['pool'])
+                                                                Hồ bơi,
+                                                            @endif
+                                                            @if($value['parking'])
+                                                                Bãi đậu xe miễn phí,
+                                                            @endif
+                                                            @if($value['wifi'])
+                                                                Wifi miễn phí,
+                                                            @endif
+                                                            @if($value['smoke'] == 0)
+                                                                Phòng không hút thuốc
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endif
+                    @endforeach
+                @endforeach
             </div>
         </div>
     </div>

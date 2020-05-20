@@ -755,16 +755,19 @@ section.testimonial-section.spad {
 }
 .hp-room-items .hp-room-item .hr-text {
 	position: absolute;
-	left: 45px;
-	right: 25px;
-	bottom: -250px;
+	/* left: 40px;
+	right: 25px; */
+	bottom: -240px;
 	-webkit-transition: all 0.5s;
 	-o-transition: all 0.5s;
-	transition: all 0.5s;
+    transition: all 0.5s;
+    padding: 0 40px;
+    width: 100%;
+    height: 55%;
 }
 .hp-room-items .hp-room-item .hr-text h3 {
 	color: #ffffff;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 }
 .hp-room-items .hp-room-item .hr-text h2 {
 	color: #dfa974;
@@ -789,7 +792,7 @@ section.testimonial-section.spad {
 	line-height: 36px;
 }
 .hp-room-items .hp-room-item .hr-text table tbody tr td.r-o {
-	width: 120px;
+	width: 160px;
 }
 .hp-room-items .hp-room-item .hr-text .primary-btn:after {
 	background: #ffffff;
@@ -798,9 +801,9 @@ section.testimonial-section.spad {
   Testimonial Slider
 -----------------------*/
 
-.testimonial-section {
+/* .testimonial-section {
 	background: #f9f9f9;
-}
+} */
 .testimonial-section .section-title {
 	margin-bottom: 30px;
 }
