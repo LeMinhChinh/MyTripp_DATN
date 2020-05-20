@@ -988,3 +988,7 @@ p.hotel-fb-number, p.hotel-fb-number-default{
     font-size: 16px;
     font-weight: 500;
 }
+
+p.hotel-fb-user-text-up-deafault {
+    color: #fff;
+}

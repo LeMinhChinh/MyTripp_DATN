@@ -57,6 +57,7 @@
                                                         </div>
                                                         <div class="hotel-fb-user-text">
                                                             <p class="hotel-fb-user-text-up hideEvaluate">Tuyệt hảo</p>
+                                                            <p class="hotel-fb-user-text-up-deafault">Tuyệt hảo</p>
                                                             @foreach ($count as $c)
                                                                 @if($value['id'] == $c['id'])
                                                                     <p class="hotel-fb-user-text-down enabled-feedback">{{ $c['count_id'] }} đánh giá </p>

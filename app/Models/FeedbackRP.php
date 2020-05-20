@@ -15,7 +15,7 @@ class FeedbackRP extends Model
         $data = DB::table('feedback_rp as fb')
                     ->select('fb.*','a.surname','a.name','a.avatar','a.gender','a.username')
                     ->join('account as a','a.id','=','fb.id_acc')
-                    ->where('fb.id',$id)
+                    ->where('fb.id_rp',$id)
                     ->get();
         return $data;
     }

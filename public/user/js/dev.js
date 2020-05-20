@@ -44,6 +44,7 @@ $(document).ready(function(){
             $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-up").addClass('showEvaluate')
             $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-number > .hotel-fb-number").addClass('showEvaluate')
             $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-number > .hotel-fb-number-default").addClass('hideEvaluate')
+            $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-up-deafault").addClass('hideEvaluate')
         }
     }
 })
