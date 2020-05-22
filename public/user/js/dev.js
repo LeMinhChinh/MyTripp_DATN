@@ -36,15 +36,13 @@ $(document).ready(function(){
         $('.nav-item:eq(3) > a').addClass('active')
     }
 
-    // var dtIndex = $(".rp-result-item[data-index]").length
-    // console.log(dtIndex)
-    // for (let i = 0; i < dtIndex; i++) {
-    //     if($(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-down.enabled-feedback").length){
-    //         $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-down.disabled-feedback").addClass('hideEvaluate')
-    //         $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-up").addClass('showEvaluate')
-    //         $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-number > .hotel-fb-number").addClass('showEvaluate')
-    //         $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-number > .hotel-fb-number-default").addClass('hideEvaluate')
-    //         $(".rp-result-item[data-index='"+i+"'] .hotel-fb-user-text > .hotel-fb-user-text-up-deafault").addClass('hideEvaluate')
-    //     }
-    // }
+    if($('.rp-validate-review').length > 0){
+        $('.rp-form-review').addClass('fix-top')
+        $('form.ra-form textarea').attr('disabled','disabled')
+        $('form.ra-form button.btn').attr('disabled','disabled')
+    }else{
+        $('.rp-form-review').removeClass('fix-top')
+        $('form.ra-form textarea').removeAttr('disabled')
+        $('form.ra-form button.btn').removeAttr('disabled')
+    }
 })

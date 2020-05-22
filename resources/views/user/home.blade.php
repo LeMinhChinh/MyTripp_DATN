@@ -218,17 +218,17 @@
                                                         <td class="r-o">Đánh giá <span>:</span></td>
                                                         <td>
                                                             @if($v['count_id'] > 0)
-                                                                @if(round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) > 9 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) == 9)
-                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Tuyệt hảo
+                                                                @if(round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) > 9 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) == 9)
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) }} - Tuyệt hảo
                                                                 @endif
-                                                                @if(9 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) && round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) > 8 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) == 8)
-                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Tốt
+                                                                @if(9 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) && round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) > 8 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) == 8)
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) }} - Tốt
                                                                 @endif
-                                                                @if( 8 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) && round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) > 7 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) == 7)
-                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Hài lòng
+                                                                @if( 8 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) && round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) > 7 || round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) == 7)
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) }} - Hài lòng
                                                                 @endif
-                                                                @if(7 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2))
-                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 5)),2) }} - Không hài lòng
+                                                                @if(7 > round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2))
+                                                                    {{ round(($v['sum_emotion'] *10 / ($v['count_id'] * 4)),2) }} - Không hài lòng
                                                                 @endif
                                                             @endif
                                                         </td>

@@ -62,7 +62,6 @@ class UserController extends Controller
             $request->session()->put('lnameSession', $inforAccount['name']);
             $request->session()->put('genderSession', $inforAccount['gender']);
             $request->session()->put('avatarSession', $inforAccount['avatar']);
-            // dd(Session::get('avatarSession'));
 
             if(Session::get('roleSession') == 1){
                 return view("Owner");

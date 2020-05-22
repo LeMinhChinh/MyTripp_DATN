@@ -1027,4 +1027,14 @@ img.rv-emotion {
     width: 60px;
 }
 
+.rp-request-login .limiter {
+    background: #fff!important;
+}
 
+.rp-request-login .modal-dialog{
+    max-width: max-content!important;
+}
+
+.rp-request-login .container-login100{
+    min-height: auto!important;
+}

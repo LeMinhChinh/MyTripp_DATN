@@ -541,24 +541,60 @@
                             <p>Đánh giá của bạn</p>
                         </div>
                         <div class="rp-request-login">
-                            <h5 style="display: none">Vui lòng <a href="" data-toggle="modal" data-target="#formLogin">đăng nhập</a> để đánh giá</h5>
+                            @if(Session::get('idSession') === null)
+                                <h5 class=rp-validate-review>Vui lòng <a href="" data-toggle="modal" data-target="#formLogin">đăng nhập</a> để đánh giá</h5>
+                            @endif
 
                             <div class="modal fade" id="formLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Đăng nhập</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
+                                        <div class="modal-header">
+                                            {{-- <h5 class="modal-title" id="exampleModalLabel">Đăng nhập</h5> --}}
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="limiter">
+                                                <div class="container-login100">
+                                                    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                                                        <form class="login100-form validate-form" action="{{ route('handleLogin']) }}" method="POST">
+                                                            @csrf
+                                                            <span class="login100-form-title p-b-49">
+                                                                Đăng nhập
+                                                            </span>
+                                        
+                                                            <div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
+                                                                <span class="label-input100">Email</span>
+                                                                <input class="input100" type="text" name="lgEmail" placeholder="Nhập vào email">
+                                                                <!-- <span class="focus-input100" data-symbol="&#xf190;"></span> -->
+                                                            </div>
+                                        
+                                                            <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                                                <span class="label-input100">Mật khẩu</span>
+                                                                <input class="input100" type="password" name="lgPass" placeholder="Nhập vào mật khẩu">
+                                                                <!-- <span class="focus-input100" data-symbol="&#xf190;"></span> -->
+                                                            </div>
+                                        
+                                                            <div class="text-right p-t-8 p-b-31">
+                                                                <a href="#">
+                                                                    Quên mật khẩu?
+                                                                </a>
+                                                            </div>
+                                        
+                                                            <div class="container-login100-form-btn">
+                                                                <div class="wrap-login100-form-btn">
+                                                                    <div class="login100-form-bgbtn"></div>
+                                                                    <button class="login100-form-btn">
+                                                                        Đăng nhập
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -588,13 +624,13 @@
                                                     </li>
                                                 </ul>
                                             </h5>
-                                            <div class="rating">
+                                            {{-- <div class="rating">
                                                 <i class="icon_star"></i>
                                                 <i class="icon_star"></i>
                                                 <i class="icon_star"></i>
                                                 <i class="icon_star"></i>
                                                 <i class="icon_star-half_alt"></i>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                         <textarea placeholder="Đánh giá của bạn về khách sạn"></textarea>
                                         <button type="button" class="btn btn-primary btn-lg">Đánh giá</button>
