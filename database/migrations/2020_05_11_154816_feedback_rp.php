@@ -17,7 +17,7 @@ class FeedbackRp extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_acc');
             $table->bigInteger('id_rp');
-            $table->string('content',1000);
+            $table->string('content',1000)->nullable;
             $table->integer('emotion')->nullable;
             $table->timestamps();
         });

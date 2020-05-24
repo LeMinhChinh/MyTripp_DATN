@@ -45,4 +45,25 @@ $(document).ready(function(){
         $('form.ra-form textarea').removeAttr('disabled')
         $('form.ra-form button.btn').removeAttr('disabled')
     }
+
+    $('input[name="rvEmotionicon"]').change(function(){
+        if($(this).is(':checked')){
+            $('li.rv-emotion-item > label > span').removeClass('rv-emotion-text-active')
+            $('li.rv-emotion-item > label > img').removeClass('rv-emotion-img-active')
+            $('li.rv-emotion-item > label[for="'+$(this).attr('id')+'"] > span').addClass('rv-emotion-text-active')
+            $('li.rv-emotion-item > label[for="'+$(this).attr('id')+'"] > img').addClass('rv-emotion-img-active')
+        }
+    })
+
+    $('.rv-off-overfollow').click(function(){
+        $('.rd-reviews').addClass('off-overflow-hidden')
+        $('.rv-off-overfollow').css('display','none')
+        $('.rv-on-overfollow').removeClass('rv-on-overfollow')
+    })
+
+    $('.rv-on-overfollow').click(function(){
+        $('.rd-reviews').removeClass('off-overflow-hidden')
+        $('.rv-off-overfollow').css('display','none')
+        $('.rv-on-overfollow').addClass('rv-on-overfollow')
+    })
 })

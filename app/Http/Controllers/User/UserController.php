@@ -74,6 +74,31 @@ class UserController extends Controller
             if(Session::get('roleSession') == 0){
                 return redirect()->route('homepage');
             }
+
+        }else{
+            return redirect()->route('login');
+        }
+    }
+
+    public function reviewHandleLogin(Request $request, Account $account)
+    {
+        $email = $request->lgEmail;
+        $password = $request->lgPass;
+
+        $inforAccount = $account->checkAccountLogin($email, $password);
+
+        if($inforAccount){
+            $request->session()->put('idSession', $inforAccount['id']);
+            $request->session()->put('usernameSession', $inforAccount['username']);
+            $request->session()->put('emailSession', $inforAccount['email']);
+            $request->session()->put('roleSession', $inforAccount['role']);
+            $request->session()->put('fnameSession', $inforAccount['surname']);
+            $request->session()->put('lnameSession', $inforAccount['name']);
+            $request->session()->put('genderSession', $inforAccount['gender']);
+            $request->session()->put('avatarSession', $inforAccount['avatar']);
+
+            return redirect()->back();
+
         }else{
             return redirect()->route('login');
         }
@@ -158,11 +183,13 @@ class UserController extends Controller
 
         $feedback = $fb->getDataFeedback($id);
         $feedback = \json_decode(json_encode($feedback),true);
+        $count = count($feedback);
 
         if($inforRP){
             $data['inforRP'] = $inforRP;
             $data['image'] = $image;
             $data['feedback'] = $feedback;
+            $data['count'] = $count;
             return view('user/restingplace', $data);
         }
     }
@@ -204,6 +231,29 @@ class UserController extends Controller
             $data['images'] = $images;
             $data['count'] = $count;
             return view('user.list-restingplace',$data);
+        }
+    }
+
+    public function reviewRestingPlace(Request $request, $idrp, $idacc, FeedbackRP $fb)
+    {
+        $idrp = $request->idrp;
+        $idacc = $request->idacc;
+        $content = $request->rvEmotionContent;
+        $emotion = $request->rvEmotionicon;
+
+        $dataReview = [
+            'id_acc' => $idacc,
+            'id_rp' => $idrp,
+            'content' => $content,
+            'emotion' => $emotion,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' =>null
+        ];
+
+        $review = $fb->addReviewToRestingPlace($dataReview);
+
+        if($review){
+            return redirect()->back();
         }
     }
 

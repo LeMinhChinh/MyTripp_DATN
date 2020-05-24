@@ -1310,9 +1310,8 @@ section.testimonial-section.spad {
 	margin-bottom: 22px;
 }
 .rd-reviews {
-	padding-top: 55px;
-	border-top: 1px solid #e5e5e5;
-	margin-bottom: 50px;
+    max-height: 500px;
+    overflow: hidden;
 }
 .rd-reviews h4 {
 	color: #19191a;
@@ -1402,7 +1401,10 @@ section.testimonial-section.spad {
 	color: #19191a;
 	margin-bottom: 24px;
 	float: left;
-	margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
 }
 .review-add .ra-form .rating {
 	padding-top: 3px;

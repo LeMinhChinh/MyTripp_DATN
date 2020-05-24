@@ -19,4 +19,11 @@ class FeedbackRP extends Model
                     ->get();
         return $data;
     }
+
+    public function addReviewToRestingPlace($data)
+    {
+        DB::table('feedback_rp')->insert($data);
+        $id = DB::getPdo()->lastInsertId();
+        return $id;
+    }
 }

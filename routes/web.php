@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::get('homepage','User\UserController@homepage')->name('homepage');
 Route::get('login', 'User\UserController@login')->name('login');
 Route::post('handle-login', 'User\UserController@handleLogin')->name('handleLogin');
+Route::post('review-handle-login', 'User\UserController@reviewHandleLogin')->name('reviewHandleLogin');
 Route::get('register', 'User\UserController@register')->name('register');
 Route::post('handle-register', 'User\UserController@handleRegister')->name('handleRegister');
 Route::get('handle-logout','User\UserController@handleLogout')->name('handleLogout');
@@ -34,6 +35,7 @@ Route::group([
     Route::get('resting-place/{id}','UserController@restingplace')->name('restingplace');
     Route::get('search-resting-place','UserController@searchrestingplace')->name('searchrestingplace');
     Route::get('list-resting-place/{idp}~{idt}','UserController@listRestingPlace')->name('listRestingPlace');
+    Route::get('review-resting-place/{idrp}~{idacc}','UserController@reviewRestingPlace')->name('reviewRestingPlace');
     // Route::get('list-type-resting-place/{id}','UserController@listTypeRestingPlace')->name('listTypeRestingPlace');
 
     Route::get('personal-information','UserController@personalInformation')->name('personalInformation');

@@ -289,7 +289,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <hr class="fix-section"> -->
+                    <hr class="fix-section">
                     <!-- <div id="tk" class="rp-search">
                         <div class="rp-search-header">
                             <p>Tìm kiếm phòng trống tại khách sạn Fusion Suites Saigon</p>
@@ -536,7 +536,15 @@
                             </h5>
                         @endempty
                     </div>
-                    <div class="review-add">
+                    @if($count > 4)
+                        <div class="rv-off-overfollow rv-overfollow">
+                            Xem tất cả đánh giá ...
+                        </div>
+                    @endif
+                    <div class="rv-on-overfollow rv-overfollow">
+                        Ẩn bớt đánh giá ...
+                    </div>
+                    <div class="review-add fix-top">
                         <div class="rp-search-header">
                             <p>Đánh giá của bạn</p>
                         </div>
@@ -558,30 +566,30 @@
                                             <div class="limiter">
                                                 <div class="container-login100">
                                                     <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-                                                        <form class="login100-form validate-form" action="{{ route('handleLogin']) }}" method="POST">
+                                                        <form class="login100-form validate-form" action="{{ route('reviewHandleLogin') }}" method="POST">
                                                             @csrf
                                                             <span class="login100-form-title p-b-49">
                                                                 Đăng nhập
                                                             </span>
-                                        
+
                                                             <div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
                                                                 <span class="label-input100">Email</span>
                                                                 <input class="input100" type="text" name="lgEmail" placeholder="Nhập vào email">
                                                                 <!-- <span class="focus-input100" data-symbol="&#xf190;"></span> -->
                                                             </div>
-                                        
+
                                                             <div class="wrap-input100 validate-input" data-validate="Password is required">
                                                                 <span class="label-input100">Mật khẩu</span>
                                                                 <input class="input100" type="password" name="lgPass" placeholder="Nhập vào mật khẩu">
                                                                 <!-- <span class="focus-input100" data-symbol="&#xf190;"></span> -->
                                                             </div>
-                                        
+
                                                             <div class="text-right p-t-8 p-b-31">
                                                                 <a href="#">
                                                                     Quên mật khẩu?
                                                                 </a>
                                                             </div>
-                                        
+
                                                             <div class="container-login100-form-btn">
                                                                 <div class="wrap-login100-form-btn">
                                                                     <div class="login100-form-bgbtn"></div>
@@ -600,40 +608,46 @@
                             </div>
                         </div>
                         <div class="rp-form-review">
-                            <form action="#" class="ra-form">
+                            <form action="{{ route('user.reviewRestingPlace',['idrp' => $inforRP['id'], 'idacc' => Session::get('idSession')]) }}" class="ra-form">
+                                @csrf
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div>
                                             <h5>Mức độ hài lòng :
                                                 <ul class="rv-emotion-list">
                                                     <li class="rv-emotion-item">
-                                                        <input type="radio" name="" id="emotio-1">
-                                                        <label for="emotio-1"><img src="{{ asset('user/img/emotion_1.gif') }}" alt="" class="rv-emotion"></label>
+                                                        <input type="radio" name="rvEmotionicon" id="emotion-1" value="1">
+                                                        <label for="emotion-1">
+                                                            <img src="{{ asset('user/img/emotion_1.gif') }}" alt="" class="rv-emotion">
+                                                            <span>Không hài lòng</span>
+                                                        </label>
                                                     </li>
                                                     <li class="rv-emotion-item">
-                                                        <input type="radio" name="" id="emotio-2">
-                                                        <label for="emotio-2"><img src="{{ asset('user/img/emotion_2.gif') }}" alt="" class="rv-emotion"></label>
+                                                        <input type="radio" name="rvEmotionicon" id="emotion-2" value="2">
+                                                        <label for="emotion-2">
+                                                            <img src="{{ asset('user/img/emotion_2.gif') }}" alt="" class="rv-emotion">
+                                                            <span>Hài lòng</span>
+                                                        </label>
                                                     </li>
                                                     <li class="rv-emotion-item">
-                                                        <input type="radio" name="" id="emotio-3">
-                                                        <label for="emotio-3"><img src="{{ asset('user/img/emotion_3.gif') }}" alt="" class="rv-emotion"></label>
+                                                        <input type="radio" name="rvEmotionicon" id="emotion-3" value="3">
+                                                        <label for="emotion-3">
+                                                            <img src="{{ asset('user/img/emotion_3.gif') }}" alt="" class="rv-emotion">
+                                                            <span>Tốt</span>
+                                                        </label>
                                                     </li>
                                                     <li class="rv-emotion-item">
-                                                        <input type="radio" name="" id="emotio-4">
-                                                        <label for="emotio-4"><img src="{{ asset('user/img/emotion_4.gif') }}" alt="" class="rv-emotion"></label>
+                                                        <input type="radio" name="rvEmotionicon" id="emotion-4" value="4">
+                                                        <label for="emotion-4">
+                                                            <img src="{{ asset('user/img/emotion_4.gif') }}" alt="" class="rv-emotion">
+                                                            <span>Tuyệt hảo</span>
+                                                        </label>
                                                     </li>
                                                 </ul>
                                             </h5>
-                                            {{-- <div class="rating">
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star-half_alt"></i>
-                                            </div> --}}
                                         </div>
-                                        <textarea placeholder="Đánh giá của bạn về khách sạn"></textarea>
-                                        <button type="button" class="btn btn-primary btn-lg">Đánh giá</button>
+                                        <textarea name="rvEmotionContent" placeholder="Đánh giá của bạn về khách sạn"></textarea>
+                                        <button type="submit" class="btn btn-primary btn-lg">Đánh giá</button>
                                     </div>
                                 </div>
                             </form>

@@ -1016,7 +1016,9 @@ ul.rv-emotion-list {
 
 li.rv-emotion-item {
     display: inline-block;
-    margin: 0 25px;
+    width: 135px;
+    text-align: center;
+    /* max-height: 150px; */
 }
 
 li.rv-emotion-item > input {
@@ -1024,7 +1026,9 @@ li.rv-emotion-item > input {
 }
 
 img.rv-emotion {
-    width: 60px;
+    width: 50px;
+    height: 50px;
+    display: block;
 }
 
 .rp-request-login .limiter {
@@ -1037,4 +1041,39 @@ img.rv-emotion {
 
 .rp-request-login .container-login100{
     min-height: auto!important;
+}
+
+.rv-emotion-item span {
+    display: inline-block;
+    font-weight: unset;
+    font-size: 13px;
+    text-align: center;
+    width: 100%;
+}
+
+.rv-emotion-text-active{
+    font-weight: 900!important;
+    color: red!important;
+}
+
+.rv-emotion-img-active{
+    width: 60px!important;
+    height: 60px!important;
+}
+
+.rv-overfollow {
+    text-align: center;
+    cursor: pointer;
+}
+.review-add > .rp-search-header p{
+    padding-bottom: unset!important
+}
+
+.rd-reviews.off-overflow-hidden {
+    max-height: inherit!important;
+    display: block!important;
+}
+
+.rv-on-overfollow{
+    display: none;
 }
