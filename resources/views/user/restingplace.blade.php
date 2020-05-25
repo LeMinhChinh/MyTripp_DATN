@@ -541,7 +541,7 @@
                             Xem tất cả đánh giá ...
                         </div>
                     @endif
-                    <div class="rv-on-overfollow rv-overfollow">
+                    <div class="rv-on-overfollow rv-overfollow rv-on-display">
                         Ẩn bớt đánh giá ...
                     </div>
                     <div class="review-add fix-top">
@@ -608,7 +608,11 @@
                             </div>
                         </div>
                         <div class="rp-form-review">
-                            <form action="{{ route('user.reviewRestingPlace',['idrp' => $inforRP['id'], 'idacc' => Session::get('idSession')]) }}" class="ra-form">
+                            @if(Session::get('idSession') !== null)
+                                <form action="{{ route('user.reviewRestingPlace',['idrp' => $inforRP['id'], 'idacc' => Session::get('idSession')]) }}" class="ra-form">
+                            @elseif(Session::get('idSession') === null)
+                                <form action="{{ route('user.reviewRestingPlace',['idrp' => $inforRP['id'], 'idacc' => 0]) }}" class="ra-form">
+                            @endif
                                 @csrf
                                 <div class="row">
                                     <div class="col-lg-12">

@@ -38,8 +38,8 @@ Route::group([
     Route::get('review-resting-place/{idrp}~{idacc}','UserController@reviewRestingPlace')->name('reviewRestingPlace');
     // Route::get('list-type-resting-place/{id}','UserController@listTypeRestingPlace')->name('listTypeRestingPlace');
 
-    Route::get('personal-information','UserController@personalInformation')->name('personalInformation');
+    Route::get('personal-information/{id}','UserController@personalInformation')->name('personalInformation');
     Route::get('personal-booking','UserController@personalInformation')->name('personalBooking');
-    Route::get('personal-update','UserController@personalInformation')->name('personalUpdate');
+    Route::get('personal-notify','UserController@personalInformation')->name('personalNotify');
     Route::get('personal-request','UserController@personalInformation')->name('personalRequest');
 });

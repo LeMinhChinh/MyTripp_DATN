@@ -259,7 +259,15 @@ class UserController extends Controller
 
     // Personal
 
-    public function personalInformation(Request $request){
-        return view('user/personal-information');
+    public function personalInformation(Request $request, $id, Account $acc){
+        $id = $request->id;
+        $id = \is_numeric($id) ? $id : 0;
+
+        $inforAcc = $acc->getDataInforAccountById($id);
+        $inforAcc = \json_decode(\json_encode($inforAcc), true);
+
+        $data['inforAcc'] = $inforAcc;
+
+        return view('user/personal-information', $data);
     }
 }

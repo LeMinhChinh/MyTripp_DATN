@@ -58,12 +58,24 @@ $(document).ready(function(){
     $('.rv-off-overfollow').click(function(){
         $('.rd-reviews').addClass('off-overflow-hidden')
         $('.rv-off-overfollow').css('display','none')
-        $('.rv-on-overfollow').removeClass('rv-on-overfollow')
+        $('.rv-on-overfollow').removeClass('rv-on-display')
     })
 
     $('.rv-on-overfollow').click(function(){
         $('.rd-reviews').removeClass('off-overflow-hidden')
-        $('.rv-off-overfollow').css('display','none')
-        $('.rv-on-overfollow').addClass('rv-on-overfollow')
+        $('.rv-off-overfollow').removeAttr('style')
+        $('.rv-on-overfollow').addClass('rv-on-display')
     })
+
+    $('.ps-button-update').click(function(){
+        $('.ps-item-content > input').removeAttr('disabled')
+        $('.ps-item-content > input.ps-item-content-email').attr('disabled', 'disabled')
+        $('.ps-item-content > .nice-select').removeClass('disabled')
+        $('p.ps-infor-img-label').removeClass('disabledInput')
+        $('.ps-item-content-input[name="inforImage"]').removeAttr('disabled')
+    })
+
+    if($('.ps-item-content-input[name="inforImage"]:disabled')){
+        $('p.ps-infor-img-label').addClass('disabledInput')
+    }
 })

@@ -16,6 +16,7 @@ class FeedbackRP extends Model
                     ->select('fb.*','a.surname','a.name','a.avatar','a.gender','a.username')
                     ->join('account as a','a.id','=','fb.id_acc')
                     ->where('fb.id_rp',$id)
+                    ->orderBy('created_at','DESC')
                     ->get();
         return $data;
     }

@@ -31,4 +31,12 @@ class Account extends Model
         $id = DB::getPdo()->lastInsertId();
         return $id;
     }
+
+    public function getDataInforAccountById($id)
+    {
+        $data = Account::select('*')
+                        ->where('id',$id)
+                        ->first();
+        return $data;
+    }
 }

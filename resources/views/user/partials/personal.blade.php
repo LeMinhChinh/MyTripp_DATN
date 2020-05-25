@@ -8,13 +8,16 @@
             <div class="col-3">
                 <div class="ps-welcome-left">
                     @if(Session::get('avatarSession') !== null)
-                        <img src="{{ Session::get('avatarSession') }} }}" alt="" class="ps-left-img">
+                        <img src="{{ Session::get('avatarSession') }}" alt="" class="ps-left-img">
                     @endif
                     @if(Session::get('avatarSession') === null && Session::get('genderSession') === 1)
                         <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-left-img">
                     @endif
                     @if(Session::get('avatarSession') === null && Session::get('genderSession') === 0)
                         <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-left-img">
+                    @endif
+                    @if(Session::get('avatarSession') === null && Session::get('genderSession') === null)
+                        <img src="{{ asset('user/img/avatar-user.png') }}" alt="" class="ps-left-img">
                     @endif
                     <div class="ps-left-info">
                     <p class="ps-left-name">{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}</p>
@@ -26,7 +29,7 @@
                                 <i class="fas fa-plus-circle"></i>
                             </div>
                             <div class="ps-left-add-content">
-                            <a href="{{ route('user.personalUpdate') }}">Thêm tên hiển thị</a>
+                            <a href="">Thêm tên hiển thị</a>
                                 <p>Có thể được cập nhật bất cứ khi nào bạn muốn và được hiển thị bên cạnh các đánh giá của bạn.</p>
                             </div>
                         </div>
@@ -35,7 +38,7 @@
                                 <i class="fas fa-plus-circle"></i>
                             </div>
                             <div class="ps-left-add-content">
-                                <a href="{{ route('user.personalUpdate') }}">Thêm số điện thoại liên lạc</a>
+                                <a href="">Thêm số điện thoại liên lạc</a>
                                 <p>Thông tin này chỉ được dùng trong trường hợp chỗ nghỉ cần liên hệ với bạn.</p>
                             </div>
                         </div>
@@ -55,13 +58,13 @@
             <div class="col-9">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                    <a class="nav-link" href="{{ route('user.personalInformation') }}">Trang cá nhân</a>
+                    <a class="nav-link" href="{{ route('user.personalInformation', ['id' => Session::get('idSession')]) }}">Trang cá nhân</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.personalBooking') }}">Đặt phòng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.personalUpdate') }}">Cập nhật hồ sơ</a>
+                        <a class="nav-link" href="{{ route('user.personalNotify') }}">Thông báo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="{{ route('user.personalRequest') }}">Yêu cầu đăng phòng</a>

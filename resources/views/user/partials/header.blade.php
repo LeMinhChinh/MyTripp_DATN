@@ -33,7 +33,7 @@
                 @if(null!==Session::get('emailSession'))
                     <div class="nav-menu">
                         <button class="btn btn-primary" id="menu-name">
-                            <a href="{{ route('user.personalInformation') }}">
+                            <a href="{{ route('user.personalInformation',['id' => Session::get('idSession')]) }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>
                                 @endif
