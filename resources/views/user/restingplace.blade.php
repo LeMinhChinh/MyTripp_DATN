@@ -492,7 +492,7 @@
                                 <div class="review-item">
                                     <div class="ri-pic">
                                         @if($fb['avatar'] !== null)
-                                            <img src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $fb['avatar'] }}" alt="" class="ps-left-img">
+                                            <img src="{{ URL::to('/') }}/user/uploads/avatar/{{ $fb['avatar'] }}" alt="" class="ps-left-img">
                                         @endif
                                         @if($fb['avatar'] === null && $fb['gender'] === 1)
                                             <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-left-img">

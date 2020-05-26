@@ -39,4 +39,12 @@ class Account extends Model
                         ->first();
         return $data;
     }
+
+    public function updateInforPerson($data, $id)
+    {
+        $update = DB::table('account')
+                        ->where('id',$id)
+                        ->update($data);
+        return $update;
+    }
 }

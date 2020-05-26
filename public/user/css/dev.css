@@ -1085,6 +1085,7 @@ img.rv-emotion {
 .ps-infor-image{
     border-radius: 50%;
     border: 1px solid #d0d0ae;
+    height: 190px;
 }
 
 .personal-content h2{
@@ -1184,4 +1185,8 @@ p.ps-infor-img-label.disabledInput {
 
 p.ps-infor-img-label.disabledInput > label{
     cursor: default;
+}
+
+input#psEmail {
+    pointer-events: none;
 }

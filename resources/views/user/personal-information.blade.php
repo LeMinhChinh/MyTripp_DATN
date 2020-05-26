@@ -7,40 +7,41 @@
         <p class="ps-infor-notify">Những thông tin này được hiển thị kế bên các đánh giá, xếp hạng, hình ảnh v.v... mà bạn đã chia sẻ công khai. Mọi cập nhật cũng sẽ xuất hiện trong các đóng góp trước đây của bạn.</p>
         <hr class="fix-section">
         <div class="ps-infor fix-top">
-            <div class="row">
-                <div class="col-3">
-                    @if($inforAcc['avatar'] !== null)
-                        <img src="{{ URL::to('/') }}/user/uploads/avatar/{{ $inforAcc['avatar'] }}" alt="" class="ps-infor-image">
-                    @endif
-                    @if($inforAcc['avatar'] === null && $inforAcc['gender'] === 1)
-                        <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-infor-image">
-                    @endif
-                    @if($inforAcc['avatar'] === null && $inforAcc['gender'] === 0)
-                        <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-infor-image">
-                    @endif
-                    @if($inforAcc['avatar'] === null && $inforAcc['gender'] === null)
-                        <img src="{{ asset('user/img/avatar-user.png') }}" alt="" class="ps-infor-image">
-                    @endif
-                    <p class="ps-infor-img-title">Ảnh hồ sơ</p>
-                    <input disabled="disabled" type="file" name="inforImage" id="inforImage" class="ps-item-content-input">
-                    <p class="ps-infor-img-label"><label for="inforImage" >Thay đổi hình ảnh</label></p>
-                </div>
-                <div class="col-9">
-                    <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{  route('user.handleUpdateInfomation',['id' => $inforAcc['id']]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-3">
+                        @if($inforAcc['avatar'] !== null)
+                            <img src="{{ URL::to('/') }}/user/uploads/avatar/{{ $inforAcc['avatar'] }}" alt="" class="ps-infor-image">
+                        @endif
+                        @if($inforAcc['avatar'] === null && $inforAcc['gender'] === 1)
+                            <img src="{{ asset('user/img/avatar-male.webp') }}" alt="" class="ps-infor-image">
+                        @endif
+                        @if($inforAcc['avatar'] === null && $inforAcc['gender'] === 0)
+                            <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-infor-image">
+                        @endif
+                        @if($inforAcc['avatar'] === null && $inforAcc['gender'] === null)
+                            <img src="{{ asset('user/img/avatar-user.png') }}" alt="" class="ps-infor-image">
+                        @endif
+                        <p class="ps-infor-img-title">Ảnh hồ sơ</p>
+                        <input disabled="disabled" type="file" name="psAvatar" id="psAvatar" class="ps-item-content-input">
+                        <p class="ps-infor-img-label"><label for="psAvatar" >Thay đổi hình ảnh</label></p>
+                    </div>
+                    <div class="col-9">
                         <div class="ps-infor-item">
                             <div class="ps-item-title">
                                 <p>Tên hiển thị</p>
                             </div>
                             <div class="ps-item-content">
-                                <input type="text" class="ps-item-content-username ps-item-content-input" value="{{ $inforAcc['username'] }}" id="" name="" disabled="disabled">
+                                <input type="text" class="ps-item-content-username ps-item-content-input" value="{{ $inforAcc['username'] }}" id="psUsername" name="psUsername" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-infor-item">
                             <div class="ps-item-title">
                                 <p>Email</p>
                             </div>
-                            <div class="ps-item-content">
-                                <input type="text" class="ps-item-content-email ps-item-content-input" value="{{ $inforAcc['email'] }}" id="" name="" disabled="disabled">
+                            <div class="ps-item-content" title="Email không thể thay đổi">
+                                <input type="text" class="ps-item-content-email ps-item-content-input" value="{{ $inforAcc['email'] }}" id="psEmail" name="psEmail" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-infor-item">
@@ -48,10 +49,10 @@
                                 <p>Danh xưng</p>
                             </div>
                             <div class="ps-item-content">
-                                <select name="" id="" disabled="disabled">
+                                <select name="psGender" id="psGender" disabled="disabled">
                                     <option value="" @if($inforAcc['gender'] == null) selected="selected" @endif>--- Danh xưng ---</option>
-                                    <option value="" @if($inforAcc['gender'] == 1) selected="selected" @endif>Anh</option>
-                                    <option value="" @if($inforAcc['gender'] == 0) selected="selected" @endif>Chị</option>
+                                    <option value="1" @if($inforAcc['gender'] == 1) selected="selected" @endif>Anh</option>
+                                    <option value="0" @if($inforAcc['gender'] == 0) selected="selected" @endif>Chị</option>
                                 </select>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
                                 <p>Họ và tên đệm</p>
                             </div>
                             <div class="ps-item-content">
-                                <input type="text" class="ps-item-content-surname ps-item-content-input" value="{{ $inforAcc['surname'] }}" id="" name="" disabled="disabled">
+                                <input type="text" class="ps-item-content-surname ps-item-content-input" value="{{ $inforAcc['surname'] }}" id="psSurname" name="psSurname" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-infor-item">
@@ -68,7 +69,7 @@
                                 <p>Tên</p>
                             </div>
                             <div class="ps-item-content">
-                                <input type="text" class="ps-item-content-name ps-item-content-input" value="{{ $inforAcc['name'] }}" id="" name="" disabled="disabled">
+                                <input type="text" class="ps-item-content-name ps-item-content-input" value="{{ $inforAcc['name'] }}" id="psName" name="psName" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-infor-item">
@@ -76,7 +77,7 @@
                                 <p>Số điện thoại</p>
                             </div>
                             <div class="ps-item-content">
-                                <input type="text" class="ps-item-content-phone ps-item-content-input" value="{{ $inforAcc['phone'] }}" id="" name="" disabled="disabled">
+                                <input type="text" class="ps-item-content-phone ps-item-content-input" value="{{ $inforAcc['phone'] }}" id="psPhone" name="psPhone" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-infor-item">
@@ -84,7 +85,7 @@
                                 <p>Ngày sinh</p>
                             </div>
                             <div class="ps-item-content">
-                                <input type="date" class="ps-item-content-age ps-item-content-input" value="{{ $inforAcc['age'] }}" id="" name="" disabled="disabled">
+                                <input type="date" class="ps-item-content-age ps-item-content-input" value="{{ $inforAcc['age'] }}" id="psAge" name="psAge" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-infor-item">
@@ -92,16 +93,16 @@
                                 <p>Địa chỉ</p>
                             </div>
                             <div class="ps-item-content">
-                                <input type="text" class="ps-item-content-address ps-item-content-input" value="{{ $inforAcc['address'] }}" id="" name="" disabled="disabled">
+                                <input type="text" class="ps-item-content-address ps-item-content-input" value="{{ $inforAcc['address'] }}" id="psAddress" name="psAddress" disabled="disabled">
                             </div>
                         </div>
                         <div class="ps-item-button">
                             <button type="button" class="btn btn-success ps-button-update">Cập nhật hồ sơ</button>
                             <button type="submit" class="btn btn-primary ps-button-save">Lưu thay đổi</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 @endsection

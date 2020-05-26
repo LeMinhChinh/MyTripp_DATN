@@ -39,7 +39,8 @@ Route::group([
     // Route::get('list-type-resting-place/{id}','UserController@listTypeRestingPlace')->name('listTypeRestingPlace');
 
     Route::get('personal-information/{id}','UserController@personalInformation')->name('personalInformation');
+    Route::post('update-personal-information/{id}','UserController@handleUpdateInfomation')->name('handleUpdateInfomation');
     Route::get('personal-booking','UserController@personalInformation')->name('personalBooking');
     Route::get('personal-notify','UserController@personalInformation')->name('personalNotify');
-    Route::get('personal-request','UserController@personalInformation')->name('personalRequest');
+    Route::get('personal-request','UserController@personalRequest')->name('personalRequest');
 });
