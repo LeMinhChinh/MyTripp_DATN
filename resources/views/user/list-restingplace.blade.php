@@ -12,9 +12,9 @@
             <div class="row">
                 @include('user/partials/filter_rp')
                 <div class="col-9">
-                   <div class="list-hotel">
+                    <div class="list-hotel">
                         <p class="hotel-notification">Hãy lựa chọn cho mình nơi ở tốt nhất @if($place) <span class="main-active">tại {{ $place['name'] }}</span> @endif</p>
-                       <div class="list-hotel-item">
+                        <div class="list-hotel-item">
                             @foreach ($inforListRP as $key => $value)
                                 <div class="rp-result-item" data-toggle="modal" data-target="#detailRoom" data-index="{{ $key }}">
                                     <div class="row">
@@ -89,7 +89,7 @@
                                                     <div class="sr__card_price bui-spacer--large">
                                                     Giá trung bình/đêm: <br><span>VND&nbsp;2.524.952</span>
                                                     </div>
-                                                    <button type="button" class="btn btn-primary">Danh sách phòng</button>
+                                                    <button type="button" class="btn btn-primary"><a href="{{ route('user.restingplace',['id' => $value['id']]) }}" class="hotel-search-rooms">Tìm phòng trống</a></button>
                                                 </div>
                                             </div>
                                         </div>

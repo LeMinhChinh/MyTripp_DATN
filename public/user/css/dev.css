@@ -358,7 +358,7 @@ span.rp-room-enabled{
     font-weight: 900!Important;
 }
 
-.rp-item-price span{
+.rp-price-discount span{
     text-decoration: line-through;
 }
 
@@ -412,6 +412,7 @@ p.rp-item-discount {
 
 .rp-item-img,.room-item-img{
     position: relative;
+    cursor: pointer;
 }
 
 p.rp-item-click {
@@ -425,7 +426,7 @@ p.rp-item-click {
     display: flex;
     justify-content: center;
     color: #fff;
-    cursor: default;
+    cursor: pointer;
 }
 
 i.fas.fa-camera {
@@ -443,6 +444,7 @@ i.fas.fa-camera {
 
 .rp-item-feedback {
     margin-bottom: 15px;
+    min-height: 85px;
 }
 
 .rp-item-feedback p {
@@ -1189,4 +1191,30 @@ p.ps-infor-img-label.disabledInput > label{
 
 input#psEmail {
     pointer-events: none;
+}
+
+.r-filter-convenient .form-check-input{
+    margin-top: .15rem!important;
+}
+
+a.hotel-search-rooms,
+a.hotel-search-rooms:hover,
+a.hotel-search-rooms:focus{
+    color: #fff!important;
+}
+
+.room-item i.fas.fa-users {
+    padding-right: 0!important;
+}
+
+.rp-item-infor .rp-item-people span i {
+    padding-right: 0!important;
+}
+
+.rp-item-featured {
+    min-height: 175px;
+}
+
+.room-btn-booking button.btn.btn-success {
+    margin-top: 15px!important;
 }

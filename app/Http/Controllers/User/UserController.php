@@ -10,6 +10,7 @@ use App\Models\RestingPlace;
 use App\Models\Type;
 use App\Models\Place;
 use App\Models\FeedbackRP;
+use App\Models\Rooms;
 use Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -162,8 +163,27 @@ class UserController extends Controller
 
     // Room
 
-    public function room(Request $request){
-        return view('user/room');
+    public function room(Request $request, $id, Rooms $room){
+        $id = $request->id;
+        $id = \is_numeric($id) ? $id : 0;
+
+        $inforRoom = $room->getInforRoomByIdRP($id);
+        $inforRoom = \json_decode(json_encode($inforRoom),true);
+
+        $images = [];
+
+        foreach ($inforRoom as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
+
+        $data['inforRoom']  = $inforRoom;
+        $data['images']  = $images;
+        // dd($data);
+
+        return view('user/room', $data);
     }
 
     public function searchroom(Request $request){
@@ -333,10 +353,8 @@ class UserController extends Controller
         $update = $acc->updateInforPerson($dataUpdate, $id);
 
         if($update){
-            // $request->session()->flash('updateInfoSuccess', 'Cập nhật thông tin cá nhân thành công');
             return redirect()->route('user.personalInformation',['id' => $id]);
         }else{
-            // $request->session()->flash('updateInfoError', 'Cập nhật thông tin thất bại.Vui lòng kiểm tra lại');
             return redirect()->route('admin.personalInformation',['id' => $id]);
         }
     }

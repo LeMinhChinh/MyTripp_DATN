@@ -21,7 +21,7 @@
                     @endif
                     <div class="ps-left-info">
                     <p class="ps-left-name">{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}</p>
-                        <a href="">Cập nhật hồ sơ của bạn</a>
+                        <a href="{{ route('user.personalInformation', ['id' => Session::get('idSession')]) }}">Cập nhật hồ sơ của bạn</a>
                     </div>
                     <div class="ps-left-notifi">
                         <div class="ps-left-add">
@@ -29,7 +29,7 @@
                                 <i class="fas fa-plus-circle"></i>
                             </div>
                             <div class="ps-left-add-content">
-                            <a href="">Thêm tên hiển thị</a>
+                            <a href="{{ route('user.personalInformation', ['id' => Session::get('idSession')]) }}">Thêm tên hiển thị</a>
                                 <p>Có thể được cập nhật bất cứ khi nào bạn muốn và được hiển thị bên cạnh các đánh giá của bạn.</p>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                                 <i class="fas fa-plus-circle"></i>
                             </div>
                             <div class="ps-left-add-content">
-                                <a href="">Thêm số điện thoại liên lạc</a>
+                                <a href="{{ route('user.personalInformation', ['id' => Session::get('idSession')]) }}">Thêm số điện thoại liên lạc</a>
                                 <p>Thông tin này chỉ được dùng trong trường hợp chỗ nghỉ cần liên hệ với bạn.</p>
                             </div>
                         </div>

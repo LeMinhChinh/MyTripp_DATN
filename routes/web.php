@@ -30,7 +30,7 @@ Route::group([
     'as' => 'user.',
     'namespace' => 'User'
 ], function () {
-    Route::get('room','UserController@room')->name('room');
+    Route::get('room/{id}','UserController@room')->name('room');
 
     Route::get('resting-place/{id}','UserController@restingplace')->name('restingplace');
     Route::get('search-resting-place','UserController@searchrestingplace')->name('searchrestingplace');
