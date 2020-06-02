@@ -1178,7 +1178,8 @@ section.testimonial-section.spad {
 	margin-bottom: 30px;
 }
 .room-item img {
-	min-width: 100%;
+    min-width: 100%;
+    min-height: 275px!important;
 }
 .room-item .ri-text {
 	border: 1px solid #ebebeb;
