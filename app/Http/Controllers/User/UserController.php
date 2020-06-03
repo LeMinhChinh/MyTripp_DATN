@@ -11,6 +11,7 @@ use App\Models\Type;
 use App\Models\Place;
 use App\Models\FeedbackRP;
 use App\Models\Rooms;
+use App\Models\RequestOwner;
 use Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -163,7 +164,7 @@ class UserController extends Controller
 
     // Room
 
-    public function room(Request $request, $id, Rooms $room){
+    public function room(Request $request, $id, Rooms $room, RestingPlace $rp){
         $id = $request->id;
         $id = \is_numeric($id) ? $id : 0;
 
@@ -179,8 +180,12 @@ class UserController extends Controller
             }
         }
 
+        $inforRP = $rp->getDataRPByRoom($id);
+        $inforRP = \json_decode(json_encode($inforRP),true);
+
         $data['inforRoom']  = $inforRoom;
         $data['images']  = $images;
+        $data['inforRP'] = $inforRP;
         // dd($data);
 
         return view('user/room', $data);
@@ -359,8 +364,50 @@ class UserController extends Controller
         }
     }
 
-    public function personalRequest(Request $request)
+    public function personalRequest(Request $request, Account $acc, $id)
     {
-        return view('user/personal-request');
+        $id = $request->id;
+        $id = \is_numeric($id) ? $id : 0;
+
+        $inforAcc = $acc->getDataInforAccountById($id);
+        $inforAcc = \json_decode(\json_encode($inforAcc), true);
+
+        $data['inforAcc'] = $inforAcc;
+
+        return view('user/personal-request', $data);
+    }
+
+    public function handleRequest(Request $request, RequestOwner $rq)
+    {
+        // dd($request->all());
+        $idOwner = $request->idOwner;
+        $nameOwner = $request->nameOwner;
+        $emaiOwner = $request->emailOwner;
+        $phoneOwner = $request->phoneOwner;
+        $nameRP = $request->nameRP;
+        $rateRP = $request->rateRP;
+        $addressRP = $request->addressRP;
+        $descRP = $request->descriptionRP;
+
+        $dataRequest = [
+            'id_acc' => $idOwner,
+            'name_acc' => $nameOwner,
+            'email' => $emaiOwner,
+            'phone' => $phoneOwner,
+            'name_rp' => $nameRP,
+            'rate' => $rateRP,
+            'address' => $addressRP,
+            'description' => $descRP,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' =>null
+        ];
+
+        $requestOwner = $rq->requestOwner($dataRequest);
+
+        if($requestOwner){
+            return redirect()->route('user.personalRequest', ['id' => $idOwner]);
+        }else{
+            return redirect()->route('user.personalRequest', ['id' => $idOwner]);
+        }
     }
 }

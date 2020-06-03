@@ -3,7 +3,7 @@
 
 @section('content-user')
     <div class="personal-content fix-top">
-        <h2>Xin chào, Lê Minh Chính!!!</h2>
+        <h2>Xin chào, {{ $inforAcc['surname'] }} {{ $inforAcc['name'] }}!!!</h2>
         <p class="ps-infor-notify">Những thông tin này được hiển thị kế bên các đánh giá, xếp hạng, hình ảnh v.v... mà bạn đã chia sẻ công khai. Mọi cập nhật cũng sẽ xuất hiện trong các đóng góp trước đây của bạn.</p>
         <hr class="fix-section">
         <div class="ps-infor fix-top">

@@ -5,7 +5,7 @@
 <main class="room-main">
     <div class="container">
         <div class="rp-title">
-            <a href="">Trang chủ</a><span>></span><a href="">Khách sạn</a><span>></span><a href="">Hà Nội</a><span>></span><a href="">Khách sạn Fusion Suites Saigon</a><span>></span><a href="" class="main-active">Danh sách phòng trống</a>
+            <a href="">Trang chủ</a><span>></span><a href="{{ route('user.listRestingPlace',['idp' => 0, 'idt' => $inforRP['id_type']]) }}">{{ $inforRP['name_type'] }}</a><span>></span><a href="{{ route('user.listRestingPlace',['idp' => $inforRP['id_place'], 'idt' => 0]) }}">{{ $inforRP['name_place'] }}</a><span>></span><a href="">{{ $inforRP['name_type'] }} {{ $inforRP['name'] }}</a><span>></span><a href="" class="main-active">Danh sách phòng trống</a>
         </div>
         <hr>
         <div class="rp-content">
@@ -108,21 +108,6 @@
                                                 <div class="rp-detail-img">
                                                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                                         <ol class="carousel-indicators">
-                                                            {{-- <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
-                                                                <div class="img-active">
-                                                                    <img src="img/summer-trip-hồ-cốc-1.jpg" alt="" >
-                                                                </div>
-                                                            </li>
-                                                            <li data-target="#carouselExampleIndicators" data-slide-to="1">
-                                                                <div class="img-active">
-                                                                    <img src="img/summer-trip-hồ-cốc-1.jpg" alt="" >
-                                                                </div>
-                                                            </li>
-                                                            <li data-target="#carouselExampleIndicators" data-slide-to="2">
-                                                                <div class="img-active">
-                                                                    <img src="img/summer-trip-hồ-cốc-1.jpg" alt="" >
-                                                                </div>
-                                                            </li> --}}
                                                             @foreach ($images as $index => $img)
                                                                 @if($index == $key)
                                                                     @foreach($img as $i => $item)
@@ -136,26 +121,12 @@
                                                             @endforeach
                                                         </ol>
                                                         <div class="carousel-inner">
-                                                            {{-- <div class="carousel-item active">
-                                                                <img class="d-block w-100" src="img/summer-trip-hồ-cốc-1.jpg" alt="First slide">
-                                                            </div>
-                                                            <div class="carousel-item">
-                                                                <img class="d-block w-100" src="img/summer-trip-hồ-cốc-1.jpg" alt="Second slide">
-                                                            </div>
-                                                            <div class="carousel-item">
-                                                                <img class="d-block w-100" src="img/summer-trip-hồ-cốc-1.jpg" alt="Third slide">
-                                                            </div> --}}
-{{--
-                                                            <div class="carousel-item active">
-                                                                <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $image[0] }}" >
-                                                            </div> --}}
                                                             @foreach ($images as $index => $img)
                                                                 @if($index == $key)
                                                                     <div class="carousel-item active">
                                                                         <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/room/{{ $img[0] }}" >
                                                                     </div>
                                                                     @foreach($img as $i => $item)
-
                                                                         @if($i > 0)
                                                                             <div class="carousel-item">
                                                                                 <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/room/{{ $item }}" alt="{{ $i }} slide">
@@ -164,13 +135,6 @@
                                                                     @endforeach
                                                                 @endif
                                                             @endforeach
-                                                            {{-- @foreach ($image as $key => $img)
-                                                                @if($key > 0)
-                                                                    <div class="carousel-item">
-                                                                        <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $img }}" alt="{{ $key }} slide">
-                                                                    </div>
-                                                                @endif
-                                                            @endforeach --}}
                                                         </div>
                                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

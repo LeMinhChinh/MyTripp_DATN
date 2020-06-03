@@ -43,7 +43,7 @@
                                 @if (Session::get('genderSession') === null)
                                     <i class="fas fa-user"></i>
                                 @endif
-                                Xin chào {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
+                                Hi, {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
                             </a>
                         </button>
                         <button class="btn btn-primary" id="menu-logout"><a href="{{ route('handleLogout') }}">Đăng xuất</a></button>

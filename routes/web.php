@@ -42,5 +42,6 @@ Route::group([
     Route::post('update-personal-information/{id}','UserController@handleUpdateInfomation')->name('handleUpdateInfomation');
     Route::get('personal-booking','UserController@personalInformation')->name('personalBooking');
     Route::get('personal-notify','UserController@personalInformation')->name('personalNotify');
-    Route::get('personal-request','UserController@personalRequest')->name('personalRequest');
+    Route::get('personal-request/{id}','UserController@personalRequest')->name('personalRequest');
+    Route::post('handle-personal-request','UserController@handleRequest')->name('handleRequest');
 });

@@ -47,7 +47,7 @@
                                 <i class="fas fa-plus-circle"></i>
                             </div>
                             <div class="ps-left-add-content">
-                                <a href="{{ route('user.personalRequest') }}">Yêu cầu đăng phòng</a>
+                                <a href="{{ route('user.personalRequest', ['id' => Session::get('idSession')]) }}">Yêu cầu đăng phòng</a>
                                 <p>Bạn là chủ sở hữu và bạn muốn đăng thông tin khách sạn (homestay, resort, ...) lên trang web.</p>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <a class="nav-link" href="{{ route('user.personalNotify') }}">Thông báo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="{{ route('user.personalRequest') }}">Yêu cầu đăng phòng</a>
+                        <a class="nav-link" href="{{ route('user.personalRequest', ['id' => Session::get('idSession')]) }}">Yêu cầu đăng phòng</a>
                     </li>
                 </ul>
                 @yield('content-user')

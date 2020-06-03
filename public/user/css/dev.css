@@ -1218,3 +1218,20 @@ a.hotel-search-rooms:focus{
 .room-btn-booking button.btn.btn-success {
     margin-top: 15px!important;
 }
+
+.ps-request-infor{
+    color: #007bff;
+}
+
+label.formPlan {
+    padding-left: 10px;
+}
+
+.ps-request-submit {
+    display: flex;
+    justify-content: center;
+}
+
+button.btn.btn-primary.btn-request {
+    padding: 15px 25px!important;
+}

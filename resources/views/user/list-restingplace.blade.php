@@ -27,7 +27,6 @@
                                                         @endif
                                                     @endforeach
                                                 </a>
-                                                {{-- {{ URL::to('/') }}/user/uploads/resting_place/{{ $image[0] }} --}}
                                             </div>
                                         </div>
                                         <div class="col-5">
