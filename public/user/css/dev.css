@@ -1235,3 +1235,10 @@ label.formPlan {
 button.btn.btn-primary.btn-request {
     padding: 15px 25px!important;
 }
+
+ul.sidebar.navbar-nav li.nav-item a.nav-link i{
+    color: var(--p-icon,#919eab)!important;
+}
+.navbar-nav .nav-item.active .nav-link {
+    color: var(--p-text,#212b36)!important;
+}

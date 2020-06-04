@@ -66,17 +66,18 @@ class UserController extends Controller
             $request->session()->put('genderSession', $inforAccount['gender']);
             $request->session()->put('avatarSession', $inforAccount['avatar']);
 
-            if(Session::get('roleSession') == 1){
-                return view("Owner");
-            }
-
-            if(Session::get('roleSession') == 2){
-                return view("Admin");
-            }
-
-            if(Session::get('roleSession') == 0){
+            if(Session::get('roleSession') === 0){
                 return redirect()->route('homepage');
             }
+
+            if(Session::get('roleSession') === 1){
+                return redirect()->route('owner.dashboard');
+            }
+
+            if(Session::get('roleSession') === 2){
+                return redirect()->route('admin.dashboard');
+            }
+
 
         }else{
             return redirect()->route('login');

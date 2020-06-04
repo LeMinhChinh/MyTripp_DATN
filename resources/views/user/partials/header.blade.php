@@ -32,7 +32,7 @@
             <div class="col-lg-4">
                 @if(null!==Session::get('emailSession'))
                     <div class="nav-menu">
-                        <button class="btn btn-primary" id="menu-name">
+                        @if(Session::get('idSession') === 0)<button class="btn btn-primary" id="menu-name">
                             <a href="{{ route('user.personalInformation',['id' => Session::get('idSession')]) }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>
@@ -45,7 +45,35 @@
                                 @endif
                                 Hi, {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
                             </a>
-                        </button>
+                        </button>@endif
+                        @if(Session::get('idSession') === 2)<button class="btn btn-primary" id="menu-name">
+                            <a href="{{ route('admin.dashboard') }}">
+                                @if (Session::get('genderSession') === 0)
+                                    <i class="fas fa-female"></i>
+                                @endif
+                                @if (Session::get('genderSession') === 1)
+                                    <i class="fas fa-male"></i>
+                                @endif
+                                @if (Session::get('genderSession') === null)
+                                    <i class="fas fa-user"></i>
+                                @endif
+                                Hi, {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
+                            </a>
+                        </button>@endif
+                        @if(Session::get('idSession') === 1)<button class="btn btn-primary" id="menu-name">
+                            <a href="{{ route('owner.dashboard') }}">
+                                @if (Session::get('genderSession') === 0)
+                                    <i class="fas fa-female"></i>
+                                @endif
+                                @if (Session::get('genderSession') === 1)
+                                    <i class="fas fa-male"></i>
+                                @endif
+                                @if (Session::get('genderSession') === null)
+                                    <i class="fas fa-user"></i>
+                                @endif
+                                Hi, {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
+                            </a>
+                        </button>@endif
                         <button class="btn btn-primary" id="menu-logout"><a href="{{ route('handleLogout') }}">Đăng xuất</a></button>
                     </div>
                 @else()

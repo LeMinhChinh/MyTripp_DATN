@@ -36,7 +36,6 @@ Route::group([
     Route::get('search-resting-place','UserController@searchrestingplace')->name('searchrestingplace');
     Route::get('list-resting-place/{idp}~{idt}','UserController@listRestingPlace')->name('listRestingPlace');
     Route::get('review-resting-place/{idrp}~{idacc}','UserController@reviewRestingPlace')->name('reviewRestingPlace');
-    // Route::get('list-type-resting-place/{id}','UserController@listTypeRestingPlace')->name('listTypeRestingPlace');
 
     Route::get('personal-information/{id}','UserController@personalInformation')->name('personalInformation');
     Route::post('update-personal-information/{id}','UserController@handleUpdateInfomation')->name('handleUpdateInfomation');
@@ -44,4 +43,31 @@ Route::group([
     Route::get('personal-notify','UserController@personalInformation')->name('personalNotify');
     Route::get('personal-request/{id}','UserController@personalRequest')->name('personalRequest');
     Route::post('handle-personal-request','UserController@handleRequest')->name('handleRequest');
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'namespace' => 'Admin',
+    'middleware' => ['web', 'check.super.admin']
+], function () {
+    Route::get('dashboard','AdminController@dashboard')->name('dashboard');
+
+    Route::get('account','AdminController@account')->name('account');
+
+    Route::get('request-owner','AdminController@request')->name('request');
+
+    Route::get('feedback','AdminController@feedback')->name('feedback');
+});
+
+Route::group([
+    'prefix' => 'owner',
+    'as' => 'owner.',
+    'namespace' => 'Owner'
+], function () {
+    Route::get('dashboard','OwnerController@dashboard')->name('dashboard');
+
+    Route::get('account','OwnerController@account')->name('account');
+
+    Route::get('feedback','OwnerController@feedback')->name('feedback');
 });
