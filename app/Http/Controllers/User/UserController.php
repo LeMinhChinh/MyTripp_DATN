@@ -19,7 +19,7 @@ class UserController extends Controller
 {
     // Homepage
 
-    public function homepage(RestingPlace $rp){
+    public function homepage(Request $request, RestingPlace $rp, Rooms $room){
         $inforFB = $rp->getMaxCountEmotion();
         $inforFB = \json_decode(\json_encode($inforFB),true);
 
@@ -35,8 +35,20 @@ class UserController extends Controller
             }
         }
 
+        // $inforRoom = $room->getDataRoom();
+        $inforRoom = Rooms::select('price','discount','id_rp')->get();
+        $inforRoom = \json_decode(\json_encode($inforRoom), true);
+        // dd($inforRoom, $inforRP);
+        // foreach ($inforRP as $key => $value) {
+        //     foreach ($inforRoom as $k => $v) {
+        //         if($value['id'] == $v['id_rp'])
+
+        //     }
+        // }
+
         $data['inforRP'] = $inforRP;
         $data['inforFB'] = $inforFB;
+        $data['inforRoom'] = $inforRoom;
         $data['images'] = $images;
 
         return view('user/home',$data);
@@ -139,6 +151,9 @@ class UserController extends Controller
             'updated_at' =>null
         ];
 
+        $request->session()->put('emailRgtSession', $email);
+        $request->session()->put('passwordRgtSession', $password);
+
         $rgtAccount = $account->registerAccount($dataRgtAccount);
 
         if($rgtAccount){
@@ -160,6 +175,9 @@ class UserController extends Controller
         $request->session()->forget('lnameSession');
         $request->session()->forget('genderSession');
         $request->session()->forget('avatarSession');
+        $request->session()->forget('emailRgtSession');
+        $request->session()->forget('passwordRgtSession');
+
         return redirect()->route('login');
     }
 
@@ -399,6 +417,7 @@ class UserController extends Controller
             'rate' => $rateRP,
             'address' => $addressRP,
             'description' => $descRP,
+            'status' => 0,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' =>null
         ];

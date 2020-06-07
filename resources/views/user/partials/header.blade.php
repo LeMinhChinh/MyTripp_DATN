@@ -32,7 +32,7 @@
             <div class="col-lg-4">
                 @if(null!==Session::get('emailSession'))
                     <div class="nav-menu">
-                        @if(Session::get('idSession') === 0)<button class="btn btn-primary" id="menu-name">
+                        @if(Session::get('roleSession') === 0)<button class="btn btn-primary" id="menu-name">
                             <a href="{{ route('user.personalInformation',['id' => Session::get('idSession')]) }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>
@@ -46,7 +46,7 @@
                                 Hi, {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
                             </a>
                         </button>@endif
-                        @if(Session::get('idSession') === 2)<button class="btn btn-primary" id="menu-name">
+                        @if(Session::get('roleSession') === 2)<button class="btn btn-primary" id="menu-name">
                             <a href="{{ route('admin.dashboard') }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>
@@ -60,7 +60,7 @@
                                 Hi, {{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}
                             </a>
                         </button>@endif
-                        @if(Session::get('idSession') === 1)<button class="btn btn-primary" id="menu-name">
+                        @if(Session::get('roleSession') === 1)<button class="btn btn-primary" id="menu-name">
                             <a href="{{ route('owner.dashboard') }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>

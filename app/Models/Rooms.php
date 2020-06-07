@@ -18,4 +18,10 @@ class Rooms extends Model
                     ->get();
         return $data;
     }
+
+    // public function getDataRoom()
+    // {
+    //     $data = DB::table('rooms as r')
+    //                 ->select('r.price','')
+    // }
 }

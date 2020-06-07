@@ -29,6 +29,12 @@ class CheckSuperAdmin
         return (is_numeric($id) && $id > 0) ? $id : 0;
     }
 
+    private function getRoleSessionAdmin()
+    {
+        $id = Session::get('roleSession');
+        return (is_numeric($id) && $id > 0) ? $id : 0;
+    }
+
     private function getEmailSessionAdmin()
     {
         $email = Session::get('emailSession');
@@ -42,7 +48,9 @@ class CheckSuperAdmin
     {
         $id = $this->getIdSessionAdmin();
         $email = $this->getEmailSessionAdmin();
-        if($id > 1 && $email){
+        $role = $this->getRoleSessionAdmin();
+        // dd($id, $email, $role);
+        if($id > 0 && $email && $role == 2){
             return true;
         }
         return false;

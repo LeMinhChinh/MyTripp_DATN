@@ -1242,3 +1242,9 @@ ul.sidebar.navbar-nav li.nav-item a.nav-link i{
 .navbar-nav .nav-item.active .nav-link {
     color: var(--p-text,#212b36)!important;
 }
+
+.paginations-view{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

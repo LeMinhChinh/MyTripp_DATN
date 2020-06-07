@@ -54,8 +54,11 @@ Route::group([
     Route::get('dashboard','AdminController@dashboard')->name('dashboard');
 
     Route::get('account','AdminController@account')->name('account');
+    Route::post('delete-account','AdminController@deleteAccount')->name('deleteAccount');
 
     Route::get('request-owner','AdminController@request')->name('request');
+    Route::post('delete-request','AdminController@deleteRequest')->name('deleteRequest');
+    Route::post('update-request','AdminController@updateRequest')->name('updateRequest');
 
     Route::get('feedback','AdminController@feedback')->name('feedback');
 });
@@ -63,7 +66,8 @@ Route::group([
 Route::group([
     'prefix' => 'owner',
     'as' => 'owner.',
-    'namespace' => 'Owner'
+    'namespace' => 'Owner',
+    'middleware' => ['web', 'check.super.owner']
 ], function () {
     Route::get('dashboard','OwnerController@dashboard')->name('dashboard');
 

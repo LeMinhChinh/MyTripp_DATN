@@ -27,4 +27,30 @@ class FeedbackRP extends Model
         $id = DB::getPdo()->lastInsertId();
         return $id;
     }
+
+    // Admin
+    public function getDataFBById($id)
+    {
+        $data = DB::table('feedback_rp');
+                        if(is_numeric($id)){
+                            $data = $data->where('id_acc', $id);
+                        }else{
+                            $data = $data->wherein('id_acc', $id);
+                        }
+                        $data = $data->get();
+        return $data;
+    }
+
+    public function deleteFeedbackById($id)
+    {
+        $delete = DB::table('feedback_rp');
+                    if(is_numeric($id)){
+                        $delete = $delete->where('id_acc', $id);
+                    }else{
+                        $delete = $delete->wherein('id_acc', $id);
+                    }
+                    $delete = $delete->delete();
+        return $delete;
+    }
 }
+

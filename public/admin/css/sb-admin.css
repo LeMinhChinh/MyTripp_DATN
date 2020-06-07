@@ -10634,9 +10634,17 @@ body {
     font-weight: 500!important;
 }
 
-.navbar-nav .nav-item .nav-link > i{
+ul.sidebar.navbar-nav .nav-item .nav-link > i{
     color: var(--p-icon,#919eab)!important;
     width: 10%;
+}
+li.nav-item.dropdown.no-arrow .nav-link > i{
+    color: var(--p-icon,#919eab)!important;
+}
+
+li.nav-item.dropdown.no-arrow .nav-link > span{
+    color: #fff!important;
+    font-size: 1.1rem!important;
 }
 
 .navbar-nav .nav-item.dropdown .dropdown-toggle::after {

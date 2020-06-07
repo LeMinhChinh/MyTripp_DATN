@@ -500,6 +500,9 @@
                                         @if($fb['avatar'] === null && $fb['gender'] === 0)
                                             <img src="{{ asset('user/img/female.jpg') }}" alt="" class="ps-left-img">
                                         @endif
+                                        @if($fb['avatar'] === null && $fb['gender'] === null)
+                                            <img src="{{ asset('user/img/avatar-user.png') }}" alt="" class="ps-left-img">
+                                        @endif
                                     </div>
                                     <div class="ri-text">
                                         <span>{{ $fb['created_at'] }}</span>

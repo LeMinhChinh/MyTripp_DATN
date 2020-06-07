@@ -8,4 +8,4 @@
  <!-- Custom scripts for all pages-->
  <script src="{{ asset('admin/js/sb-admin.min.js') }}"></script>
 
- <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+ {{-- <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script> --}}

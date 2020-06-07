@@ -14,13 +14,13 @@
 
                     <div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
                         <span class="label-input100">Email</span>
-                        <input class="input100" type="text" name="lgEmail" placeholder="Nhập vào email">
+                        <input class="input100" type="text" name="lgEmail" placeholder="Nhập vào email" value="{{ Session::get('emailRgtSession') }}">
                         <!-- <span class="focus-input100" data-symbol="&#xf190;"></span> -->
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Password is required">
                         <span class="label-input100">Mật khẩu</span>
-                        <input class="input100" type="password" name="lgPass" placeholder="Nhập vào mật khẩu">
+                        <input class="input100" type="password" name="lgPass" placeholder="Nhập vào mật khẩu" value="{{ Session::get('passwordRgtSession') }}">
                         <!-- <span class="focus-input100" data-symbol="&#xf190;"></span> -->
                     </div>
 

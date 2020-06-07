@@ -235,7 +235,14 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="r-o">Giá trung bình/đêm <span>:</span></td>
-                                                        <td>2.524.952 VND</td>
+                                                        <td>
+                                                            2.524.952 VND
+                                                            {{-- @foreach ($inforRoom as $item)
+                                                                @if($item['id_rp'] == $value['id'])
+                                                                    0 + {{ $item['price'] }}
+                                                                @endif()
+                                                            @endforeach --}}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="r-o">Tiện nghi <span>:</span></td>
