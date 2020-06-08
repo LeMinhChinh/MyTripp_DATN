@@ -64,7 +64,7 @@
                         <a class="nav-link" href="{{ route('user.personalBooking') }}">Đặt phòng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.personalNotify') }}">Thông báo</a>
+                        <a class="nav-link" href="{{ route('user.personalNotify', ['id' => Session::get('idSession')]) }}">Thông báo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.personalRequest', ['id' => Session::get('idSession')]) }}">Yêu cầu đăng phòng</a>

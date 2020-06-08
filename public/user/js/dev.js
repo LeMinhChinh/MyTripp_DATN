@@ -29,7 +29,7 @@ $(document).ready(function(){
     if(url.indexOf('http://localhost:8000/user/personal-booking') !== -1){
         $('.nav-item:eq(1) > a').addClass('active')
     }
-    if(url.indexOf('http://localhost:8000/user/personal-update') !== -1){
+    if(url.indexOf('http://localhost:8000/user/personal-notify') !== -1){
         $('.nav-item:eq(2) > a').addClass('active')
     }
     if(url.indexOf('http://localhost:8000/user/personal-request') !== -1){
@@ -77,5 +77,15 @@ $(document).ready(function(){
 
     if($('.ps-item-content-input[name="psAvatar"]:disabled')){
         $('p.ps-infor-img-label').addClass('disabledInput')
+    }
+
+    for(let i = 0; i <= 1000; i++){
+        $('.show-feedback-'+i).click(function(){
+            if($('.content-feedback-'+i).hasClass('show-content')){
+                $('.content-feedback-'+i).removeClass('show-content')
+            }else{
+                $('.content-feedback-'+i).addClass('show-content')
+            }
+        })
     }
 })

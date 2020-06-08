@@ -19,12 +19,12 @@
                     <div class="language-option">
                         <img src="{{ asset('user/img/vietnam-flag-square-icon-16.png')}}" alt="">
                         <span>VN <i class="fa fa-angle-down"></i></span>
-                        <div class="flag-dropdown">
-                            {{-- <ul>
+                        {{-- <div class="flag-dropdown">
+                            <ul>
                                 <li><a href="#">Zi</a></li>
                                 <li><a href="#">Fr</a></li>
-                            </ul> --}}
-                        </div>
+                            </ul>
+                        </div> --}}
                     </div>
 
                 </div>

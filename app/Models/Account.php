@@ -75,4 +75,12 @@ class Account extends Model
                     $delete = $delete->delete();
         return $delete;
     }
+
+    public function updateAccount($data, $id)
+    {
+        $update = DB::table('account')
+                    ->where('id',$id)
+                    ->update($data);
+        return $update;
+    }
 }

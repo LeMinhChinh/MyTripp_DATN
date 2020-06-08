@@ -3,8 +3,12 @@
 
 @section('content-user')
     <div class="personal-content fix-top">
-        <h2>Xin chào, !!!</h2>
-        <p class="ps-infor-notify">Bạn là chủ khách sạn, resort, ... Bạn muốn đăng thông tin khách sạn trên trang web. Hãy gửi yêu cầu ngay đến chúng tôi.</p>
+        <h2>Xin chào, {{ $inforAcc['surname'] }} {{ $inforAcc['name'] }}!!!</h2>
+        @if($count == 0)
+            <p class="ps-infor-notify">Bạn là chủ khách sạn, resort, ... Bạn muốn đăng thông tin khách sạn trên trang web. Hãy gửi yêu cầu ngay đến chúng tôi.</p>
+        @else
+            <p class="ps-infor-notify ps-infor-note ">Yêu cầu của bạn đang trong trạng thái chờ duyệt. Vui lòng đợi phản hồi từ chúng tôi. Xin cảm ơn!</p>
+        @endif
     </div>
     <div class="personal-content-request fix-top">
         <form action="{{ route('user.handleRequest') }}" method="POST">
@@ -53,7 +57,7 @@
                 </div>
             </div>
             <div class="ps-request-submit">
-                <button type="submit" class="btn btn-primary btn-request">Gửi yêu cầu</button>
+                <button type="submit" class="btn btn-primary btn-request" @if($count > 0) disabled="disabled" @endif>Gửi yêu cầu</button>
             </div>
         </form>
     </div>

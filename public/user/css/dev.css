@@ -1248,3 +1248,27 @@ ul.sidebar.navbar-nav li.nav-item a.nav-link i{
     align-items: center;
     justify-content: center;
 }
+
+.ps-infor-note {
+    color: #28a745;
+    font-size: 17px!important;
+}
+
+.personal-notify-item{
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+    padding: 16px;
+}
+
+.content-feedback{
+    display: none;
+}
+
+.show-content{
+    display: block!important;
+}
+
+p.show-feedback {
+    cursor: pointer;
+    color: #007bff;
+}

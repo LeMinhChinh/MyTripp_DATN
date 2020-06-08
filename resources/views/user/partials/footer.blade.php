@@ -5,11 +5,14 @@
             <div class="col-lg-4">
                 <div class="ft-about">
                     <div class="logo">
-                        <a href="#">
-                            <img src="{{ asset('user/img/footer-logo.png')}}" alt="">
-                        </a>
+                        <div class="logo">
+                            <a href="{{ route('homepage') }}">
+                                {{-- <img src="{{ asset('/user/img/logo.png')}}" alt=""> --}}
+                                MyTripp<span>.Com</span>
+                            </a>
+                        </div>
                     </div>
-                    <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>
+                    <p>Tìm kiếm ưu đãi khách sạn, chỗ nghỉ dạng nhà ở và nhiều hơn nữa...</p>
                     <div class="fa-social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
                         <a href="#"><i class="fa fa-twitter"></i></a>
@@ -20,7 +23,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="ft-contact">
-                    <h6>Contact Us</h6>
+                    <h6>Liên hệ</h6>
                     <ul>
                         <li>(+84) 32 777 5252</li>
                         <li>mytripp@gmail.com</li>
@@ -30,12 +33,12 @@
             </div>
             <div class="col-lg-4 ">
                 <div class="ft-newslatter">
-                    <h6>New latest</h6>
-                    <p>Get the latest updates and offers.</p>
-                    <form action="#" class="fn-form">
-                        <input type="text" placeholder="Email">
-                        <button type="submit"><i class="fa fa-send"></i></button>
-                    </form>
+                    <h6>Phản hồi</h6>
+                    <p>Gửi phản hồi của bạn đến quản lí website về chất lượng của nhà cung cấp</p>
+                    <div  class="fn-form">
+                        <input type="text" placeholder="Phản hồi của bạn" class="feedback-content">
+                        <button class="send-feedback" id={{ Session::get('idSession') }}><i class="fa fa-send"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,10 +49,10 @@
         <div class="row">
             <div class="col-lg-7">
                 <ul>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Terms of use</a></li>
-                    <li><a href="#">Privacy</a></li>
-                    <li><a href="#">Environmental Policy</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Riêng tư</a></li>
+                    <li><a href="#">Chính sách</a></li>
                 </ul>
             </div>
             <div class="col-lg-5">
@@ -60,3 +63,36 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $(function(){
+            $('.send-feedback').click(function() {
+                var self = $(this);
+                var id = self.attr('id').trim();
+                var content = $('.feedback-content').val()
+                console.log(id, content)
+                if(id > 0){
+                    $.ajax({
+                        url: "{{ route('user.sendFeedBack') }}",
+                        type: "POST",
+                        data: {id: id, content: content},
+                        success: function(data){
+                            if(data === 'Feedback fail') {
+                                alert('Gửi phản hồi không thành công.Vui lòng thử lại.');
+                            }
+                            if(data === 'Feedback success') {
+                                $('.feedback-content').val('')
+                                alert('Gửi phản hồi thành công. Vui lòng kiểm tra lại trong thông báo.');
+                            }
+                        }
+                    });
+                }else{
+                    // window.location.href =  "{{ route('login') }}";
+                    alert('Vui lòng đăng nhập để gửi phản hồi.');
+
+                }
+            });
+        });
+    </script>
+@endpush()

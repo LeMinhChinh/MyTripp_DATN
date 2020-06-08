@@ -43,6 +43,7 @@
         <thead>
             <tr>
                 <th scope="col"></th>
+                <th scope="col">Id</th>
                 <th scope="col">Id Account</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
@@ -59,6 +60,7 @@
             @foreach ($dataRequest as $value)
                 <tr class="js-account-{{ $value['id'] }}">
                     <td><input type="checkbox" class="requestCheck" id="requestCheck-{{ $value['id'] }}" name="requestCheck-{{ $value['id'] }}" value="{{ $value['id'] }}"></td>
+                    <td>{{ $value['id'] }}</td>
                     <td>{{ $value['id_acc'] }}</td>
                     <td>{{ $value['name_acc'] }}</td>
                     <td>{{ $value['email'] }}</td>
@@ -167,52 +169,52 @@
                 });
             })
 
-            $('.awaiting-request-enabled .btn.btn-primary.js-update-request').click(function(){
-                $(this).addClass('awaiting-request-hide')
-                $('.awaiting-request-enabled .btn.btn-success.js-update-request').addClass('approved-request-show')
-            })
-
-            $('.awaiting-request-enabled .btn.btn-success.js-update-request').click(function(){
-                $(this).removeClass('approved-request-show')
-                $('.awaiting-request-enabled .btn.btn-primary.js-update-request').removeClass('awaiting-request-hide')
-            })
-
-            $('.approved-request-enabled .btn.btn-success.js-update-request').click(function(){
-                $(this).addClass('approved-request-hide')
-                $('.approved-request-enabled .btn.btn-primary.js-update-request').addClass('awaiting-request-show')
-            })
-
-            $('.approved-request-enabled .btn.btn-primary.js-update-request').click(function(){
-                $(this).removeClass('awaiting-request-show')
-                $('.approved-request-enabled .btn.btn-success.js-update-request').removeClass('approved-request-hide')
-            })
-
             $('.js-update-request').click(function(){
                 var self = $(this)
                 var id = self.attr('id').trim();
+                console.log(id)
 
                 $.ajax({
-                        url: "{{ route('admin.updateRequest') }}",
-                        type: "POST",
-                        data: {id: id},
-                        success: function(data){
-                            if(data === 'Update fail') {
-                                alert('Update fail');
-                            }
-                            if(data === 'Update success') {
-                                // if(self.hasClass('btn-primary')){
-                                //     self.addClass('remove')
-                                //     console.log(self,self.find($('button.btn-success')))
-                                //     self.find('button.btn-success').addClass('show')
-                                // }
-                                // if(self.hasClass('btn-success')){
-                                //     self.addClass('remove')
-                                //     self.find('.btn-primary').addClass('show')
-                                // }
-                                alert('Update success');
-                            }
+                    url: "{{ route('admin.updateRequest') }}",
+                    type: "POST",
+                    data: {id: id},
+                    success: function(data){
+                        console.log(data)
+                        if(data === 'Update request fail') {
+                            alert('Update request fail');
                         }
-                    });
+                        if(data === 'Update account fail') {
+                            alert('Update account fail');
+                        }
+                        if(data === 'Update success') {
+                            if(self.hasClass('btn-primary')){
+                                self.addClass('hide')
+                                $('.awaiting-'+id+' .btn-success').addClass('show')
+                            }
+
+                            if(self.hasClass('btn-success')){
+                                if(self.hasClass('show')){
+                                    self.removeClass('show')
+                                    $('.awaiting-'+id+' .btn-primary').removeClass('hide')
+                                }
+                            }
+
+                            if(self.hasClass('btn-success')){
+                                self.addClass('hide')
+                                $('.approved-'+id+' .btn-primary').addClass('show')
+                            }
+
+                            if(self.hasClass('btn-primary')){
+                                if(self.hasClass('show')){
+                                    self.removeClass('show')
+                                    $('.approved-'+id+' .btn-success').removeClass('hide')
+                                }
+                            }
+
+                            alert('Update success');
+                        }
+                    }
+                });
             })
         });
     </script>

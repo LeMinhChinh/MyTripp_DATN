@@ -44,7 +44,7 @@
                 <th scope="col">
                     {{-- <input type="checkbox" id="customCheck" name="customCheck"> --}}
                 </th>
-                <th scope="col">Id Account</th>
+                <th scope="col">Id</th>
                 <th scope="col">Email</th>
                 <th scope="col">Username</th>
                 <th scope="col">Surname</th>

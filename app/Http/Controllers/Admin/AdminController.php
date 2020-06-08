@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Account;
 use App\Models\FeedbackRP;
 use App\Models\RequestOwner;
+use App\Models\FeedbackUser;
 
 class AdminController extends Controller
 {
@@ -97,36 +98,64 @@ class AdminController extends Controller
         }
     }
 
-    public function updateRequest(Request $request, RequestOwner $rq)
+    public function updateRequest(Request $request, RequestOwner $rq, Account $account)
     {
         $id = $request->id;
         $id = is_numeric($id) ? $id : 0;
+        $id = intval($id);
 
         $status = RequestOwner::where('id',$id)->pluck('status')->first();
+        $idAcc = RequestOwner::where('id', $id)->pluck('id_acc')->first();
 
-        if($status == 0){
-            $dataUpdate = [
-                'status' => 1
-            ];
-        }
+        // dd(\gettype($id),$id, $status, $idAcc);
 
-        if($status == 1){
-            $dataUpdate = [
-                'status' => 0
-            ];
-        }
+        if($id > 0){
+            $updateRequest = $rq->updateRequest($id, $status);
+            if($updateRequest){
+                if($status == 0){
+                    $dataAccount = [
+                        'role' => 1
+                    ];
 
-        $update = $rq->updateRequest($dataUpdate, $id);
-        if($update){
-            echo "Update success";
-        }else{
-            echo "Update fail";
+                    $updateAccount = $account->updateAccount($dataAccount, $idAcc);
+                    if($updateAccount){
+                        echo "Update success";
+                    }else{
+                        echo "Update account fail";
+                    }
+                }
+                if($status == 1){
+                    $dataAccount = [
+                        'role' => 0
+                    ];
+
+                    $updateAccount = $account->updateAccount($dataAccount, $idAcc);
+                    dd($updateAccount);
+                    if($updateAccount){
+                        echo "Update success";
+                    }else{
+                        echo "Update account fail";
+                    }
+                }
+            }else{
+                echo "Update request fail";
+            }
         }
     }
 
     //feedback
-    public function feedback(Request $request)
+    public function feedback(Request $request, FeedbackUser $fb)
     {
-        return view('admin/feedback');
+        $keyword = $request->keyword;
+        $keyword = \strip_tags($keyword);
+        $data['keyword'] = $keyword;
+
+        $feedback = $fb->getDataFeedback($keyword);
+        $data['paginate'] = $feedback;
+        $feedback = json_decode(json_encode($feedback),true);
+
+        $data['feedback'] = $feedback['data'] ?? [];
+// dd($data);
+        return view('admin/feedback', $data);
     }
 }

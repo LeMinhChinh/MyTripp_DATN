@@ -42,11 +42,16 @@ class RequestOwner extends Model
         return $delete;
     }
 
-    public function updateRequest($data, $id)
+    public function updateRequest($id, $status)
     {
         $update = DB::table('request_owner')
-                    ->where('id',$id)
-                    ->update($data);
+                    ->where('id',$id);
+                    if($status == 0){
+                        $update = $update->update(['status' => 1]);
+                    }
+                    if($status == 1){
+                        $update = $update->update(['status' => 0]);
+                    }
         return $update;
     }
 }

@@ -12,6 +12,7 @@ use App\Models\Place;
 use App\Models\FeedbackRP;
 use App\Models\Rooms;
 use App\Models\RequestOwner;
+use App\Models\FeedbackUser;
 use Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -391,7 +392,12 @@ class UserController extends Controller
         $inforAcc = $acc->getDataInforAccountById($id);
         $inforAcc = \json_decode(\json_encode($inforAcc), true);
 
+        $countRequest = RequestOwner::where('id_acc',$id)->get();
+        $countRequest = \json_decode(\json_encode($countRequest), true);
+        $count = count($countRequest);
+
         $data['inforAcc'] = $inforAcc;
+        $data['count'] = $count;
 
         return view('user/personal-request', $data);
     }
@@ -429,5 +435,46 @@ class UserController extends Controller
         }else{
             return redirect()->route('user.personalRequest', ['id' => $idOwner]);
         }
+    }
+
+    public function sendFeedBack(Request $request, FeedbackUser $fb)
+    {
+        $id = $request->id;
+        $content = $request->content;
+
+        $dataFeedback = [
+            'id_acc' => $id,
+            'content' => $content,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' =>null
+        ];
+
+        $feedback = $fb->feedbackUser($dataFeedback);
+
+        if($feedback){
+            echo "Feedback success";
+        }else{
+            echo "Feedback fail";
+        }
+    }
+
+    public function personalNotify(Request $request, FeedbackUser $fb, $id)
+    {
+        $id = $request->id;
+        $id = \is_numeric($id) ? $id : 0;
+
+        $account = Account::where('id',$id)->select('name','surname')->first();
+        $account = \json_decode(json_encode($account),true);
+
+        $feedback = FeedbackUser::where('id_acc',$id)->get();
+        $feedback = \json_decode(json_encode($feedback),true);
+        $count = count($feedback);
+        // dd($feedback, $count, $account);
+
+        $data['count'] = $count;
+        $data['feedback'] = $feedback;
+        $data['account'] = $account;
+
+        return view('user/personal-notify', $data);
     }
 }

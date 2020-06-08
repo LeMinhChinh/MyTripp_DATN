@@ -40,9 +40,13 @@ Route::group([
     Route::get('personal-information/{id}','UserController@personalInformation')->name('personalInformation');
     Route::post('update-personal-information/{id}','UserController@handleUpdateInfomation')->name('handleUpdateInfomation');
     Route::get('personal-booking','UserController@personalInformation')->name('personalBooking');
-    Route::get('personal-notify','UserController@personalInformation')->name('personalNotify');
+
+    Route::get('personal-notify/{id}','UserController@personalNotify')->name('personalNotify');
+
     Route::get('personal-request/{id}','UserController@personalRequest')->name('personalRequest');
     Route::post('handle-personal-request','UserController@handleRequest')->name('handleRequest');
+
+    Route::post('send-feedback','UserController@sendFeedBack')->name('sendFeedBack');
 });
 
 Route::group([
