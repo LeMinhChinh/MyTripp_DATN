@@ -330,33 +330,34 @@ class UserController extends Controller
         $phone = $request->psPhone;
         $age = $request->psAge;
         $address = $request->psAddress;
+        $avatar = $request->psAvatar;
 
         $oldAvatar = Account::where('id',$id)->select('avatar')->first();
         $oldAvatar = json_decode(json_encode($oldAvatar), true);
-        // dd($oldAvatar);
 
-        // $oldAvatar = $infoAcc['avatar'];
-        if(isset($_FILES['psAvatar'])){
-            if($_FILES['psAvatar']['error'] == 0){
-                $validatorAvatar = Validator::make(
-                    ['psAvatar' => $request->file('psAvatar')],
-                    ['psAvatar' => 'required'],
-                    [
-                        'required' => 'Vui lòng chọn ảnh'
-                    ]
-                );
+        if($avatar != null){
+            if(isset($_FILES['psAvatar'])){
+                if($_FILES['psAvatar']['error'] == 0){
+                    $validatorAvatar = Validator::make(
+                        ['psAvatar' => $request->file('psAvatar')],
+                        ['psAvatar' => 'required'],
+                        [
+                            'required' => 'Vui lòng chọn ảnh'
+                        ]
+                    );
 
-                if($validatorAvatar->fails()){
-                    return redirect()->route('user.personalInformation',['id' => $id])
-                                    ->withErrors($validatorAvatar)
-                                    ->withInput();
-                }else{
-                    $oldAvatar = $_FILES['psAvatar']['name'];
-                    $tmpName  = $_FILES['psAvatar']['tmp_name'];
-                    $up = move_uploaded_file($tmpName, public_path() . '/user/uploads/avatar/' . $oldAvatar);
-                    if(!$up){
-                        $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');
-                        return redirect()->route('user.personalInformation',['id' => $id]);
+                    if($validatorAvatar->fails()){
+                        return redirect()->route('user.personalInformation',['id' => $id])
+                                        ->withErrors($validatorAvatar)
+                                        ->withInput();
+                    }else{
+                        $oldAvatar = $_FILES['psAvatar']['name'];
+                        $tmpName  = $_FILES['psAvatar']['tmp_name'];
+                        $up = move_uploaded_file($tmpName, public_path() . '/user/uploads/avatar/' . $oldAvatar);
+                        if(!$up){
+                            $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');
+                            return redirect()->route('user.personalInformation',['id' => $id]);
+                        }
                     }
                 }
             }
@@ -440,10 +441,12 @@ class UserController extends Controller
     public function sendFeedBack(Request $request, FeedbackUser $fb)
     {
         $id = $request->id;
+        $name = $request->name;
         $content = $request->content;
 
         $dataFeedback = [
             'id_acc' => $id,
+            'name' => $name,
             'content' => $content,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' =>null

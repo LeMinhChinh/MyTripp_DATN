@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-7">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" id={{ $keyword }}>
+                    <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value={{ $keyword }}>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">
                         <i class="fas fa-search"></i>
@@ -38,9 +38,9 @@
                 <th scope="col"></th>
                 <th scope="col">Id</th>
                 <th scope="col">Id Account</th>
-                <th scope="col">Surname</th>
                 <th scope="col">Name</th>
                 <th scope="col">Content</th>
+                <th scope="col">Reply</th>
                 <th scope="col">Created at</th>
                 <th scope="col" colspan="2">Action</th>
             </tr>
@@ -51,15 +51,37 @@
                     <td><input type="checkbox" class="customCheck" id="customCheck-{{ $value['id'] }}" name="customCheck-{{ $value['id'] }}" value="{{ $value['id'] }}"></td>
                     <td>{{ $value['id'] }}</td>
                     <td>{{ $value['id_acc'] }}</td>
-                    <td>{{ $value['surname'] }}</td>
                     <td>{{ $value['name'] }}</td>
                     <td>{{ $value['content'] }}</td>
+                    <td>{{ $value['reply'] }}</td>
                     <td>{{ $value['created_at'] }}</td>
                     <td>
-                        <button id="{{ $value['id'] }}" class="btn btn-primary js-delete-account">Reply</button>
+                        <button id="{{ $value['id'] }}" class="btn btn-primary js-reply-account" data-toggle="modal" data-target="#data-{{ $value['id'] }}">Reply</button>
                         <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account">Delete</button>
                     </td>
                 </tr>
+                <div class="modal fade" id="data-{{ $value['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Enter your reply to customer</label>
+                                <textarea class="form-control content-reply-{{ $value['id'] }}" id="exampleFormControlTextarea1" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary js-send-reply" data-id={{ $value['id'] }}>Send</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             @endforeach
         </tbody>
     </table>
@@ -73,7 +95,7 @@
         $(document).ready(function(){
             $('#js-search').click(function(){
                 var keyword = $('#js-keyword').val().trim();
-                window.location.href =  "{{ route('admin.account') }}" + "?keyword=" + keyword ;
+                window.location.href =  "{{ route('admin.feedback') }}" + "?keyword=" + keyword ;
             });
 
             $('.customCheck').click(function(){
@@ -85,6 +107,84 @@
                 }
             })
 
+            $('.action-select').click(function(){
+                var id = $('input.customCheck:checked').map(function(){
+                    return $(this).val();
+                }).toArray();
+                console.log(id)
+                $.ajax({
+                    url: "{{ route('admin.deleteFeedback') }}",
+                    type: "POST",
+                    data: {id: id},
+                    success: function(data){
+                        if(data === 'Feedback not found') {
+                            alert('Feedback not found');
+                        }
+                        if(data === 'Delete fail') {
+                            alert('Delete fail');
+                        }
+                        if(data === 'Delete success') {
+                            $.each(id, function(index, id){
+                                $('.js-account-'+id).hide();
+                            })
+                            alert('Delele success');
+                        }
+                    }
+                });
+            })
+
+            $('.js-send-reply').click(function(){
+                var self = $(this);
+                var id = self.attr('data-id').trim();
+                var content = $.trim($(".content-reply-"+id).val());
+                console.log(id, content)
+
+                $.ajax({
+                    url: "{{ route('admin.replyFeedback') }}",
+                    type: "POST",
+                    data: {id: id, content: content},
+                    success: function(data){
+                        if(data === 'SenReplyd fail') {
+                            alert('Reply fail');
+                        }
+                        if(data === 'Reply success') {
+                            $('.modal.fade').removeClass('show')
+                            $('.modal.fade').removeAttr('style')
+                            $('.modal-backdrop.fade').remove()
+                            $('body').removeAttr('style')
+                            $('body').removeClass('modal-open')
+                            $(".content-reply-"+id).val()
+                            alert('Reply success');
+                        }
+                    }
+                });
+            })
+        });
+
+        $(function(){
+            $('.js-delete-account').click(function() {
+                var self = $(this);
+                var id = self.attr('id').trim();
+                if($.isNumeric(id)){
+                    $.ajax({
+                        url: "{{ route('admin.deleteFeedback') }}",
+                        type: "POST",
+                        data: {id: id},
+                        beforeSend: function(){
+                            self.text('Loading ...');
+                        },
+                        success: function(data){
+                            if(data === 'Delete fail') {
+                                alert('Delete fail');
+                            }
+                            if(data === 'Delete success') {
+                                $('.js-account-'+id).hide();
+                                alert('Delele success');
+                            }
+                        }
+                    });
+                }
+            });
         });
     </script>
 @endpush

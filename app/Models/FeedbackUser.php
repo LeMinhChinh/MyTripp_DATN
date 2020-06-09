@@ -19,14 +19,31 @@ class FeedbackUser extends Model
     //Admin
     public function getDataFeedback($keyword)
     {
-        $data = DB::table('feedback_user as fb')
-                    ->select('fb.*','a.name','a.surname')
-                    ->join('account as a','a.id','=','fb.id_acc');
+        $data = DB::table('feedback_user')
+                    ->select('*');
                     if($keyword!= null){
-                        $data = $data->orWhere('a.name', 'like', '%'.$keyword.'%')
-                                    ->orWhere('a.surname', 'like', '%'.$keyword.'%');
+                        $data = $data->orWhere('name', 'like', '%'.$keyword.'%');
                     }
                     $data = $data->paginate(15);
         return $data;
+    }
+
+    public function deleteFeedbackById($id)
+    {
+        $delete = DB::table('feedback_user');
+                        if(is_numeric($id)){
+                            $delete = $delete->where('id', $id);
+                        }else{
+                            $delete = $delete->wherein('id', $id);
+                        }
+                        $delete = $delete->delete();
+        return $delete;
+    }
+
+    public function updateFeedback($id, $content){
+        $update = DB::table('feedback_user')
+                    ->where('id',$id)
+                    ->update(['reply' => $content]);
+        return $update;
     }
 }

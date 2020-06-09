@@ -6,9 +6,9 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('owner.account') }}">
+        <a class="nav-link" href="{{ route('owner.information') }}">
         <i class="fas fa-user-circle"></i>
-        <span>Account</span></a>
+        <span>General Information</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('owner.feedback') }}">

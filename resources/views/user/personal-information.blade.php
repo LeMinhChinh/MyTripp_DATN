@@ -50,9 +50,9 @@
                             </div>
                             <div class="ps-item-content">
                                 <select name="psGender" id="psGender" disabled="disabled">
-                                    <option value="" @if($inforAcc['gender'] == null) selected="selected" @endif>--- Danh xưng ---</option>
-                                    <option value="1" @if($inforAcc['gender'] == 1) selected="selected" @endif>Anh</option>
-                                    <option value="0" @if($inforAcc['gender'] == 0) selected="selected" @endif>Chị</option>
+                                    <option value="" @if($inforAcc['gender'] === null) selected="selected" @endif>--- Danh xưng ---</option>
+                                    <option value="1" @if($inforAcc['gender'] === 1) selected="selected" @endif>Anh</option>
+                                    <option value="0" @if($inforAcc['gender'] === 0) selected="selected" @endif>Chị</option>
                                 </select>
                             </div>
                         </div>

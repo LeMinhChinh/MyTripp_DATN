@@ -65,6 +65,8 @@ Route::group([
     Route::post('update-request','AdminController@updateRequest')->name('updateRequest');
 
     Route::get('feedback','AdminController@feedback')->name('feedback');
+    Route::post('delete-feedback','AdminController@deleteFeedback')->name('deleteFeedback');
+    Route::post('reply-feedback','AdminController@replyFeedback')->name('replyFeedback');
 });
 
 Route::group([
@@ -75,7 +77,7 @@ Route::group([
 ], function () {
     Route::get('dashboard','OwnerController@dashboard')->name('dashboard');
 
-    Route::get('account','OwnerController@account')->name('account');
+    Route::get('general-information','OwnerController@information')->name('information');
 
     Route::get('feedback','OwnerController@feedback')->name('feedback');
 });

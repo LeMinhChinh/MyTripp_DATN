@@ -14,9 +14,9 @@ class OwnerController extends Controller
     }
 
     //account
-    public function account(Request $request)
+    public function information(Request $request)
     {
-        return view('owner/account');
+        return view('owner/information');
     }
 
     //feedback

@@ -155,7 +155,38 @@ class AdminController extends Controller
         $feedback = json_decode(json_encode($feedback),true);
 
         $data['feedback'] = $feedback['data'] ?? [];
-// dd($data);
+
         return view('admin/feedback', $data);
+    }
+
+    public function deleteFeedback(Request $request, FeedbackUser $fb)
+    {
+        $id = $request->id;
+
+        if($id > 0){
+            $delete = $fb->deleteFeedbackById($id);
+            if($delete){
+                echo "Delete success";
+            }else{
+                echo "Delete fail";
+            }
+        } else {
+            echo "Feedback not found";
+        }
+    }
+
+    public function replyFeedback(Request $request, FeedbackUser $fb)
+    {
+        $id = $request->id;
+        $content = $request->content;
+
+        if($id > 0){
+            $updateFeedback = $fb->updateFeedback($id, $content);
+            if($updateFeedback){
+                echo "Reply success";
+            }else{
+                echo "Reply fail";
+            }
+        }
     }
 }

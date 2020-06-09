@@ -35,8 +35,9 @@
                 <div class="ft-newslatter">
                     <h6>Phản hồi</h6>
                     <p>Gửi phản hồi của bạn đến quản lí website về chất lượng của nhà cung cấp</p>
-                    <div  class="fn-form">
+                    <div class="fn-form">
                         <input type="text" placeholder="Phản hồi của bạn" class="feedback-content">
+                        <label for="" style="display: none" class="feedback-name">{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}</label>
                         <button class="send-feedback" id={{ Session::get('idSession') }}><i class="fa fa-send"></i></button>
                     </div>
                 </div>
@@ -71,12 +72,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 var self = $(this);
                 var id = self.attr('id').trim();
                 var content = $('.feedback-content').val()
-                console.log(id, content)
+                var name = $('.feedback-name').text()
                 if(id > 0){
                     $.ajax({
                         url: "{{ route('user.sendFeedBack') }}",
                         type: "POST",
-                        data: {id: id, content: content},
+                        data: {id: id, content: content, name: name},
                         success: function(data){
                             if(data === 'Feedback fail') {
                                 alert('Gửi phản hồi không thành công.Vui lòng thử lại.');

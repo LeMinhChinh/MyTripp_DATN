@@ -95,3 +95,7 @@ button.js-update-request {
 .show{
     display: block!important;
 }
+
+.owner-infor .form-group{
+    width: 70%!important;
+}
