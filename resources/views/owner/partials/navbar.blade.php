@@ -6,7 +6,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('owner.information') }}">
+        <a class="nav-link" href="{{ route('owner.information', ['id' =>  Session::get('idSession')]) }}">
         <i class="fas fa-user-circle"></i>
         <span>General Information</span></a>
     </li>

@@ -46,10 +46,17 @@
                         </div>
                         <div class="ps-infor-item">
                             <div class="ps-item-title">
-                                <p>Danh xưng</p>
+                                <label for="psGender">Danh xưng</label>
                             </div>
-                            <div class="ps-item-content">
+                            {{-- <div class="ps-item-content">
                                 <select name="psGender" id="psGender" disabled="disabled">
+                                    <option value="" @if($inforAcc['gender'] === null) selected="selected" @endif>--- Danh xưng ---</option>
+                                    <option value="1" @if($inforAcc['gender'] === 1) selected="selected" @endif>Anh</option>
+                                    <option value="0" @if($inforAcc['gender'] === 0) selected="selected" @endif>Chị</option>
+                                </select>
+                            </div> --}}
+                            <div class="ps-item-content">
+                                <select class="custom-select" name="psGender" id="psGender" disabled="disabled">
                                     <option value="" @if($inforAcc['gender'] === null) selected="selected" @endif>--- Danh xưng ---</option>
                                     <option value="1" @if($inforAcc['gender'] === 1) selected="selected" @endif>Anh</option>
                                     <option value="0" @if($inforAcc['gender'] === 0) selected="selected" @endif>Chị</option>

@@ -77,7 +77,8 @@ Route::group([
 ], function () {
     Route::get('dashboard','OwnerController@dashboard')->name('dashboard');
 
-    Route::get('general-information','OwnerController@information')->name('information');
+    Route::get('general-information/{id}','OwnerController@information')->name('information');
+    Route::post('update-general-information/{id}','OwnerController@handleUpdateInfomation')->name('handleUpdateInfomation');
 
     Route::get('feedback','OwnerController@feedback')->name('feedback');
 });

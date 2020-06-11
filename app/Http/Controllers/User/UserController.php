@@ -24,7 +24,9 @@ class UserController extends Controller
         $inforFB = $rp->getMaxCountEmotion();
         $inforFB = \json_decode(\json_encode($inforFB),true);
 
-        $inforRP = $rp->getInforListRP();
+        $arr_id = \array_column($inforFB,'id');
+
+        $inforRP = $rp->getInforListRP($arr_id);
         $inforRP = \json_decode(\json_encode($inforRP),true);
 
         $images = [];
@@ -36,21 +38,31 @@ class UserController extends Controller
             }
         }
 
-        // $inforRoom = $room->getDataRoom();
-        $inforRoom = Rooms::select('price','discount','id_rp')->get();
+        $inforRoom = Rooms::select('price','discount','id_rp')->whereIn('id_rp',$arr_id)->get();
         $inforRoom = \json_decode(\json_encode($inforRoom), true);
-        // dd($inforRoom, $inforRP);
-        // foreach ($inforRP as $key => $value) {
-        //     foreach ($inforRoom as $k => $v) {
-        //         if($value['id'] == $v['id_rp'])
 
-        //     }
-        // }
+        $sumPrice = 0;
+        $arrPrice = [];
+
+        foreach ($inforRP as $key => $value) {
+            $index = 0;
+            foreach ($inforRoom as $k => $v) {
+                if($value['id'] == $v['id_rp'])
+                    $sumPrice += ($v['price'] - ($v['price']*$v['discount']/100)) ;
+                    $index ++;
+            }
+            $arrPrice[]= [
+                $value['id'],
+                ($sumPrice/$index)*4
+            ];
+        }
 
         $data['inforRP'] = $inforRP;
         $data['inforFB'] = $inforFB;
-        $data['inforRoom'] = $inforRoom;
+        $data['arrPrice'] = $arrPrice;
         $data['images'] = $images;
+
+        // dd($data);
 
         return view('user/home',$data);
     }
@@ -326,13 +338,13 @@ class UserController extends Controller
         $email = $request->psEmail;
         $surname = $request->psSurname;
         $name = $request->psName;
-        $gender = $request->psGender;
+        $gender = $request->input('psGender');
         $phone = $request->psPhone;
         $age = $request->psAge;
         $address = $request->psAddress;
         $avatar = $request->psAvatar;
 
-        $oldAvatar = Account::where('id',$id)->select('avatar')->first();
+        $oldAvatar = Account::where('id',$id)->pluck('avatar')->first();
         $oldAvatar = json_decode(json_encode($oldAvatar), true);
 
         if($avatar != null){
@@ -369,7 +381,7 @@ class UserController extends Controller
             'surname' => $surname,
             'name' => $name,
             'phone' => $phone,
-            'gender' => 1,
+            'gender' => $gender,
             'age' => $age,
             'address' => $address,
             'avatar' => $oldAvatar,
@@ -381,7 +393,7 @@ class UserController extends Controller
         if($update){
             return redirect()->route('user.personalInformation',['id' => $id]);
         }else{
-            return redirect()->route('admin.personalInformation',['id' => $id]);
+            return redirect()->route('user.personalInformation',['id' => $id]);
         }
     }
 

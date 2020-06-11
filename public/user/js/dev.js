@@ -69,10 +69,10 @@ $(document).ready(function(){
 
     $('.ps-button-update').click(function(){
         $('.ps-item-content > input').removeAttr('disabled')
-        // $('.ps-item-content > input.ps-item-content-email').attr('disabled', 'disabled')
         $('.ps-item-content > .nice-select').removeClass('disabled')
         $('p.ps-infor-img-label').removeClass('disabledInput')
         $('.ps-item-content-input[name="psAvatar"]').removeAttr('disabled')
+        $('.ps-item-content > select').removeAttr('disabled')
     })
 
     if($('.ps-item-content-input[name="psAvatar"]:disabled')){

@@ -50,7 +50,7 @@
   </div>
 
   @include('owner/partials/script')
-  {{-- <script>
+  <script>
       $(function(){
         $.ajaxSetup({
             headers: {
@@ -59,7 +59,7 @@
         });
       });
     </script>
-  @stack('scripts') --}}
+  @stack('scripts')
 </body>
 
 </html>

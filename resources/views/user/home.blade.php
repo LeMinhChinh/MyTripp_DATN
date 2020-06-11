@@ -197,6 +197,7 @@
                 </div>
             </div>
             <div class="row">
+                <?php $a = 0 ?>
                 @foreach ($inforRP as $key => $value)
                     @foreach ($inforFB as $v)
                         @if($value['id'] == $v['id'])
@@ -236,12 +237,11 @@
                                                     <tr>
                                                         <td class="r-o">Giá trung bình/đêm <span>:</span></td>
                                                         <td>
-                                                            2.524.952 VND
-                                                            {{-- @foreach ($inforRoom as $item)
-                                                                @if($item['id_rp'] == $value['id'])
-                                                                    0 + {{ $item['price'] }}
+                                                            @foreach ($arrPrice as $item)
+                                                                @if($item[0] == $value['id'])
+                                                                    {{  round($item[1],2)  }}
                                                                 @endif()
-                                                            @endforeach --}}
+                                                            @endforeach
                                                         </td>
                                                     </tr>
                                                     <tr>

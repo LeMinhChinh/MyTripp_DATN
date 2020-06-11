@@ -99,3 +99,88 @@ button.js-update-request {
 .owner-infor .form-group{
     width: 70%!important;
 }
+input.ps-item-content-input {
+    width: 100%;
+    padding: 7px 12px;
+    height: 45px;
+    border: 1px solid #d0d0ae;
+    border-radius: 5px;
+}
+
+.ps-item-title p {
+    font-size: 16px;
+    color: #000;
+}
+
+input.ps-item-content-input:focus, .nice-select, .nice-select:hover, .nice-select:focus{
+    border: 1px solid #d0d0ae!important;
+}
+
+.nice-select, .nice-select > ul.list{
+    width: 100%!important;
+}
+
+p.ps-infor-img-title {
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    color: #000;
+}
+.ps-item-button{
+    text-align: right;
+    padding: 5px 10px;
+}
+
+input.ps-item-content-input[type=file]{
+    display: none;
+}
+
+p.ps-infor-img-label > label {
+    margin: 0!important;
+    cursor: pointer;
+}
+
+p.ps-infor-img-label {
+    font-size: 16px;
+    color: #0071c2;
+    justify-content: center;
+    text-align: center;
+    border: 1px solid #0071c2;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+p.ps-infor-img-label.disabledInput {
+    color: rgb(170, 170, 170);
+    cursor: default;
+    background-color: rgb(235, 235, 228);
+    border: 1px solid #d0d0ae;
+    cursor: default;
+}
+
+p.ps-infor-img-label.disabledInput > label{
+    cursor: default;
+}
+
+.owner-infor .ps-item-button {
+    text-align: right;
+    width: 70%;
+    padding: 10px 0 0 0!important;
+}
+
+.ps-infor-image {
+    border-radius: 50%;
+    border: 1px solid #d0d0ae;
+    height: 190px;
+    width: 190px;
+}
+
+.owner-infor .col-4 {
+    display: flex;
+    justify-content: center;
+}
+
+input#psEmail {
+    pointer-events: none;
+}

@@ -62,12 +62,13 @@ class RestingPlace extends Model
         return $data;
     }
 
-    public function getInforListRP()
+    public function getInforListRP($id)
     {
         $data = DB::table('resting_places as rp')
                     ->select('rp.*','trp.name as type_name')
                     ->join('type_rp as trp', 'trp.id','=','rp.type')
                     ->where('rp.status',2)
+                    ->whereIn('rp.id',$id)
                     ->get();
         return $data;
     }
