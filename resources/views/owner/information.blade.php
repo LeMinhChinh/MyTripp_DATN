@@ -4,7 +4,7 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Personal Information</a>
+            <a href="#">My Information</a>
         </li>
         <li class="breadcrumb-item active">Overview</li>
     </ol>
@@ -13,7 +13,7 @@
             @csrf
             <div class="row">
                 <div class="col-4">
-                   <div class="owner-avatar">
+                    <div class="owner-avatar">
                         @if($inforAcc['avatar'] !== null)
                             <img src="{{ URL::to('/') }}/user/uploads/avatar/{{ $inforAcc['avatar'] }}" alt="" class="ps-infor-image">
                         @endif
@@ -26,52 +26,56 @@
                         @if($inforAcc['avatar'] === null && $inforAcc['gender'] === null)
                             <img src="{{ asset('user/img/avatar-user.png') }}" alt="" class="ps-infor-image">
                         @endif
-                        <p class="ps-infor-img-title">Ảnh hồ sơ</p>
+                    </div>
+                    <div class="owner-title">
+                        <p class="ps-infor-img-title">Avatar</p>
+                    </div>
+                    <div class="owner-name">
                         <input disabled="disabled" type="file" name="psAvatar" id="psAvatar" class="ps-item-content-input">
-                        <p class="ps-infor-img-label"><label for="psAvatar" >Thay đổi hình ảnh</label></p>
-                   </div>
+                        <p class="ps-infor-img-label"><label for="psAvatar" >Choose file</label></p>
+                    </div>
                 </div>
                 <div class="col-8">
                     <div>
                         <div class="form-group ps-item-content">
-                            <label for="formGroupExampleInput">Tên hiển thị</label>
-                            <input type="text" class="form-control" id="psUsername" name="psUsername" placeholder="Tên hiển thị" value="{{ $inforAcc['username'] }}" disabled="disabled">
+                            <label for="formGroupExampleInput">Username</label>
+                            <input type="text" class="form-control" id="psUsername" name="psUsername" placeholder="Username" value="{{ $inforAcc['username'] }}" disabled="disabled">
                         </div>
                         <div class="form-group ps-item-content" title="Email không thể thay đổi">
                             <label for="formGroupExampleInput2">Email</label>
                             <input type="text" class="form-control ps-item-content-input" id="psEmail" name="psEmail" placeholder="Email" value="{{ $inforAcc['email'] }}" disabled="disabled">
                         </div>
                         <div class="form-group ps-item-content">
-                            <label for="psGender">Danh xưng</label>
+                            <label for="psGender">Gender</label>
                             <select class="custom-select" name="psGender" id="psGender" disabled="disabled">
-                                <option value="" @if($inforAcc['gender'] === null) selected="selected" @endif>--- Danh xưng ---</option>
-                                <option value="1" @if($inforAcc['gender'] === 1) selected="selected" @endif>Anh</option>
-                                <option value="0" @if($inforAcc['gender'] === 0) selected="selected" @endif>Chị</option>
+                                <option value="" @if($inforAcc['gender'] === null) selected="selected" @endif>--- Gender ---</option>
+                                <option value="1" @if($inforAcc['gender'] === 1) selected="selected" @endif>Male</option>
+                                <option value="0" @if($inforAcc['gender'] === 0) selected="selected" @endif>Femail</option>
                             </select>
                         </div>
                         <div class="form-group ps-item-content">
-                            <label for="formGroupExampleInput2">Họ và tên đêm</label>
-                            <input type="text" class="form-control" id="psSurname" name="psSurname" placeholder="Họ và tên đêm" value="{{ $inforAcc['surname'] }}" disabled="disabled">
+                            <label for="formGroupExampleInput2">Surname</label>
+                            <input type="text" class="form-control" id="psSurname" name="psSurname" placeholder="Surname" value="{{ $inforAcc['surname'] }}" disabled="disabled">
                         </div>
                         <div class="form-group ps-item-content">
-                            <label for="formGroupExampleInput">Tên</label>
-                            <input type="text" class="form-control" id="psName" name="psName" placeholder="Tên"  value="{{ $inforAcc['name'] }}" disabled="disabled">
+                            <label for="formGroupExampleInput">Name</label>
+                            <input type="text" class="form-control" id="psName" name="psName" placeholder="Name"  value="{{ $inforAcc['name'] }}" disabled="disabled">
                         </div>
                         <div class="form-group ps-item-content">
-                            <label for="formGroupExampleInput2">Số điện thoại</label>
-                            <input type="text" class="form-control" id="psPhone" name="psPhone" placeholder="Số điện thoại"  value="{{ $inforAcc['phone'] }}" disabled="disabled">
+                            <label for="formGroupExampleInput2">Phone</label>
+                            <input type="text" class="form-control" id="psPhone" name="psPhone" placeholder="Phone"  value="{{ $inforAcc['phone'] }}" disabled="disabled">
                         </div>
                         <div class="form-group ps-item-content">
-                            <label for="formGroupExampleInput">Ngày sinh</label>
-                            <input type="date" class="form-control" id="psAge" name="psAge" placeholder="Ngày sinh"  value="{{ $inforAcc['age'] }}" disabled="disabled">
+                            <label for="formGroupExampleInput">Age</label>
+                            <input type="date" class="form-control" id="psAge" name="psAge" placeholder="Age"  value="{{ $inforAcc['age'] }}" disabled="disabled">
                         </div>
                         <div class="form-group ps-item-content">
-                            <label for="formGroupExampleInput2">Địa chỉ</label>
-                            <input type="text" class="form-control" id="psAddress" name="psAddress" placeholder="Địa chỉ"  value="{{ $inforAcc['address'] }}" disabled="disabled">
+                            <label for="formGroupExampleInput2">Address</label>
+                            <input type="text" class="form-control" id="psAddress" name="psAddress" placeholder="Address"  value="{{ $inforAcc['address'] }}" disabled="disabled">
                         </div>
                         <div class="ps-item-button">
-                            <button type="button" class="btn btn-success ps-button-update">Cập nhật hồ sơ</button>
-                            <button type="submit" class="btn btn-primary ps-button-save" id="{{ $inforAcc['id'] }}">Lưu thay đổi</button>
+                            <button type="button" class="btn btn-success ps-button-update">Update</button>
+                            <button type="submit" class="btn btn-primary ps-button-save" id="{{ $inforAcc['id'] }}">Save</button>
                         </div>
                     </div>
                 </div>
@@ -79,3 +83,14 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#psAvatar').change(function(){
+            var x = $('#psAvatar').val()
+            var fileName = `<div class="owner-name-file"><p class="ps-name-file">Namefile : `+x.slice(12)+`</p></div>`
+            console.log(fileName)
+            $(fileName).insertAfter($('.owner-name'))
+        })
+    </script>
+@endpush

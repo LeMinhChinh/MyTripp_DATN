@@ -157,6 +157,10 @@ p.ps-infor-img-label.disabledInput {
     background-color: rgb(235, 235, 228);
     border: 1px solid #d0d0ae;
     cursor: default;
+    width: 70%;
+}
+p.ps-infor-img-label{
+    width: 70%;
 }
 
 p.ps-infor-img-label.disabledInput > label{
@@ -173,14 +177,22 @@ p.ps-infor-img-label.disabledInput > label{
     border-radius: 50%;
     border: 1px solid #d0d0ae;
     height: 190px;
-    width: 190px;
 }
 
-.owner-infor .col-4 {
+.owner-avatar, .owner-name ,.owner-title,.owner-name-file{
     display: flex;
     justify-content: center;
 }
 
 input#psEmail {
     pointer-events: none;
+}
+
+/* span.click-upload-hotel {
+    color: #007bff;
+    cursor: pointer;
+} */
+
+.form-group.save-button {
+    text-align: right;
 }

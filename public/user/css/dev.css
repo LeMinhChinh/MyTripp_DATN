@@ -1272,3 +1272,40 @@ p.show-feedback {
     cursor: pointer;
     color: #007bff;
 }
+
+p.ps-infor-img-label.disabledInput {
+    color: rgb(170, 170, 170);
+    cursor: default;
+    background-color: rgb(235, 235, 228);
+    border: 1px solid #d0d0ae;
+    cursor: default;
+    width: 70%;
+}
+p.ps-infor-img-label{
+    width: 70%;
+}
+
+p.ps-infor-img-label.disabledInput > label{
+    cursor: default;
+}
+
+.owner-infor .ps-item-button {
+    text-align: right;
+    width: 70%;
+    padding: 10px 0 0 0!important;
+}
+
+.ps-infor-image {
+    border-radius: 50%;
+    border: 1px solid #d0d0ae;
+    height: 190px;
+}
+
+.owner-avatar, .owner-name ,.owner-title,.owner-name-file{
+    display: flex;
+    justify-content: center;
+}
+
+input#psEmail {
+    pointer-events: none;
+}

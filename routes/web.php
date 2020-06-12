@@ -80,5 +80,7 @@ Route::group([
     Route::get('general-information/{id}','OwnerController@information')->name('information');
     Route::post('update-general-information/{id}','OwnerController@handleUpdateInfomation')->name('handleUpdateInfomation');
 
-    Route::get('feedback','OwnerController@feedback')->name('feedback');
+    Route::get('my-hotel/{id}','OwnerController@myHotel')->name('myHotel');
+    Route::get('create-hotel','OwnerController@createHotel')->name('createHotel');
+    Route::post('handle-create-hotel','OwnerController@handleCreateHotel')->name('handleCreateHotel');
 });
