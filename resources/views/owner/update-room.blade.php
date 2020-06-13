@@ -4,7 +4,7 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ route('owner.roomHotel', ['id' => $id_rp]) }}">{{ $name_rp }}</a>
+            <a href="{{ route('owner.roomHotel', ['id' => $name['id_rp']]) }}">{{ $name_rp }}</a>
         </li>
         <li class="breadcrumb-item">
             <a href="{{ route('owner.updateRoom', ['id' => $name['id']]) }}">{{ $name['name'] }}</a>

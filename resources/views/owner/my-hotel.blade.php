@@ -194,6 +194,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="paginations-view">
+                        {{ $paginate->links() }}
+                    </div>
                 </div>
             {{-- @endif --}}
         @endif

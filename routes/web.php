@@ -92,4 +92,8 @@ Route::group([
     Route::post('handle-create-room','OwnerController@handleCreateRoom')->name('handleCreateRoom');
     Route::get('view-room/{id}','OwnerController@updateRoom')->name('updateRoom');
     Route::post('handle-update-room/{id}','OwnerController@handleUpdateRoom')->name('handleUpdateRoom');
+    Route::post('delete-room','OwnerController@deleteRoom')->name('deleteRoom');
+
+    Route::get('pricing-plan/{id}','OwnerController@pricingPlan')->name('pricingPlan');
+    Route::get('payment-plan','OwnerController@paymentPlan')->name('paymentPlan');
 });

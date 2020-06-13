@@ -15,4 +15,9 @@
         <i class="fas fa-user-circle"></i>
         <span>My Information</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('owner.pricingPlan', ['id' =>  Session::get('idSession')]) }}">
+        <i class="fas fa-tags"></i>
+        <span>Pricing plans</span></a>
+    </li>
 </ul>

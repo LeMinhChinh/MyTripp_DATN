@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-7">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control id-search-keyword" placeholder="Searching for..." id="js-keyword">
+                    <input type="text" class="form-control id-search-keyword" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}" data-id="{{ $id }}">
                     {{-- <select class="custom-select custom-select-sm mb-3 role-select-option" name="" id="">
                         <option value="">Filter role</option>
                         <option value="2">Super Admin</option>
@@ -84,7 +84,88 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="paginations-view">
+                    {{ $paginate->links() }}
+                </div>
             </div>
         @endif
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            $('.js-delete-account').click(function() {
+                var self = $(this);
+                var idAccount = self.attr('id').trim();
+                if($.isNumeric(idAccount)){
+                    $.ajax({
+                        url: "{{ route('owner.deleteRoom') }}",
+                        type: "POST",
+                        data: {id: idAccount},
+                        beforeSend: function(){
+                            self.text('Loading ...');
+                        },
+                        success: function(data){
+                            console.log(data)
+                            self.text('Delete');
+                            if(data === 'Hotel not found'){
+                                alert('Hotel not found')
+                            }
+                            if(data === 'Delete fail') {
+                                alert('Delete fail');
+                            }
+                            if(data === 'Delete success') {
+                                $('.js-account-'+idAccount).hide();
+                                alert('Delele success');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            $('.customCheck').click(function(){
+                var checked = $('input.customCheck:checked').length;
+                if(checked){
+                    $('.more-select-option').addClass('more-action-show')
+                }else{
+                    $('.more-select-option').removeClass('more-action-show')
+                }
+            })
+
+            $('#js-search').click(function(){
+                var keyword = $('#js-keyword').val().trim();
+                var id = $('#js-keyword').attr('data-id')
+                window.location.href = "http://localhost:8000/owner/my-room/"+id+"?keyword="+keyword;
+            });
+
+            $('.action-select').click(function(){
+                var id = $('input.customCheck:checked').map(function(){
+                    return $(this).val();
+                }).toArray();
+                console.log(id)
+                $.ajax({
+                    url: "{{ route('owner.deleteRoom') }}",
+                    type: "POST",
+                    data: {id: id},
+                    success: function(data){
+                        if(data === 'Hotel not found'){
+                            alert('Hotel not found')
+                        }
+                        if(data === 'Delete fail') {
+                            alert('Delete fail');
+                        }
+                        if(data === 'Delete success') {
+                            $.each(id, function(index, id){
+                                $('.js-account-'+id).hide();
+                            })
+                            alert('Delele success');
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+@endpush

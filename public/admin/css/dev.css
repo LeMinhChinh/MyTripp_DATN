@@ -202,7 +202,7 @@ input#psEmail {
     width: 50%;
 }
 
-.js-view > a, .js-view > a:hover, .js-view > a:focus {
+.js-view > a, .js-view > a:hover, .js-view > a:focus, .monthly-price button.btn a, .monthly-price button.btn a:hover, .monthly-price button.btn a:focus {
     color: #fff;
     text-decoration: none;
 }
@@ -210,4 +210,55 @@ input#psEmail {
 .js-room > a, .js-room > a:hover, .js-room > a:focus {
     color: #fff;
     text-decoration: none;
+}
+
+thead.thead-light > tr > th .plan-title{
+    text-align: center;
+    font-size: 20px;
+}
+
+.table .thead-light th:first-child {
+    width: 20%;
+}
+
+.monthly-price {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+span.pricing-table__feature-value.pricing-table__feature-price.monthly-price__price {
+    font-size: 35px;
+}
+
+span.monthly-price__currency.text-minor {
+    padding-left: 10px;
+}
+
+p.plan-desc {
+    text-align: center;
+    margin-bottom: 0;
+    font-weight: normal;
+    margin-top: -1rem;
+}
+
+.form-group.single-lable {
+    margin-bottom: 0;
+}
+
+.form-group.single-lable.select-bank-lable {
+    margin-top: 1rem;
+}
+
+img.logo-bank {
+    width: 100px;
+    height: 50px;
 }

@@ -97,7 +97,7 @@ class RestingPlace extends Model
                         $data = $data->where('rp.name', 'like', '%'.$keyword.'%');
                     }
                     $data = $data->where('rp.id_acc', $id)
-                                    ->paginate(156);
+                                    ->paginate(15);
         return $data;
     }
 

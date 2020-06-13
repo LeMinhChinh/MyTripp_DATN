@@ -120,7 +120,7 @@ class OwnerController extends Controller
 
         $count = count($inforRP);
         $data['count'] = $count;
-        // dd($inforRP);
+        // dd($data);
 
         return view('owner/my-hotel', $data);
     }
@@ -366,28 +366,23 @@ class OwnerController extends Controller
     {
         $id = $request->id;
 
-        $inforRoom = $room->getInforRoomById($id);
+        $keyword = $request->keyword;
+        $keyword = \strip_tags($keyword);
+        $data['keyword'] = $keyword;
+
+        $inforRoom = $room->getInforRoomById($id, $keyword);
+
+        $data['paginate'] = $inforRoom;
         $inforRoom = json_decode(json_encode($inforRoom),true);
+
+        $data['inforRoom'] = $inforRoom['data'] ?? [];
 
         $name = RestingPlace::where('id',$id)->pluck('name')->first();
         $name = \json_decode(\json_encode($name),true);
 
-        $images = [];
-
-        foreach ($inforRoom as $key => $value) {
-            if(!empty($value['image'])){
-                $image = \explode(";", $value['image']);
-                array_push($images,$image);
-            }
-        }
-
-        $count = count($inforRoom);
-
-        $data['count'] = $count;
+        $data['count'] = count($inforRoom);
         $data['id'] = $id;
-        $data['inforRoom'] = $inforRoom;
         $data['name'] = $name;
-        $data['images'] = $images;
 
         return view('owner.room-hotel', $data);
     }
@@ -509,7 +504,7 @@ class OwnerController extends Controller
 
         $data['name'] = $name;
         $data['name_rp'] = $name_rp;
-        $data['id_rp'] = $id_rp;
+        // $data['id_rp'] = $id_rp;
         $data['type'] = $type;
 
         return view('owner.update-room', $data);
@@ -578,7 +573,7 @@ class OwnerController extends Controller
         }
 
         $dataRoom = [
-            'id_rp' => $id,
+            'id_rp' => $id_rp,
             'name' => $name,
             'image' => $viewFile,
             'price' => $price,
@@ -606,5 +601,37 @@ class OwnerController extends Controller
         }else{
             return redirect()->route('owner.updateRoom',['id' => $id]);
         }
+    }
+
+    public function deleteRoom(Request $request, Rooms $room)
+    {
+        $id = $request->id;
+
+        if($id > 0){
+            $delete = $room->deleteRoomById($id);
+            if($delete){
+                echo "Delete success";
+            }else{
+                echo "Delete fail";
+            }
+        } else {
+            echo "Hotel not found";
+        }
+    }
+
+    // Pricing plan
+    public function pricingPlan(Request $request, $id)
+    {
+        $id = $request->id;
+
+        $status = RestingPlace::where('id_acc',$id)->pluck('status')->first();
+
+        $data['status'] = $status;
+        return view('owner.pricing-plan', $data);
+    }
+
+    public function paymentPlan(Request $request)
+    {
+        return view('owner.payment-plan');
     }
 }

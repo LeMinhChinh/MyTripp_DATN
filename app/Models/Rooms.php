@@ -21,14 +21,18 @@ class Rooms extends Model
 
     // Admin
 
-    public function getInforRoomById($id)
+    public function getInforRoomById($id, $keyword)
     {
         $data =DB::table('rooms as r')
                     ->select('r.*','rp.name as nameHotel','tb.name as namebed')
                     ->join('resting_places as rp','rp.id','=','r.id_rp')
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
                     ->where('r.id_rp',$id)
-                    ->get();
+                    ->orderby('r.id','ASC');
+                    if($keyword!= null){
+                        $data = $data->where('r.name', 'like', '%'.$keyword.'%');
+                    }
+                    $data = $data->paginate(15);
         return $data;
     }
 
@@ -45,5 +49,17 @@ class Rooms extends Model
                     ->where('id',$id)
                     ->update($data);
         return $update;
+    }
+
+    public function deleteRoomById($id)
+    {
+        $delete = DB::table('rooms');
+                        if(is_numeric($id)){
+                            $delete = $delete->where('id', $id);
+                        }else{
+                            $delete = $delete->wherein('id', $id);
+                        }
+                        $delete = $delete->delete();
+        return $delete;
     }
 }
