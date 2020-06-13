@@ -344,6 +344,8 @@ class UserController extends Controller
         $address = $request->psAddress;
         $avatar = $request->psAvatar;
 
+        dd($gender);
+
         $oldAvatar = Account::where('id',$id)->pluck('avatar')->first();
         $oldAvatar = json_decode(json_encode($oldAvatar), true);
 

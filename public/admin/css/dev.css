@@ -188,11 +188,26 @@ input#psEmail {
     pointer-events: none;
 }
 
-/* span.click-upload-hotel {
-    color: #007bff;
-    cursor: pointer;
-} */
-
 .form-group.save-button {
     text-align: right;
+}
+
+.ageOption.divide{
+    float: left;
+    width: 50%;
+}
+
+.ageLimit{
+    float: left;
+    width: 50%;
+}
+
+.js-view > a, .js-view > a:hover, .js-view > a:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.js-room > a, .js-room > a:hover, .js-room > a:focus {
+    color: #fff;
+    text-decoration: none;
 }

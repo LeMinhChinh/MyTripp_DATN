@@ -38,11 +38,7 @@
                                                     <span class="glyphicon glyphicon-map-marker"></span><p>{{ $value['address'] }} - <a href="" class="rp-click-map" data-toggle="modal" data-target="#popupMap">Xem trên bản đồ</a></p>
                                                 </div>
                                                 <div class="rp-description">
-                                                    <p>Lakeside 1 Hotel Nam Định cung cấp chỗ nghỉ tại Như Thức. Khách sạn 3 sao này có lễ tân 24 giờ, dịch vụ phòng và WiFi miễn phí. Chỗ nghỉ có thể bố trí chỗ đỗ xe riêng với một khoản phụ phí.</p>
-                                                    <p>Phòng nghỉ tại khách sạn được trang bị máy điều hòa, TV truyền hình vệ tinh màn hình phẳng, tủ lạnh, ấm đun nước, chậu rửa vệ sinh, máy sấy tóc và tủ để quần áo.</p>
-                                                    <p>Khách sạn phục vụ bữa sáng kiểu Á hàng ngày.</p>
-                                                    <p>Lakeside 1 Hotel Nam Định cung cấp chỗ nghỉ 3 sao với bể sục.</p>
-                                                    <p>Khách sạn cách thành phố Ninh Bình 32 km. Sân bay gần nhất là Sân bay quốc tế Cát Bi, nằm trong bán kính 100 km từ LakeSide 1 Hotel Nam Định. </p>
+                                                    {!! $value['description'] !!}
                                                 </div>
                                             </div>
                                         </div>

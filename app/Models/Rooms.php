@@ -19,9 +19,31 @@ class Rooms extends Model
         return $data;
     }
 
-    // public function getDataRoom()
-    // {
-    //     $data = DB::table('rooms as r')
-    //                 ->select('r.price','')
-    // }
+    // Admin
+
+    public function getInforRoomById($id)
+    {
+        $data =DB::table('rooms as r')
+                    ->select('r.*','rp.name as nameHotel','tb.name as namebed')
+                    ->join('resting_places as rp','rp.id','=','r.id_rp')
+                    ->join('type_bed as tb','tb.id','=','r.type_bed')
+                    ->where('r.id_rp',$id)
+                    ->get();
+        return $data;
+    }
+
+    public function createRoom($data)
+    {
+        DB::table('rooms')->insert($data);
+        $id = DB::getPdo()->lastInsertId();
+        return $id;
+    }
+
+    public function updateRoom($data, $id)
+    {
+        $update = DB::table('rooms')
+                    ->where('id',$id)
+                    ->update($data);
+        return $update;
+    }
 }

@@ -83,4 +83,13 @@ Route::group([
     Route::get('my-hotel/{id}','OwnerController@myHotel')->name('myHotel');
     Route::get('create-hotel','OwnerController@createHotel')->name('createHotel');
     Route::post('handle-create-hotel','OwnerController@handleCreateHotel')->name('handleCreateHotel');
+    Route::get('view-hotel/{id}','OwnerController@updateHotel')->name('updateHotel');
+    Route::post('handle-update-hotel/{id}','OwnerController@handleUpdateHotel')->name('handleUpdateHotel');
+    Route::post('delete-hotel','OwnerController@deleteHotel')->name('deleteHotel');
+
+    Route::get('my-room/{id}','OwnerController@roomHotel')->name('roomHotel');
+    Route::get('create-room/{id}','OwnerController@createRoom')->name('createRoom');
+    Route::post('handle-create-room','OwnerController@handleCreateRoom')->name('handleCreateRoom');
+    Route::get('view-room/{id}','OwnerController@updateRoom')->name('updateRoom');
+    Route::post('handle-update-room/{id}','OwnerController@handleUpdateRoom')->name('handleUpdateRoom');
 });
