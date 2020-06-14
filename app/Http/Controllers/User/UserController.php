@@ -38,31 +38,44 @@ class UserController extends Controller
             }
         }
 
-        $inforRoom = Rooms::select('price','discount','id_rp')->whereIn('id_rp',$arr_id)->get();
-        $inforRoom = \json_decode(\json_encode($inforRoom), true);
+        $inforRoom = $room->getRoomByDiscount();
+        $inforRoom = \json_decode(\json_encode($inforRoom),true);
 
-        $sumPrice = 0;
-        $arrPrice = [];
+        $imageRoom = [];
 
-        foreach ($inforRP as $key => $value) {
-            $index = 0;
-            foreach ($inforRoom as $k => $v) {
-                if($value['id'] == $v['id_rp'])
-                    $sumPrice += ($v['price'] - ($v['price']*$v['discount']/100)) ;
-                    $index ++;
+        foreach ($inforRoom as $k => $v) {
+            if(!empty($v['image'])){
+                $img = \explode(";", $v['image']);
+                array_push($imageRoom,$img);
             }
-            $arrPrice[]= [
-                $value['id'],
-                ($sumPrice/$index)*4
-            ];
         }
 
-        $data['inforRP'] = $inforRP;
+        // $inforRoom = Rooms::select('price','discount','id_rp')->whereIn('id_rp',$arr_id)->get();
+        // $inforRoom = \json_decode(\json_encode($inforRoom), true);
+
+        // $sumPrice = 0;
+        // $arrPrice = [];
+
+        // foreach ($inforRP as $key => $value) {
+        //     $index = 0;
+        //     foreach ($inforRoom as $k => $v) {
+        //         if($value['id'] == $v['id_rp'])
+        //             $sumPrice += ($v['price'] - ($v['price']*$v['discount']/100)) ;
+        //             $index ++;
+        //     }
+        //     $arrPrice[]= [
+        //         $value['id'],
+        //         ($sumPrice/$index)*4
+        //     ];
+        // }
+
         $data['inforFB'] = $inforFB;
-        $data['arrPrice'] = $arrPrice;
+
+        $data['inforRP'] = $inforRP;
         $data['images'] = $images;
 
-        // dd($data);
+        $data['inforRoom'] = $inforRoom;
+        $data['imageRoom'] = $imageRoom;
 
         return view('user/home',$data);
     }
@@ -343,8 +356,6 @@ class UserController extends Controller
         $age = $request->psAge;
         $address = $request->psAddress;
         $avatar = $request->psAvatar;
-
-        dd($gender);
 
         $oldAvatar = Account::where('id',$id)->pluck('avatar')->first();
         $oldAvatar = json_decode(json_encode($oldAvatar), true);

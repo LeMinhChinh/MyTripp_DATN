@@ -1309,3 +1309,11 @@ p.ps-infor-img-label.disabledInput > label{
 input#psEmail {
     pointer-events: none;
 }
+
+.service-item > img {
+    height: 250px;
+}
+
+.service-item > p{
+    font-size: 15px;
+}

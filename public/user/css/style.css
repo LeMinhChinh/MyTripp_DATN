@@ -692,7 +692,7 @@ section.testimonial-section.spad {
 	margin-bottom: 36px;
 }
 .service-item {
-	text-align: center;
+	/* text-align: center; */
 	padding: 0 0 30px 0;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
@@ -720,7 +720,7 @@ section.testimonial-section.spad {
 .service-item h4 {
 	color: #000;
 	font-size: 22px;
-	margin-bottom: 15px;
+	margin-bottom: 5px;
 	margin-top: 10px;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
@@ -1973,7 +1973,7 @@ section.testimonial-section.spad {
 @media only screen and (min-width: 1554px) and (max-width: 1920px) {
 	.hp-room-items .hp-room-item .hr-text {
 		bottom: -275px;
-	}
+    }
 }
 @media only screen and (min-width: 1200px) and (max-width: 1250px) {
 	.hp-room-items .hp-room-item .hr-text {

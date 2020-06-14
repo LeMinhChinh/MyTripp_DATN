@@ -4,10 +4,17 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="">Pricing plan</a>
+            <a href="{{ route('owner.pricingPlan', ['id' =>  Session::get('idSession')]) }}">Pricing plan</a>
         </li>
         <li class="breadcrumb-item active">Overview</li>
     </ol>
+    @if($payment !== null)
+        @if($payment === 0)
+            <div>
+                <p>You have sent an upgrade request. Please wait for a response from us!</p>
+            </div>
+        @endif
+    @endif
     <div class="container">
         <div>
             <table class="table table-bordered">
@@ -49,6 +56,20 @@
                             </div>
                         </td>
                     </tr>
+                    @if($status == null)
+                        <tr>
+                            <td>
+                                <div class="monthly-price">
+                                    Plan
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <div class="monthly-price">
+                                    You need to own at least one hotel
+                                </div>
+                            </td>
+                        </tr>
+                    @endif
                     @if($status == 1)
                         <tr>
                             <td>

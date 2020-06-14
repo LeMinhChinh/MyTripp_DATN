@@ -127,58 +127,129 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title">
-                    <h2>Nhà ở được khách yêu thích</h2>
+                    <h2>Nhà ở đang được giảm giá</h2>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-sm-6">
-                <div class="service-item">
-                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg')}}" alt="">
-                    <h4>Travel Plan</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="service-item">
-                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg')}}" alt="">
-                    <h4>Catering Service</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="service-item">
-                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg')}}" alt="">
-                    <h4>Babysitting</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="service-item">
-                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg')}}" alt="">
-                    <h4>Laundry</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="service-item">
-                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg')}}" alt="">
-                    <h4>Hire Driver</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <div class="service-item">
-                    <img src="{{ asset('user/img/summer-trip-hồ-cốc-1.jpg')}}" alt="">
-                    <h4>Bar & Drink</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.</p>
-                </div>
+        <div class="room-discount hp-room-items">
+            <div class="row">
+                @foreach ($inforRoom as $index => $item)
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="service-item" data-toggle="modal" data-target="#detailRoom-{{ $index }}">
+                            @foreach($imageRoom as $in => $it)
+                                @if($index == $in)
+                                    <img src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $it['0'] }}" alt="">
+                                @endif
+                            @endforeach
+                            <h3 style="color: #0071c2">Phòng : {{ $item['name'] }}</h3>
+                            <p>{{ $item['type'] }} : {{ $item['rp'] }}</p>
+                            <p>Địa điểm : {{ $item['place'] }}</p>
+                            @if($item['discount'])
+                                <p style="text-decoration: line-through;">Giá gốc : {{   number_format($item['price'], 0, '', ',')}}&#8363;</p>
+                                <p style="color:red">Giá hiện tại : {{   number_format(($item['price'] - ($item['price']*$item['discount'])/100), 0, '', ',')}}&#8363; (discount: {{ $item['discount'] }} %)</p>
+                            @else
+                                <p>Giá gốc : {{   number_format($item['price'], 0, '', ',')}}&#8363;</p>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="modal fade" id="detailRoom-{{ $index }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog popup-detail" role="document">
+                        <div class="modal-content content-detail">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"><p class="rp-item-name-room"><small>{{ $item['type'] }} </small> {{ $item['rp'] }} - <small>Phòng </small>{{ $item['name'] }}</p></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="rp-item-infor">
+                                            <div class="rp-item-featured">
+                                                <div class="rp-item-feedback">
+                                                    <p class="rp-item-people">Phòng ngủ dành cho : @if($item['adult'] > 0 && $item['child'] == 0)<span>{{ $item['adult'] }} người lớn <i class="fas fa-user-friends"></i>@endif @if($item['child'] > 0 && $item['adult'] == 0) {{ $item['child'] }} trẻ con <i class="fas fa-baby"></i>@endif @if($item['adult'] > 0 && $item['child'] > 0)<span>{{ $item['adult'] }} người lớn <i class="fas fa-user-friends"></i> và {{ $item['child'] }} trẻ con <i class="fas fa-baby"></i> @endif</p>
+                                                    @if($item['acreage'] > 0)<p><i class="fa fa-home"></i>Diện tích phòng :  {{ $item['acreage'] }}m&#178;</p>@endif
+                                                    @if($item['quantity_bed'] > 0)<p><i class="fa fa-bed"></i>{{ $item['quantity_bed'] }} @if($item['type_bed'] > 0) {{ $item['name_bed'] }} @endif @if($item['description_bed'] !== null) {{ $item['description_bed'] }} @endif</p>@endif
+                                                    @if($item['smoke'] == 0)
+                                                        <p><i class="fas fa-smoking"></i>Không hút thuốc</p>
+                                                    @else
+                                                        <p><i class="fas fa-smoking"></i>Có hút thuốc</p>
+                                                    @endif
+                                                </div>
+                                                @if($item['wifi'] > 0 && $item['phone'] > 0 && $item['television'] > 0)<div class="rp-item-feedback">
+                                                    <p class="rp-item-title-index">Giải trí : </p>
+                                                    @if($item['wifi'] > 0)<p><i class="fas fa-wifi"></i>Wifi miễn phí tất cả các phòng</p>@endif
+                                                    @if($item['phone'] > 0)<p><i class="fas fa-phone-alt"></i>Điện thoại</p>@endif
+                                                    @if($item['television'] > 0)<p><i class="fas fa-tv"></i>Televison</p>@endif
+                                                </div>@endif
+                                                @if($item['air_conditioning'] > 0)<div class="rp-item-feedback">
+                                                    <p class="rp-item-title-index">Tiện nghi : </p>
+                                                    <p><img src="https://img.icons8.com/pastel-glyph/64/000000/air-conditioner--v2.png"/>Điều hòa</p>
+                                                </div>@endif
+                                                <div class="rp-item-feedback">
+                                                    @if($item['discount'] > 0)
+                                                        <p class="rp-item-price rp-price-discount"><i class="fas fa-dollar-sign"></i> Giá gốc : <span>{{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</span></p><p class="rp-item-discount">Giảm giá đến <span>{{ $item['discount'] }}%</span></p>
+                                                        <p class="rp-item-promo-price">Nay chỉ còn : <span>{{ number_format($item['price'] - ($item['price']*$item['discount']/100) ,0 ,'.' ,'.').'' }}&#8363;</span></p>
+                                                    @else
+                                                        <p class="rp-item-price"><i class="fas fa-dollar-sign"></i> Giá gốc : <span>{{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</span></p>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="room-btn-booking">
+                                                <button type="button" class="btn btn-primary">Thêm vào danh sách phòng</button>
+                                                <button type="button" class="btn btn-success">Đặt phòng ngay</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="rp-detail-img">
+                                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                                <ol class="carousel-indicators">
+                                                    @foreach ($images as $key => $img)
+                                                        @if($index == $key)
+                                                            @foreach($img as $i => $t)
+                                                                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $i }}" class="active">
+                                                                    <div class="img-active">
+                                                                        <img src="{{ URL::to('/') }}/user/uploads/room/{{ $t }}" alt="" >
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
+                                                        @endif
+                                                    @endforeach
+                                                </ol>
+                                                <div class="carousel-inner">
+                                                    @foreach ($images as $key => $img)
+                                                        @if($index == $key)
+                                                            <div class="carousel-item active">
+                                                                <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/room/{{ $img[0] }}" >
+                                                            </div>
+                                                            @foreach($img as $i => $t)
+                                                                @if($i > 0)
+                                                                    <div class="carousel-item">
+                                                                        <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/room/{{ $t }}" alt="{{ $i }} slide">
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -234,16 +305,16 @@
                                                             @endif
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td class="r-o">Giá trung bình/đêm <span>:</span></td>
                                                         <td>
                                                             @foreach ($arrPrice as $item)
                                                                 @if($item[0] == $value['id'])
-                                                                    {{  round($item[1],2)  }}
+                                                                    {{   number_format(round($item[1],2), 0, '', ',')}}&#8363;
                                                                 @endif()
                                                             @endforeach
                                                         </td>
-                                                    </tr>
+                                                    </tr> --}}
                                                     <tr>
                                                         <td class="r-o">Tiện nghi <span>:</span></td>
                                                         <td>

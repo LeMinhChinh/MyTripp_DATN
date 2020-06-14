@@ -16,6 +16,11 @@
         <span>Request Owner</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.pricing') }}">
+            <i class="fas fa-tags"></i>
+        <span>Request Pricing</span></a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.feedback') }}">
         <i class="fas fa-comment-dots"></i>
         <span>Feedback</span></a>

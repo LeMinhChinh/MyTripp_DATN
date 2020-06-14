@@ -13,13 +13,6 @@
             <div class="col-7">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control id-search-keyword" placeholder="Searching for..." id="js-keyword" data-id="{{ Session::get('idSession') }}" value="{{ $keyword }}">
-                    {{-- <select class="custom-select custom-select-sm mb-3 role-select-option" name="" id="">
-                        <option value="">Filter role</option>
-                        <option value="2">Super Admin</option>
-                        <option value="1">Owner</option>
-                        <option value="0">Customer</option>
-
-                    </select> --}}
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">
                         <i class="fas fa-search"></i>
@@ -223,11 +216,11 @@
                             if(data === 'Hotel not found'){
                                 alert('Hotel not found')
                             }
-                            // if(data === 'Delete user error') {
-                            //     alert('Delete user fail');
-                            // }
-                            if(data === 'Delete fail') {
-                                alert('Delete fail');
+                            if(data === 'Delete room fail') {
+                                alert('Delete room fail');
+                            }
+                            if(data === 'Delete hotel fail') {
+                                alert('Delete hotel fail');
                             }
                             if(data === 'Delete success') {
                                 $('.js-account-'+idAccount).hide();
@@ -268,8 +261,11 @@
                         if(data === 'Hotel not found'){
                             alert('Hotel not found')
                         }
-                        if(data === 'Delete fail') {
-                            alert('Delete fail');
+                        if(data === 'Delete room fail') {
+                            alert('Delete room fail');
+                        }
+                        if(data === 'Delete hotel fail') {
+                            alert('Delete hotel fail');
                         }
                         if(data === 'Delete success') {
                             $.each(id, function(index, id){

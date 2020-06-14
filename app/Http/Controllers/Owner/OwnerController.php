@@ -10,6 +10,7 @@ use App\Models\Place;
 use App\Models\RestingPlace;
 use App\Models\Rooms;
 use App\Models\TypeBed;
+use App\Models\Payment;
 use Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -118,9 +119,8 @@ class OwnerController extends Controller
 
         $data['inforRP'] = $inforRP['data'] ?? [];
 
-        $count = count($inforRP);
+        $count = count($data['inforRP']);
         $data['count'] = $count;
-        // dd($data);
 
         return view('owner/my-hotel', $data);
     }
@@ -164,6 +164,16 @@ class OwnerController extends Controller
             $newAge = $age;
         }else{
             $newAge = $ageLimit;
+        }
+
+        $payment = Payment::where('id_owner', Session::get('idSession'))->pluck('status')->first();
+
+        if($payment != null){
+            if($payment == 1){
+                $status = 2;
+            }else{
+                $status = 1;
+            }
         }
 
         $viewFile = '';
@@ -217,7 +227,7 @@ class OwnerController extends Controller
             'checkin' => $checkin,
             'checkout' => $checkout,
             'description' => $description,
-            'status' => 1,
+            'status' =>  $status,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' =>null
         ];
@@ -344,16 +354,21 @@ class OwnerController extends Controller
         }
     }
 
-    public function deleteHotel(Request $request, Restingplace $rp)
+    public function deleteHotel(Request $request, Restingplace $rp, Rooms $room)
     {
         $id = $request->id;
 
         if($id > 0){
             $delete = $rp->deleteHotelById($id);
             if($delete){
-                echo "Delete success";
+                $deleteRoom = $room->deleteRoomByIdHotel($id);
+                if($deleteRoom){
+                    echo "Delete success";
+                }else{
+                    echo "Delete room fail";
+                }
             }else{
-                echo "Delete fail";
+                echo "Delete hotel fail";
             }
         } else {
             echo "Hotel not found";
@@ -380,7 +395,7 @@ class OwnerController extends Controller
         $name = RestingPlace::where('id',$id)->pluck('name')->first();
         $name = \json_decode(\json_encode($name),true);
 
-        $data['count'] = count($inforRoom);
+        $data['count'] = count($data['inforRoom']);
         $data['id'] = $id;
         $data['name'] = $name;
 
@@ -504,7 +519,6 @@ class OwnerController extends Controller
 
         $data['name'] = $name;
         $data['name_rp'] = $name_rp;
-        // $data['id_rp'] = $id_rp;
         $data['type'] = $type;
 
         return view('owner.update-room', $data);
@@ -625,13 +639,50 @@ class OwnerController extends Controller
         $id = $request->id;
 
         $status = RestingPlace::where('id_acc',$id)->pluck('status')->first();
+        $payment = Payment::where('id_owner', Session::get('idSession'))->pluck('status')->first();
 
         $data['status'] = $status;
+        $data['payment'] = $payment;
+
+        // dd($data);
         return view('owner.pricing-plan', $data);
     }
 
     public function paymentPlan(Request $request)
     {
-        return view('owner.payment-plan');
+        $payment = Payment::where('id_owner', Session::get('idSession'))->pluck('status')->first();
+        $status = RestingPlace::where('id_acc', Session::get('idSession'))->pluck('status')->first();
+
+        $data['payment'] = $payment;
+        $data['status'] = $status;
+
+        return view('owner.payment-plan', $data);
+    }
+
+    public function handlePaymentPlan(Request $request, Payment $pm)
+    {
+        $id = $request->idOwner;
+        $name = $request->nameOwner;
+        $payment = $request->selectPayment;
+        $bank = $request->selectBank;
+
+        $data = [
+            'id_owner' => $id,
+            'name_owner' => $name,
+            'payment' => $payment,
+            'bank' => $bank,
+            'status' => 0,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' =>null
+        ];
+
+        $payment = $pm->createPayment($data);
+
+        if($payment){
+            return redirect()->route('owner.pricingPlan',['id' => Session::get('idSession')]);
+        }else{
+            return redirect()->route('owner.paymentPlan');
+        }
+
     }
 }

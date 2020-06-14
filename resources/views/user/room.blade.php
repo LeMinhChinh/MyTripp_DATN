@@ -68,10 +68,6 @@
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="rp-item-infor">
-                                                    {{-- <div class="rp-item-feedback">
-                                                        <p class="rp-item-title-index">Đánh giá của khách hàng : </p>
-                                                        <a href="">Tuyệt vời 8,9 - 245 đánh giá</a>
-                                                    </div> --}}
                                                     <div class="rp-item-featured">
                                                         <div class="rp-item-feedback">
                                                             <p class="rp-item-people">Phòng ngủ dành cho : @if($value['adult'] > 0 && $value['child'] == 0)<span>{{ $value['adult'] }} người lớn <i class="fas fa-user-friends"></i>@endif @if($value['child'] > 0 && $value['adult'] == 0) {{ $value['child'] }} trẻ con <i class="fas fa-baby"></i>@endif @if($value['adult'] > 0 && $value['child'] > 0)<span>{{ $value['adult'] }} người lớn <i class="fas fa-user-friends"></i> và {{ $value['child'] }} trẻ con <i class="fas fa-baby"></i> @endif</p>

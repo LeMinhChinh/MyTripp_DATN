@@ -4,30 +4,46 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="">Payment plan</a>
+            <a href="{{ route('owner.pricingPlan', ['id' =>  Session::get('idSession')]) }}">Pricing plan</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ route('owner.paymentPlan') }}">Payment plan</a>
         </li>
         <li class="breadcrumb-item active">Overview</li>
     </ol>
+    @if($payment !== null)
+        @if($payment == 0)
+            <div class="notifi-payment">
+                <p>You have sent an upgrade request. Please wait for a response from us!</p>
+            </div>
+        @endif
+        @if($status == 2)
+            <div class="notifi-payment">
+                <p>You are using the premium version. No need to continue paying fees</p>
+            </div>
+        @endif
+    @endif
     <div class="container">
-        <form>
+        <form action="{{  route('owner.handlepaymentPlan')}}" method="POST" >
+            @csrf
             <h2 style="text-align: center; color:red">Payment plan</h2>
-            <div class="form-group">
-                <label for="formGroupExampleInput">Hotel name</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Hotel name">
+            <div class="form-group" style="display: none">
+                <label for="formGroupExampleInput">Id owner</label>
+                <input type="text" class="form-control" id="idOwner" name="idOwner" placeholder="Hotel name" value="{{ Session::get('idSession') }}">
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Owner name</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Owner name">
+                <input type="text" class="form-control" id="nameOwner" name="nameOwner" placeholder="Owner name" value="{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}">
             </div>
             <div class="form-group single-lable">
                 <label for="formGroupExampleInput2">Payments</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline1" name="select-payment" class="custom-control-input" value="0">
+                <input type="radio" id="customRadioInline1" name="selectPayment" class="custom-control-input" value="0">
                 <label class="custom-control-label" for="customRadioInline1">Banking</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline2" name="select-payment" class="custom-control-input" value="1">
+                <input type="radio" id="customRadioInline2" name="selectPayment" class="custom-control-input" value="1">
                 <label class="custom-control-label" for="customRadioInline2">Paypal</label>
             </div>
             <div class="show-select-bank hide">
@@ -35,7 +51,7 @@
                     <label for="formGroupExampleInput2">Select a bank</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline5" name="select-bank" class="custom-control-input" value="0">
+                    <input type="radio" id="customRadioInline5" name="selectBank" class="custom-control-input" value="0">
                     <label class="custom-control-label" for="customRadioInline5"><img class="logo-bank" src="{{ asset('user/img/Techcombank_logo.png')}}" alt=""></label>
                     <div class="select-techcombank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -43,7 +59,7 @@
                     </div>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline6" name="select-bank" class="custom-control-input" value="1">
+                    <input type="radio" id="customRadioInline6" name="selectBank" class="custom-control-input" value="1">
                     <label class="custom-control-label" for="customRadioInline6"><img class="logo-bank" src="{{ asset('user/img/Vietcombank_logo.jpg')}}" alt=""></label>
                     <div class="select-vietcombank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -51,7 +67,7 @@
                     </div>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline3" name="select-bank" class="custom-control-input" value="2">
+                    <input type="radio" id="customRadioInline3" name="selectBank" class="custom-control-input" value="2">
                     <label class="custom-control-label" for="customRadioInline3"><img class="logo-bank" src="{{ asset('user/img/Viettinbank_logo.png')}}" alt=""></label>
                     <div class="select-viettinbank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -59,7 +75,7 @@
                     </div>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline4" name="select-bank" class="custom-control-input" value="3">
+                    <input type="radio" id="customRadioInline4" name="selectBank" class="custom-control-input" value="3">
                     <label class="custom-control-label" for="customRadioInline4"><img class="logo-bank" src="{{ asset('user/img/agribank_logo.jpg')}}" alt=""></label>
                     <div class="select-agribank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -68,7 +84,7 @@
                 </div>
             </div>
             <div class="form-group save-button">
-                <button type="submit" class="btn btn-primary btn-lg ps-button-save" id="{{ Session::get('idSession') }}">Paid</button>
+                <button type="submit" class="btn btn-primary btn-lg ps-button-save">Paid</button>
             </div>
         </form>
     </div>
@@ -76,7 +92,7 @@
 
 @push('scripts')
     <script>
-        $('input[name="select-payment"]').change(function(){
+        $('input[name="selectPayment"]').change(function(){
             var value = $(this).val()
             if(value == 0){
                 $('.show-select-bank').removeClass('hide')
@@ -85,7 +101,7 @@
             }
         })
 
-        $('input[name="select-bank"]').change(function(){
+        $('input[name="selectBank"]').change(function(){
             var value = $(this).val()
             if(value == 0){
                 $('.select-techcombank').removeClass('hide')
@@ -111,5 +127,10 @@
                 $('.select-agribank').addClass('hide')
             }
         })
+
+        if($('.notifi-payment').length){
+            $('.ps-button-save').css('cursor','no-drop')
+            $('.ps-button-save').attr('disabled','disabled')
+        }
     </script>
 @endpush

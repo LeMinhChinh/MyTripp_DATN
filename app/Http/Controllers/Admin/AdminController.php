@@ -8,6 +8,8 @@ use App\Models\Account;
 use App\Models\FeedbackRP;
 use App\Models\RequestOwner;
 use App\Models\FeedbackUser;
+use App\Models\Payment;
+use App\Models\RestingPlace;
 
 class AdminController extends Controller
 {
@@ -189,4 +191,79 @@ class AdminController extends Controller
             }
         }
     }
+
+    // Pricing
+    public function pricing(Request $request, Payment $pm)
+    {
+        $keyword = $request->keyword;
+        $keyword = \strip_tags($keyword);
+        $data['keyword'] = $keyword;
+
+        $payment = $pm->getDataPayment($keyword);
+
+        $data['paginate'] = $payment;
+        $payment = json_decode(json_encode($payment),true);
+
+        $data['payment'] = $payment['data'] ?? [];
+
+        return view('admin.payment', $data);
+    }
+
+    public function deletePayment(Request $request, Payment $pm)
+    {
+        $id = $request->id;
+
+        if($id > 0){
+            $delete = $pm->deletePaymentById($id);
+            if($delete){
+                echo "Delete success";
+            }else{
+                echo "Delete fail";
+            }
+        } else {
+            echo "Payment not found";
+        }
+    }
+
+    public function updatePayment(Request $request, Payment $pm, RestingPlace $rp)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $id = intval($id);
+
+        $status = Payment::where('id',$id)->pluck('status')->first();
+        $id_owner = Payment::where('id',$id)->pluck('id_owner')->first();
+
+        $updatePayment = $pm->updatePayment($id, $status);
+        if($updatePayment){
+            if($status == 0){
+                $dataRP = [
+                    'status' => 2
+                ];
+
+                $updateRP = $rp->updateHotelByPayment($dataRP, $id_owner);
+                if($updateRP){
+                    echo "Update success";
+                }else{
+                    echo "Update hotel fail";
+                }
+            }
+            if($status == 1){
+                $dataRP = [
+                    'status' => 1
+                ];
+
+                $updateRP = $rp->updateHotelByPayment($dataRP, $id_owner);
+                if($updateRP){
+                    echo "Update success";
+                }else{
+                    echo "Update hotel fail";
+                }
+            }
+        }else{
+            echo "Update payment fail";
+        }
+
+    }
+
 }

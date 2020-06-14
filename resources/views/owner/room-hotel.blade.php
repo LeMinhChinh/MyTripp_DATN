@@ -69,7 +69,7 @@
                             <tr class="js-account-{{ $value['id'] }}">
                                 <td><input type="checkbox" class="customCheck" id="customCheck-{{ $value['id'] }}" name="customCheck-{{ $value['id'] }}" value="{{ $value['id'] }}"></td>
                                 <td>{{ $value['name'] }}</td>
-                                <td>{{ $value['price'] }}</td>
+                                <td>{{   number_format($value['price'], 0, '', ',')}}&#8363;</td>
                                 <td>{{ $value['discount'] }}%</td>
                                 <td>{{ $value['namebed'] }}</td>
                                 <td>{{ $value['quantity_bed'] }}</td>

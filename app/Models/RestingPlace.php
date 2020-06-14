@@ -120,4 +120,12 @@ class RestingPlace extends Model
                     ->update($data);
         return $update;
     }
+
+    public function updateHotelByPayment($data, $id)
+    {
+        $update = DB::table('resting_places')
+                    ->where('id_acc',$id)
+                    ->update($data);
+        return $update;
+    }
 }

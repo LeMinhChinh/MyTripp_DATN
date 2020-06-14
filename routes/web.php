@@ -67,6 +67,10 @@ Route::group([
     Route::get('feedback','AdminController@feedback')->name('feedback');
     Route::post('delete-feedback','AdminController@deleteFeedback')->name('deleteFeedback');
     Route::post('reply-feedback','AdminController@replyFeedback')->name('replyFeedback');
+
+    Route::get('pricing','AdminController@pricing')->name('pricing');
+    Route::post('delete-payment','AdminController@deletePayment')->name('deletePayment');
+    Route::post('update-payment','AdminController@updatePayment')->name('updatePayment');
 });
 
 Route::group([
@@ -96,4 +100,5 @@ Route::group([
 
     Route::get('pricing-plan/{id}','OwnerController@pricingPlan')->name('pricingPlan');
     Route::get('payment-plan','OwnerController@paymentPlan')->name('paymentPlan');
+    Route::post('handle-payment-plan','OwnerController@handlepaymentPlan')->name('handlepaymentPlan');
 });
