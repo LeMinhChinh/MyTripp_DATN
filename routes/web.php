@@ -47,6 +47,10 @@ Route::group([
     Route::post('handle-personal-request','UserController@handleRequest')->name('handleRequest');
 
     Route::post('send-feedback','UserController@sendFeedBack')->name('sendFeedBack');
+
+    Route::get('search','SearchController@search')->name('search');
+
+    Route::post('filter-by-type','UserController@filterRPByType')->name('filterRPByType');
 });
 
 Route::group([

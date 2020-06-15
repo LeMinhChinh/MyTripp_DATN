@@ -15,10 +15,21 @@ use App\Models\RequestOwner;
 use App\Models\FeedbackUser;
 use Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
     // Homepage
+
+    public function __construct(Request $request)
+    {
+        $keyword = $request->inforListRP;
+        $keyword = trim($keyword);
+
+        $data['keyword'] = $keyword;
+
+        view::share($data);
+    }
 
     public function homepage(Request $request, RestingPlace $rp, Rooms $room){
         $inforFB = $rp->getMaxCountEmotion();
@@ -50,6 +61,7 @@ class UserController extends Controller
             }
         }
 
+        // dd($imageRoom, $images);
         // $inforRoom = Rooms::select('price','discount','id_rp')->whereIn('id_rp',$arr_id)->get();
         // $inforRoom = \json_decode(\json_encode($inforRoom), true);
 
@@ -290,8 +302,6 @@ class UserController extends Controller
         $count = $rp->countFBListRP($idp, $idt);
         $count = \json_decode(\json_encode($count),true);
 
-        // dd($count);
-
         $place = Place::where('id',$idp)->first();
         $type = Type::where('id', $idt)->first();
 
@@ -504,5 +514,43 @@ class UserController extends Controller
         $data['account'] = $account;
 
         return view('user/personal-notify', $data);
+    }
+
+    // Search
+    public function filterRPByType(Request $request, RestingPlace $rp)
+    {
+        $rate = $request->rate;
+        $fb = $request->fb;
+
+        $inforListRP = $rp->filterRPByType(0,1,$rate,$fb);
+        $data['paginate'] = $inforListRP;
+        $inforListRP = \json_decode(\json_encode($inforListRP),true);
+        $inforListRP = $inforListRP['data'] ?? [];
+        $images = [];
+        dd( $inforListRP['data']);
+
+        foreach ($inforListRP as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
+
+        $count = $rp->countFBListRP(0,1,$rate,$fb);
+        $count = \json_decode(\json_encode($count),true);
+
+        $place = Place::where('id', 1)->first();
+        $type = Type::where('id', 0)->first();
+        dd( $place, $type);
+
+        $data['inforListRP'] = $inforListRP;
+        $data['place'] = $place;
+        // $data['type'] = $type;
+        $data['images'] = $images;
+        $data['count'] = $count;
+
+
+
+        return view('user.partials.filter_room', $data);
     }
 }

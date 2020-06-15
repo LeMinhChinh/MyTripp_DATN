@@ -36,6 +36,22 @@ class RestingPlace extends Model
         return $data;
     }
 
+    public function filterRPByType($idp, $idt)
+    {
+        $data = DB::table('resting_places as rp')
+                    ->select('rp.*', 'p.name as pname', 'trp.name as tname')
+                    ->join('type_rp as trp', 'trp.id','=','rp.type')
+                    ->join('place as p','p.id','=','rp.place');
+                    if($idt == 0){
+                        $data = $data->where('rp.place',$idp);
+                    }
+                    if($idp == 0){
+                        $data = $data->where('rp.type', $idt);
+                    }
+                    $data = $data->paginate(6);
+        return $data;
+    }
+
     public function countFBListRP($idp, $idt)
     {
         $data = DB::table('resting_places as rp')
@@ -76,6 +92,31 @@ class RestingPlace extends Model
                     ->join('type_rp as trp','trp.id','=','rp.type')
                     ->where('rp.id',$id)
                     ->first();
+        return $data;
+    }
+
+    public function getRPSearch($keyword)
+    {
+        $data = DB::table('resting_places as rp')
+                    ->select('rp.*','p.name as pname', 'trp.name as tname')
+                    ->join('place as p','p.id','=','rp.place')
+                    ->join('type_rp as trp', 'trp.id','=','rp.type')
+                    ->where('rp.name',$keyword)
+                    ->orwhere('p.name',$keyword)
+                    ->paginate(15);
+        return $data;
+    }
+
+    public function countFBListRPSearch($keyword)
+    {
+        $data = DB::table('resting_places as rp')
+                    ->leftjoin('feedback_rp as fb','rp.id','=','fb.id_rp')
+                    ->join('place as p','p.id','=','rp.place')
+                    ->select(DB::raw('count(fb.id) as count_id, rp.id, sum(fb.emotion) as sum_emotion'))
+                    ->groupby('rp.id')
+                    ->where('rp.name',$keyword)
+                    ->orwhere('p.name',$keyword)
+                    ->get();
         return $data;
     }
 

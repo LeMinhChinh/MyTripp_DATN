@@ -1317,3 +1317,11 @@ input#psEmail {
 .service-item > p{
     font-size: 15px;
 }
+
+.sr__card_price.bui-spacer--large {
+    display: none;
+}
+
+.nav-search form{
+    width: 100%;
+}

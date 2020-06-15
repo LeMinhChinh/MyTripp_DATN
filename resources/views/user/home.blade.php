@@ -66,7 +66,7 @@
                         <div class="bi-text">
                             {{-- <span class="b-tag">Travel Trip</span> --}}
                             <h4>Thành phố Hồ Chí Minh</h4>
-                            <div class="b-time">1500 chỗ ở</div>
+                            {{-- <div class="b-time">1500 chỗ ở</div> --}}
                         </div>
                     </div>
                 </a>
@@ -77,7 +77,7 @@
                         <div class="bi-text">
                             {{-- <span class="b-tag">Camping</span> --}}
                             <h4>Vũng Tàu</h4>
-                            <div class="b-time">1500 chỗ ở</div>
+                            {{-- <div class="b-time">1500 chỗ ở</div> --}}
                         </div>
                     </div>
                 </a>
@@ -88,7 +88,7 @@
                         <div class="bi-text">
                             {{-- <span class="b-tag">Event</span> --}}
                             <h4>Đà Nẵng</h4>
-                            <div class="b-time">1500 chỗ ở</div>
+                            {{-- <div class="b-time">1500 chỗ ở</div> --}}
                         </div>
                     </div>
                 </a>
@@ -99,7 +99,7 @@
                         <div class="bi-text">
                             {{-- <span class="b-tag">Event</span> --}}
                             <h4>Hà Nội</h4>
-                            <div class="b-time">1500 chỗ ở</div>
+                            {{-- <div class="b-time">1500 chỗ ở</div> --}}
                         </div>
                     </div>
                 </a>
@@ -110,7 +110,7 @@
                         <div class="bi-text">
                             {{-- <span class="b-tag">Travel</span> --}}
                             <h4>Huế</h4>
-                            <div class="b-time">1500 chỗ ở</div>
+                            {{-- <div class="b-time">1500 chỗ ở</div> --}}
                         </div>
                     </div>
                 </a>
@@ -205,8 +205,8 @@
                                         <div class="rp-detail-img">
                                             <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                                 <ol class="carousel-indicators">
-                                                    @foreach ($images as $key => $img)
-                                                        @if($index == $key)
+                                                    @foreach ($imageRoom as $y => $img)
+                                                        @if($index == $y)
                                                             @foreach($img as $i => $t)
                                                                 <li data-target="#carouselExampleIndicators" data-slide-to="{{ $i }}" class="active">
                                                                     <div class="img-active">
@@ -218,8 +218,8 @@
                                                     @endforeach
                                                 </ol>
                                                 <div class="carousel-inner">
-                                                    @foreach ($images as $key => $img)
-                                                        @if($index == $key)
+                                                    @foreach ($imageRoom as $y => $img)
+                                                        @if($index == $y)
                                                             <div class="carousel-item active">
                                                                 <img class="d-block w-100" src="{{ URL::to('/') }}/user/uploads/room/{{ $img[0] }}" >
                                                             </div>
@@ -361,27 +361,27 @@
         <div class="ts-item">
             <img src="https://r-cf.bstatic.com/xdata/images/xphoto/square300/57584488.webp?k=bf724e4e9b9b75480bbe7fc675460a089ba6414fe4693b83ea3fdd8e938832a6&o=" alt="">
             <h4>Khách sạn</h4>
-            <p>704,996 khách sạn</p>
+            {{-- <p>704,996 khách sạn</p> --}}
         </div>
         <div class="ts-item">
             <img src="https://r-cf.bstatic.com/static/img/theme-index/carousel_320x240/bg_hostels/cd5489c0d29025a9ca9daa602ac1581ba042bc69.jpg" alt="">
             <h4>Homestay</h4>
-            <p>773,442 homestay</p>
+            {{-- <p>773,442 homestay</p> --}}
         </div>
         <div class="ts-item">
             <img src="https://r-cf.bstatic.com/static/img/theme-index/carousel_320x240/bg_resorts/6f87c6143fbd51a0bb5d15ca3b9cf84211ab0884.jpg" alt="">
             <h4>Resort</h4>
-            <p>773,442 resort</p>
+            {{-- <p>773,442 resort</p> --}}
         </div>
         <div class="ts-item">
             <img src="https://q-cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-villas_300/dd0d7f8202676306a661aa4f0cf1ffab31286211.jpg" alt="">
             <h4>Biệt thự</h4>
-            <p>773,442 biệt thự</p>
+            {{-- <p>773,442 biệt thự</p> --}}
         </div>
         <div class="ts-item">
             <img src="https://r-cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-apartments_300/9f60235dc09a3ac3f0a93adbc901c61ecd1ce72e.jpg" alt="">
             <h4>Căn hộ</h4>
-            <p>773,442 căn hộ</p>
+            {{-- <p>773,442 căn hộ</p> --}}
         </div>
     </div>
     </div>
