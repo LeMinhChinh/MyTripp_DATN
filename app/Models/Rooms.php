@@ -33,6 +33,25 @@ class Rooms extends Model
         return $data;
     }
 
+    public function getDataRoomBooking($id, $child, $adult)
+    {
+        $data = DB::table('rooms as r')
+                    ->select('r.*','tb.name as name_bed','rp.name as rp','p.name as place','t.name as type', 'address')
+                    ->join('resting_places as rp','rp.id','=','r.id_rp')
+                    ->join('place as p','p.id','=','rp.place')
+                    ->join('type_rp as t','t.id','=','rp.type')
+                    ->join('type_bed as tb','tb.id','=','r.type_bed')
+                    ->whereNotIn('id', $id);
+                    if($adult){
+                        $data = $data->where('r.adult', $adult);
+                    }
+                    if($adult){
+                        $data = $data->where('r.child', $child);
+                    }
+                    $data = $data->paginate(10);
+        return $data;
+    }
+
     // Admin
 
     public function getInforRoomById($id, $keyword)

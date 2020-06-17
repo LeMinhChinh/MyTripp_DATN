@@ -52,15 +52,11 @@
                    </div>
                     <div class="r-prices-content r-content-3 fix-top">
                         <div class="r-filter-price">
-                            <div data-role="page" class="r-child r-people">
-                                <div data-role="main" class="ui-content">
-                                    <div data-role="rangeslider">
-                                      <label for="price-min">Price</label>
-                                      <input type="range" name="price-min" id="price-min" value="0" min="0" max="10000000" step="0.01">
-                                      <label for="price-max">Price:</label>
-                                      <input type="range" name="price-max" id="price-max" value="10000000" min="0" max="10000000">
-                                    </div>
-                                </div>
+                            <div data-role="rangeslider">
+                                <label for="range-1a">Rangeslider:</label>
+                                <input type="range" name="range-1a" id="range-1a" min="0" max="100" value="40">
+                                <label for="range-1b">Rangeslider:</label>
+                                <input type="range" name="range-1b" id="range-1b" min="0" max="100" value="80">
                             </div>
                         </div>
                     </div>

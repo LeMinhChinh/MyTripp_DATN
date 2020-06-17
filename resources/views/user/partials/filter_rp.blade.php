@@ -122,13 +122,6 @@
                         type: "POST",
                         data: {rate: rate, fb: fb},
                         success: function(data){
-                            // if(data === 'Feedback fail') {
-                            //     alert('Gửi phản hồi không thành công.Vui lòng thử lại.');
-                            // }
-                            // if(data === 'Feedback success') {
-                            //     $('.feedback-content').val('')
-                            //     alert('Gửi phản hồi thành công. Vui lòng kiểm tra lại trong thông báo.');
-                            // }
                         }
                     });
             });

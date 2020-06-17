@@ -36,7 +36,7 @@ class RestingPlace extends Model
         return $data;
     }
 
-    public function filterRPByType($idp, $idt)
+    public function filterRPByType($idp, $idt,$rate, $fb)
     {
         $data = DB::table('resting_places as rp')
                     ->select('rp.*', 'p.name as pname', 'trp.name as tname')
@@ -48,7 +48,10 @@ class RestingPlace extends Model
                     if($idp == 0){
                         $data = $data->where('rp.type', $idt);
                     }
-                    $data = $data->paginate(6);
+                    if($rate){
+                        $data = $data->wherein('rp.rate',$rate);
+                    }
+                    $data = $data->get();
         return $data;
     }
 

@@ -1,6 +1,6 @@
 <div class="booking-form">
     <p class="bk-title">Tìm kiếm phòng trống</p>
-    <form action="#" class="booking-form-content">
+    <form action="{{ route('user.searchRoom') }}" method="GET" class="booking-form-content">
         <div class="check-date">
             <label for="date-in">Check In:</label>
             <input type="text" class="date-input booking-input" id="date-in" placeholder="Thời gian nhận phòng">

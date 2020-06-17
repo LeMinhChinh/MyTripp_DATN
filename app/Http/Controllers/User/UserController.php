@@ -13,9 +13,12 @@ use App\Models\FeedbackRP;
 use App\Models\Rooms;
 use App\Models\RequestOwner;
 use App\Models\FeedbackUser;
+use App\Models\DetailBooking;
+use App\Models\TypeBed;
 use Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -248,9 +251,9 @@ class UserController extends Controller
         return view('user/room', $data);
     }
 
-    public function searchroom(Request $request){
-        return view('user/search-room');
-    }
+    // public function searchroom(Request $request){
+    //     return view('user/search-room');
+    // }
 
 
     // Resting place
@@ -507,7 +510,6 @@ class UserController extends Controller
         $feedback = FeedbackUser::where('id_acc',$id)->get();
         $feedback = \json_decode(json_encode($feedback),true);
         $count = count($feedback);
-        // dd($feedback, $count, $account);
 
         $data['count'] = $count;
         $data['feedback'] = $feedback;
@@ -516,41 +518,93 @@ class UserController extends Controller
         return view('user/personal-notify', $data);
     }
 
-    // Search
-    public function filterRPByType(Request $request, RestingPlace $rp)
+    // Filter
+    // public function filterRPByType(Request $request, RestingPlace $rp)
+    // {
+    //     $rate = $request->rate;
+    //     $fb = $request->fb;
+
+    //     $inforListRP = $rp->filterRPByType(0,1,$rate,$fb);
+    //     dd($inforListRP);
+    //     $data['paginate'] = $inforListRP;
+    //     $inforListRP = \json_decode(\json_encode($inforListRP),true);
+    //     $inforListRP = $inforListRP['data'] ?? [];
+    //     $images = [];
+    //     dd( $inforListRP['data']);
+
+    //     foreach ($inforListRP as $key => $value) {
+    //         if(!empty($value['image'])){
+    //             $image = \explode(";", $value['image']);
+    //             array_push($images,$image);
+    //         }
+    //     }
+
+    //     $count = $rp->countFBListRP(0,1,$rate,$fb);
+    //     $count = \json_decode(\json_encode($count),true);
+
+    //     $place = Place::where('id', 1)->first();
+    //     $type = Type::where('id', 0)->first();
+    //     dd( $place, $type);
+
+    //     $data['inforListRP'] = $inforListRP;
+    //     $data['place'] = $place;
+    //     // $data['type'] = $type;
+    //     $data['images'] = $images;
+    //     $data['count'] = $count;
+
+
+
+    //     return view('user.partials.filter_room', $data);
+    // }
+
+    public function searchRoom(Request $request, DetailBooking $dt, Rooms $r)
     {
-        $rate = $request->rate;
-        $fb = $request->fb;
+        $checkin = $request->checkin;
+        $checkout = $request->checkout;
+        $adult = $request->adult;
+        $child = $request->child;
 
-        $inforListRP = $rp->filterRPByType(0,1,$rate,$fb);
-        $data['paginate'] = $inforListRP;
-        $inforListRP = \json_decode(\json_encode($inforListRP),true);
-        $inforListRP = $inforListRP['data'] ?? [];
+        $query = DetailBooking::query();
+        if($checkin){
+            $query = $query->where('checkout','<=', $checkin);
+        }
+        if($checkout){
+            $query = $query->orwhere('checkin','>=',$checkout);
+        }
+        $room = $query->get()->pluck('id');
+
+        $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id');
+
+        $dataRoomBooking = $r->getDataRoomBooking($roomNotBook, $child, $adult);
+
+        $data['paginate'] = $dataRoomBooking;
+        $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
+
+        $data['dataRoomBooking'] = $dataRoomBooking['data'] ?? [];
+
         $images = [];
-        dd( $inforListRP['data']);
 
-        foreach ($inforListRP as $key => $value) {
+        foreach ($data['dataRoomBooking'] as $key => $value) {
             if(!empty($value['image'])){
                 $image = \explode(";", $value['image']);
                 array_push($images,$image);
             }
         }
 
-        $count = $rp->countFBListRP(0,1,$rate,$fb);
-        $count = \json_decode(\json_encode($count),true);
+        $type = TypeBed::get();
+        $type = json_decode(json_encode($type), true);
 
-        $place = Place::where('id', 1)->first();
-        $type = Type::where('id', 0)->first();
-        dd( $place, $type);
+        $place = Place::get();
+        $place = json_decode(json_encode($place), true);
 
-        $data['inforListRP'] = $inforListRP;
-        $data['place'] = $place;
-        // $data['type'] = $type;
-        $data['images'] = $images;
-        $data['count'] = $count;
+        $data['images']  = $images;
+        $data['checkin']  = $checkin;
+        $data['checkout']  = $checkout;
+        $data['adult']  = $adult;
+        $data['child']  = $child;
+        $data['type']  = $type;
+        $data['place']  = $place;
 
-
-
-        return view('user.partials.filter_room', $data);
+        return view('user.search-room', $data);
     }
 }

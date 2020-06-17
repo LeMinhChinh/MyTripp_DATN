@@ -15,24 +15,26 @@
             <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                 <div class="booking-form">
                     <h3>Bạn cần phòng trống?</h3>
-                    <form action="#">
+                    <form action="http://localhost:8000/user/search-room" method="GET">
                         <div class="check-date">
                             <label for="date-in">Check in</label>
-                            <input type="text" class="date-input" id="date-in" placeholder="Thời gian nhận phòng">
+                            {{-- <input type="datetime" class="date-input" id="date-in" placeholder="Thời gian nhận phòng" name="checkin"> --}}
+                            <input type="date" name="checkin" id="checkin">
                             <i class="icon_calendar"></i>
                         </div>
                         <div class="check-date">
                             <label for="date-out">Check out</label>
-                            <input type="text" class="date-input" id="date-out"  placeholder="Thời gian trả phòng">
+                            {{-- <input type="datetime" class="date-input" id="date-out"  placeholder="Thời gian trả phòng" name="checkout"> --}}
+                            <input type="date" name="checkout" id="checkout">
                             <i class="icon_calendar"></i>
                         </div>
                         <div class="select-option">
                             <label for="guest">Số người lớn</label>
-                            <input type="text" class="booking-input" placeholder="Nhập vào số người lớn">
+                            <input type="text" class="booking-input" placeholder="Nhập vào số người lớn" name="adult" id="adult">
                         </div>
                         <div class="select-option">
                             <label for="room">Số trẻ con</label>
-                            <input type="text" class="booking-input" placeholder="Nhập vào số trẻ con">
+                            <input type="text" class="booking-input" placeholder="Nhập vào số trẻ con" name="child" id="child">
                         </div>
                         <button type="submit">Tìm kiếm</button>
                     </form>

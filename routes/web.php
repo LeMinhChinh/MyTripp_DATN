@@ -33,7 +33,6 @@ Route::group([
     Route::get('room/{id}','UserController@room')->name('room');
 
     Route::get('resting-place/{id}','UserController@restingplace')->name('restingplace');
-    Route::get('search-resting-place','UserController@searchrestingplace')->name('searchrestingplace');
     Route::get('list-resting-place/{idp}~{idt}','UserController@listRestingPlace')->name('listRestingPlace');
     Route::get('review-resting-place/{idrp}~{idacc}','UserController@reviewRestingPlace')->name('reviewRestingPlace');
 
@@ -51,6 +50,8 @@ Route::group([
     Route::get('search','SearchController@search')->name('search');
 
     Route::post('filter-by-type','UserController@filterRPByType')->name('filterRPByType');
+
+    Route::get('search-room','UserController@searchRoom')->name('searchRoom');
 });
 
 Route::group([

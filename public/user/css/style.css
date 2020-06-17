@@ -580,7 +580,7 @@ section.testimonial-section.spad {
 	border-radius: 2px;
 	border: 1px solid #ebebeb;
 	height: 50px;
-	line-height: 32px;
+	/* line-height: 32px; */
 	outline: none;
 	padding-left: 20px;
 	width: 100%;
@@ -1179,7 +1179,7 @@ section.testimonial-section.spad {
 }
 .room-item img {
     min-width: 100%;
-    min-height: 275px!important;
+    min-height: 310px!important;
 }
 .room-item .ri-text {
 	border: 1px solid #ebebeb;
