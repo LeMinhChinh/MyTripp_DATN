@@ -52,6 +52,17 @@ class Rooms extends Model
         return $data;
     }
 
+    public function getRoomById($id)
+    {
+        $data =DB::table('rooms as r')
+                    ->select('r.*','rp.name as nameHotel','tb.name as namebed')
+                    ->join('resting_places as rp','rp.id','=','r.id_rp')
+                    ->join('type_bed as tb','tb.id','=','r.type_bed')
+                    ->where('r.id',$id)
+                    ->first();
+        return $data;
+    }
+
     // Admin
 
     public function getInforRoomById($id, $keyword)

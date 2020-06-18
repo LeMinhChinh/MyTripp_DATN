@@ -392,3 +392,37 @@
 <!-- Testimonial Section End -->
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                    dd='0'+dd
+                }
+                if(mm<10){
+                    mm='0'+mm
+                }
+
+            today = yyyy+'-'+mm+'-'+dd;
+            $('#checkin').attr("min", today);
+
+            var todays = new Date();
+            var dds = todays.getDate()+1;
+            var mms = todays.getMonth()+1;
+            var yyyys = todays.getFullYear();
+            if(dds<10){
+                    dds='0'+dds
+                }
+                if(mms<10){
+                    mms='0'+mms
+                }
+
+            todays = yyyys+'-'+mms+'-'+dds;
+            $('#checkout').attr("min", todays);
+        })
+    </script>
+@endpush

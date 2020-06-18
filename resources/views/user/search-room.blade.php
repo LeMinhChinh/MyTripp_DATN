@@ -164,8 +164,8 @@
                         <div class="row">
                             @foreach ($dataRoomBooking as $key =>  $value)
                                 <div class="col-6">
-                                    <div class="room-item" data-toggle="modal" data-target="#detailRoom-{{ $key }}">
-                                        <div class="room-item-img">
+                                    <div class="room-item" >
+                                        <div class="room-item-img" data-toggle="modal" data-target="#detailRoom-{{ $key }}">
                                             @foreach ($images as $k => $v)
                                                 @if($key == $k)
                                                     <img src="{{ URL::to('/') }}/user/uploads/room/{{ $v['0'] }}" alt="">
@@ -198,8 +198,8 @@
                                                 </div>
                                             </div>
                                             <div class="room-btn-booking">
-                                                <button type="button" class="btn btn-primary">Thêm vào danh sách phòng</button>
-                                                <button type="button" class="btn btn-success">Đặt phòng ngay</button>
+                                                <button type="button" class="btn btn-primary" id={{ $value['id'] }}>Thêm vào danh sách phòng</button>
+                                                <button type="button" class="btn btn-success booking-now" id={{ $value['id'] }} data-checkin="{{ $checkin }}" data-checkout="{{ $checkout }}">Đặt phòng ngay</button>
                                             </div>
                                         </div>
                                     </div>
@@ -308,3 +308,28 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        $('.booking-now').click(function(){
+            var self = $(this);
+            var id = self.attr('id').trim();
+            var checkin = self.attr('data-checkin');
+            var checkout = self.attr('data-checkout');
+            console.log(id, checkin, checkout)
+
+            if($.isNumeric(id)){
+                $.ajax({
+                    url: "{{ route('user.bookingNow') }}",
+                    type: "POST",
+                    data: {id: id, checkin: checkin, checkout: checkout},
+                    success: function(data){
+                        if(data.success == true){
+                            window.location.href =  "{{ route('user.bookingPage') }}"
+                        }
+                    }
+                });
+            }
+        })
+    </script>
+@endpush

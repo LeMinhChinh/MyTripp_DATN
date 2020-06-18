@@ -21,6 +21,7 @@ Route::get('homepage','User\UserController@homepage')->name('homepage');
 Route::get('login', 'User\UserController@login')->name('login');
 Route::post('handle-login', 'User\UserController@handleLogin')->name('handleLogin');
 Route::post('review-handle-login', 'User\UserController@reviewHandleLogin')->name('reviewHandleLogin');
+Route::post('booking-handle-login', 'User\UserController@bookingHandleLogin')->name('bookingHandleLogin');
 Route::get('register', 'User\UserController@register')->name('register');
 Route::post('handle-register', 'User\UserController@handleRegister')->name('handleRegister');
 Route::get('handle-logout','User\UserController@handleLogout')->name('handleLogout');
@@ -52,6 +53,9 @@ Route::group([
     Route::post('filter-by-type','UserController@filterRPByType')->name('filterRPByType');
 
     Route::get('search-room','UserController@searchRoom')->name('searchRoom');
+
+    Route::post('booking-now','UserController@bookingNow')->name('bookingNow');
+    Route::get('booking-page','UserController@bookingPage')->name('bookingPage');
 });
 
 Route::group([

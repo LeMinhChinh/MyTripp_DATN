@@ -161,6 +161,30 @@ class UserController extends Controller
         }
     }
 
+    public function bookingHandleLogin(Request $request, Account $account)
+    {
+        $email = $request->lgEmail;
+        $password = $request->lgPass;
+
+        $inforAccount = $account->checkAccountLogin($email, $password);
+
+        if($inforAccount){
+            $request->session()->put('idSession', $inforAccount['id']);
+            $request->session()->put('usernameSession', $inforAccount['username']);
+            $request->session()->put('emailSession', $inforAccount['email']);
+            $request->session()->put('roleSession', $inforAccount['role']);
+            $request->session()->put('fnameSession', $inforAccount['surname']);
+            $request->session()->put('lnameSession', $inforAccount['name']);
+            $request->session()->put('genderSession', $inforAccount['gender']);
+            $request->session()->put('avatarSession', $inforAccount['avatar']);
+
+            return redirect()->back();
+
+        }else{
+            return redirect()->route('login');
+        }
+    }
+
     // Register
 
     public function register(Request $request)
@@ -606,5 +630,31 @@ class UserController extends Controller
         $data['place']  = $place;
 
         return view('user.search-room', $data);
+    }
+
+    public function bookingNow(Request $request)
+    {
+        $id = $request->id;
+        $checkin = $request->checkin;
+        $checkout = $request->checkout;
+
+        $request->session()->put('idRoom', $id);
+        $request->session()->put('checkin', $checkin);
+        $request->session()->put('checkout', $checkout);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
+    public function bookingPage(Request $request, Rooms $r)
+    {
+        $room = $r->getRoomById(Session::get('idRoom'));
+        $room = json_decode(json_encode($room), true);
+
+        $data['room'] = $room;
+        // dd($data['room']);
+
+        return view('user.booking-page', $data);
     }
 }
