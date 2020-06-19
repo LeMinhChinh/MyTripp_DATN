@@ -15,6 +15,7 @@ use App\Models\RequestOwner;
 use App\Models\FeedbackUser;
 use App\Models\DetailBooking;
 use App\Models\TypeBed;
+use App\Models\Booking;
 use Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
@@ -118,6 +119,8 @@ class UserController extends Controller
             $request->session()->put('lnameSession', $inforAccount['name']);
             $request->session()->put('genderSession', $inforAccount['gender']);
             $request->session()->put('avatarSession', $inforAccount['avatar']);
+            $request->session()->put('phoneSession', $inforAccount['phone']);
+            $request->session()->put('addressSession', $inforAccount['address']);
 
             if(Session::get('roleSession') === 0){
                 return redirect()->route('homepage');
@@ -153,6 +156,8 @@ class UserController extends Controller
             $request->session()->put('lnameSession', $inforAccount['name']);
             $request->session()->put('genderSession', $inforAccount['gender']);
             $request->session()->put('avatarSession', $inforAccount['avatar']);
+            $request->session()->put('phoneSession', $inforAccount['phone']);
+            $request->session()->put('addressSession', $inforAccount['address']);
 
             return redirect()->back();
 
@@ -177,6 +182,8 @@ class UserController extends Controller
             $request->session()->put('lnameSession', $inforAccount['name']);
             $request->session()->put('genderSession', $inforAccount['gender']);
             $request->session()->put('avatarSession', $inforAccount['avatar']);
+            $request->session()->put('phoneSession', $inforAccount['phone']);
+            $request->session()->put('addressSession', $inforAccount['address']);
 
             return redirect()->back();
 
@@ -242,6 +249,8 @@ class UserController extends Controller
         $request->session()->forget('avatarSession');
         $request->session()->forget('emailRgtSession');
         $request->session()->forget('passwordRgtSession');
+        $request->session()->forget('phoneSession');
+        $request->session()->forget('addresssSession');
 
         return redirect()->route('login');
     }
@@ -274,11 +283,6 @@ class UserController extends Controller
 
         return view('user/room', $data);
     }
-
-    // public function searchroom(Request $request){
-    //     return view('user/search-room');
-    // }
-
 
     // Resting place
 
@@ -542,6 +546,24 @@ class UserController extends Controller
         return view('user/personal-notify', $data);
     }
 
+    public function personalBooking(Request $request, $id)
+    {
+        $id = $request->id;
+        $booking = Booking::where('id_acc', $id)->get();
+        $booking = \json_decode(json_encode($booking), true);
+
+        $idBooking = Booking::where('id_acc', $id)->get()->pluck('id');
+        $idBooking = \json_decode(json_encode($idBooking), true);
+
+        $bookingDetail = DetailBooking::wherein('id_book', $idBooking)->get();
+        $bookingDetail = \json_decode(json_encode($bookingDetail), true);
+
+        $data['booking'] = $booking;
+        $data['bookingDetail'] = $bookingDetail;
+
+        return view('user/personal-booking', $data);
+    }
+
     // Filter
     // public function filterRPByType(Request $request, RestingPlace $rp)
     // {
@@ -597,7 +619,8 @@ class UserController extends Controller
         }
         $room = $query->get()->pluck('id');
 
-        $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id');
+        $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
+        $roomNotBook = json_decode(json_encode($roomNotBook),true);
 
         $dataRoomBooking = $r->getDataRoomBooking($roomNotBook, $child, $adult);
 
@@ -647,14 +670,74 @@ class UserController extends Controller
         ]);
     }
 
-    public function bookingPage(Request $request, Rooms $r)
+    public function bookingPage(Request $request, Rooms $r, FeedbackRP $fb)
     {
         $room = $r->getRoomById(Session::get('idRoom'));
         $room = json_decode(json_encode($room), true);
 
         $data['room'] = $room;
-        // dd($data['room']);
+        if(Session::get('idRoom')){
+            $id = Rooms::where('id',Session::get('idRoom'))->pluck('id_rp')->first();
+
+            $feedback = $fb->getDataFeedback($id);
+            $feedback = \json_decode(json_encode($feedback),true);
+
+            if($feedback){
+                $point = 0;
+                foreach ($feedback as $key => $value) {
+                $point += $value['emotion'];
+                }
+                $count = ($point/(count($feedback)*4))*10;
+                $data['count'] = $count;
+            }else{
+                $data['count'] = 0;
+            }
+        }
 
         return view('user.booking-page', $data);
+    }
+
+    public function cancelBooking(Request $request)
+    {
+        $request->session()->forget('idRoom');
+
+        return redirect()->route('homepage');
+    }
+
+    public function paymentBooking(Request $request)
+    {
+        $book = new Booking;
+        $book->id_acc = Session::get('idSession');
+        $book->name = $request->nameCustomer;
+        $book->phone = $request->phoneCustomer;
+        $book->email = $request->emailCustomer;
+        $book->address = $request->addressCustomer;
+        $book->payment = $request->selectPayment;
+        $book->bank = $request->selectBank;
+        $book->total = $request->totalPrice;
+        $book->status = 0;
+        $book->note = $request->noteCustomer;
+
+        $book->save();
+        if($book->save()){
+            $detailBook = new DetailBooking;
+            $detailBook->id_book = $book->id;
+            $detailBook->id_rp = $request->idRp;
+            $detailBook->name_rp = $request->nameRp;
+            $detailBook->id_room = Session::get('idRoom');
+            $detailBook->name_room = $request->nameRoom;
+            $detailBook->price = $request->priceRoom;
+            $detailBook->discount = $request->discountRoom;
+            $detailBook->checkin = Session::get('checkin');
+            $detailBook->checkout = Session::get('checkout');
+
+            $detailBook->save();
+
+            $request->session()->forget('idRoom');
+            $request->session()->forget('checkin');
+            $request->session()->forget('checkout');
+        }
+
+        return redirect()->route('user.personalBooking',['id' => Session::get('idSession')]);
     }
 }

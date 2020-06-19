@@ -39,7 +39,8 @@ Route::group([
 
     Route::get('personal-information/{id}','UserController@personalInformation')->name('personalInformation');
     Route::post('update-personal-information/{id}','UserController@handleUpdateInfomation')->name('handleUpdateInfomation');
-    Route::get('personal-booking','UserController@personalInformation')->name('personalBooking');
+
+    Route::get('personal-booking/{id}','UserController@personalBooking')->name('personalBooking');
 
     Route::get('personal-notify/{id}','UserController@personalNotify')->name('personalNotify');
 
@@ -56,6 +57,8 @@ Route::group([
 
     Route::post('booking-now','UserController@bookingNow')->name('bookingNow');
     Route::get('booking-page','UserController@bookingPage')->name('bookingPage');
+    Route::get('cancel-booking','UserController@cancelBooking')->name('cancelBooking');
+    Route::get('payment-booking','UserController@paymentBooking')->name('paymentBooking');
 });
 
 Route::group([

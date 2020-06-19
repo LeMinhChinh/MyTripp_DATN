@@ -61,7 +61,7 @@
                     <a class="nav-link" href="{{ route('user.personalInformation', ['id' => Session::get('idSession')]) }}">Trang cá nhân</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.personalBooking') }}">Đặt phòng</a>
+                        <a class="nav-link" href="{{ route('user.personalBooking',['id' => Session::get('idSession')]) }}">Đặt phòng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user.personalNotify', ['id' => Session::get('idSession')]) }}">Thông báo</a>

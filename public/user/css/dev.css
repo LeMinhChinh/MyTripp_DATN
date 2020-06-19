@@ -1449,3 +1449,19 @@ img.logo-bank {
 .form-booking .show-select-bank .custom-control-inline .select-bankname{
     display: inline-block!important;
 }
+
+.nav-search .input-group-append {
+    display: inherit!important;
+}
+
+button.btn.btn-secondary.btn-lg.ps-button-cancel > a, button.btn.btn-secondary.btn-lg.ps-button-cancel > a:hover, button.btn.btn-secondary.btn-lg.ps-button-cancel > a:focus{
+    color: #fff!important;
+}
+
+.booking-list h3 {
+    color: #e3ad6d;
+}
+
+.booking-list-detail h3 {
+    color: #b7c00e;
+}
