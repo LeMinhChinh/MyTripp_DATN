@@ -8,3 +8,4 @@
 <link href="{{ asset('admin/css/sb-admin.css') }}" rel="stylesheet">
 
 <link href="{{ asset('admin/css/dev.css') }}" rel="stylesheet">
+<link href="{{ asset('user/css/dev.css') }}" rel="stylesheet">

@@ -33,43 +33,46 @@ return [
     |
     */
 
-    'mailers' => [
-        'smtp' => [
-            'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
-        ],
+    // 'mailers' => [
+    //     'smtp' => [
+    //         'transport' => 'smtp',
+    //         'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    //         'port' => env('MAIL_PORT', 587),
+    //         'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    //         'username' => env('MAIL_USERNAME'),
+    //         'password' => env('MAIL_PASSWORD'),
+    //         'timeout' => null,
+    //     ],
 
-        'ses' => [
-            'transport' => 'ses',
-        ],
+    //     'ses' => [
+    //         'transport' => 'ses',
+    //     ],
 
-        'mailgun' => [
-            'transport' => 'mailgun',
-        ],
+    //     'mailgun' => [
+    //         'transport' => 'mailgun',
+    //     ],
 
-        'postmark' => [
-            'transport' => 'postmark',
-        ],
+    //     'postmark' => [
+    //         'transport' => 'postmark',
+    //     ],
 
-        'sendmail' => [
-            'transport' => 'sendmail',
-            'path' => '/usr/sbin/sendmail -bs',
-        ],
+    //     'sendmail' => [
+    //         'transport' => 'sendmail',
+    //         'path' => '/usr/sbin/sendmail -bs',
+    //     ],
 
-        'log' => [
-            'transport' => 'log',
-            'channel' => env('MAIL_LOG_CHANNEL'),
-        ],
+    //     'log' => [
+    //         'transport' => 'log',
+    //         'channel' => env('MAIL_LOG_CHANNEL'),
+    //     ],
 
-        'array' => [
-            'transport' => 'array',
-        ],
-    ],
+    //     'array' => [
+    //         'transport' => 'array',
+    //     ],
+    // ],
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,9 +86,18 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'leminhchinh1011@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'AdminLMC'),
     ],
+
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+
+    'username' => ('leminhchinh1011@gmail.com'),
+
+    'password' => ('c10111998'),
+
+    'sendmail' => '/usr/sbin/sendmail -bs',
+    'pretend' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -105,5 +117,7 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    'log_channel' => env('MAIL_LOG_CHANNEL'),
 
 ];

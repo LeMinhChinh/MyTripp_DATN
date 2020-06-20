@@ -59,6 +59,9 @@ Route::group([
     Route::get('booking-page','UserController@bookingPage')->name('bookingPage');
     Route::get('cancel-booking','UserController@cancelBooking')->name('cancelBooking');
     Route::get('payment-booking','UserController@paymentBooking')->name('paymentBooking');
+
+    // Route::post('list-booking','UserController@listBooking')->name('listBooking');
+    // Route::get('view-list-booking','UserController@viewListBooking')->name('viewListBooking');
 });
 
 Route::group([
@@ -113,4 +116,8 @@ Route::group([
     Route::get('pricing-plan/{id}','OwnerController@pricingPlan')->name('pricingPlan');
     Route::get('payment-plan','OwnerController@paymentPlan')->name('paymentPlan');
     Route::post('handle-payment-plan','OwnerController@handlepaymentPlan')->name('handlepaymentPlan');
+
+    Route::get('request-booking/{id}','OwnerController@requestBooking')->name('requestBooking');
+
+    Route::post('approval-booking','OwnerController@approvalBooking')->name('approvalBooking');
 });

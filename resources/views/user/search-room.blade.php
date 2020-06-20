@@ -176,6 +176,7 @@
                                         <div class="ri-text">
                                             <div class="rp-item-infor">
                                                 <div class="rp-item-name">
+                                                    <p class="rp-item-name-room"><small>{{ $value['type'] }} </small>{{ $value['rp'] }}</p>
                                                     <p class="rp-item-name-room"><small>Phòng </small>{{ $value['name'] }}</p>
                                                 </div>
                                                 <div class="rp-item-feedback">
@@ -198,7 +199,7 @@
                                                 </div>
                                             </div>
                                             <div class="room-btn-booking">
-                                                <button type="button" class="btn btn-primary" id={{ $value['id'] }}>Thêm vào danh sách phòng</button>
+                                                <button type="button" class="btn btn-primary add-to-book" id={{ $value['id'] }} data-checkin="{{ $checkin }}" data-checkout="{{ $checkout }}" data-id="{{ $value['idRp'] }}" data-name="{{ $value['rp'] }}">Thêm vào danh sách phòng</button>
                                                 <button type="button" class="btn btn-success booking-now" id={{ $value['id'] }} data-checkin="{{ $checkin }}" data-checkout="{{ $checkout }}">Đặt phòng ngay</button>
                                             </div>
                                         </div>

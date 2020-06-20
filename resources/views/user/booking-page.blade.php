@@ -19,6 +19,7 @@
                                     <p>{{ Session::get('checkin') }}</p>
                                     <p class="booking-detail-label">Checkout : </p>
                                     <p>{{ Session::get('checkout') }}</p>
+                                    <hr>
                                     <p class="booking-detail-label">Phòng đã đặt : </p>
                                     <p>{{ $room['name'] }}</p>
                                     <p class="booking-detail-label">Thông tin về phòng : </p>
@@ -63,6 +64,29 @@
                                 </div>
                             </div>
                             @if(Session::get('idSession'))
+                                <div class="fix-top">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
+                                    @if ($messages)
+                                        <div class="alert alert-danger">
+                                            <h6>{{ $messages }}</h6>
+                                        </div>
+                                    @endif
+
+                                    @if ($bookingError)
+                                        <div class="alert alert-danger">
+                                            <h6>{{ $bookingError }}</h6>
+                                        </div>
+                                    @endif
+                                </div>
                                 <form action="{{ route('user.paymentBooking') }}">
                                     <h2 class="infor-request">Nhập thông tin của bạn!</h2>
                                     <div class="booking-detail-form fix-top">

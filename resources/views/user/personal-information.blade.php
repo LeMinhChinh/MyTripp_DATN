@@ -5,6 +5,26 @@
     <div class="personal-content fix-top">
         <h2>Xin chào, {{ $inforAcc['surname'] }} {{ $inforAcc['name'] }}!!!</h2>
         <p class="ps-infor-notify">Những thông tin này được hiển thị kế bên các đánh giá, xếp hạng, hình ảnh v.v... mà bạn đã chia sẻ công khai. Mọi cập nhật cũng sẽ xuất hiện trong các đóng góp trước đây của bạn.</p>
+
+        <div class="fix-top">
+            @if ($errorAvatar)
+                <div class="alert alert-danger">
+                    <h6>{{ $errorAvatar }}</h6>
+                </div>
+            @endif
+
+            @if ($updateSuccess)
+                <div class="alert alert-success">
+                    <h6>{{ $updateSuccess }}</h6>
+                </div>
+            @endif
+
+            @if ($updateError)
+                <div class="alert alert-danger">
+                    <h6>{{ $updateError }}</h6>
+                </div>
+            @endif
+        </div>
         <hr class="fix-section">
         <div class="ps-infor fix-top">
             <form action="{{  route('user.handleUpdateInfomation',['id' => $inforAcc['id']]) }}" method="POST" enctype="multipart/form-data">

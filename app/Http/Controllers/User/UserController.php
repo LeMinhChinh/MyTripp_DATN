@@ -20,6 +20,11 @@ use Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\DB;
+use Mail;
+use App\Http\Requests\RequestRegister;
+use App\Http\Requests\RequestLogin;
+use App\Http\Requests\RequestIsOwner;
+use App\Http\Requests\RequestBooking;
 
 class UserController extends Controller
 {
@@ -100,10 +105,15 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        return view('user/login');
+        $data['messages'] = $request->session()->get('messages');
+        $data['registerSuccess'] = $request->session()->get('registerSuccess');
+        $data['loginError'] = $request->session()->get('loginError');
+        $data['loginErrorV1'] = $request->session()->get('loginErrorV1');
+        $data['loginErrorV2'] = $request->session()->get('loginErrorV2');
+        return view('user/login', $data);
     }
 
-    public function handleLogin(Request $request, Account $account)
+    public function handleLogin(RequestLogin $request, Account $account)
     {
         $email = $request->lgEmail;
         $password = $request->lgPass;
@@ -136,6 +146,7 @@ class UserController extends Controller
 
 
         }else{
+            $request->session()->flash('loginError','Tên đăng nhập hoặc mật khẩu không chính xác');
             return redirect()->route('login');
         }
     }
@@ -162,6 +173,7 @@ class UserController extends Controller
             return redirect()->back();
 
         }else{
+            $request->session()->flash('loginErrorV1','Tên đăng nhập hoặc mật khẩu không chính xác');
             return redirect()->route('login');
         }
     }
@@ -188,6 +200,7 @@ class UserController extends Controller
             return redirect()->back();
 
         }else{
+            $request->session()->flash('loginErrorV1','Tên đăng nhập hoặc mật khẩu không chính xác');
             return redirect()->route('login');
         }
     }
@@ -196,10 +209,12 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        return view('user/register');
+        $data['messages'] = $request->session()->get('messages');
+        $data['registerError'] = $request->session()->get('registerError');
+        return view('user/register', $data);
     }
 
-    public function handleRegister(Request $request,Account $account)
+    public function handleRegister(RequestRegister $request,Account $account)
     {
         $email = $request->rgtEmail;
         $password = $request->rgtPass;
@@ -229,8 +244,10 @@ class UserController extends Controller
         $rgtAccount = $account->registerAccount($dataRgtAccount);
 
         if($rgtAccount){
+            $request->session()->flash('registerSuccess','Tạo tài khoản thành công.');
             return redirect()->route('login');
         }else{
+            $request->session()->flash('registerError', 'Đã có lỗi xảy ra. Vui lòng thử lại.');
             return redirect()->route('register');
         }
     }
@@ -380,6 +397,10 @@ class UserController extends Controller
 
         $data['inforAcc'] = $inforAcc;
 
+        $data['errorAvatar'] = $request->session()->get('errorAvatar');
+        $data['updateSuccess'] = $request->session()->get('updateSuccess');
+        $data['updateError'] = $request->session()->get('updateError');
+
         return view('user/personal-information', $data);
     }
 
@@ -445,8 +466,10 @@ class UserController extends Controller
         $update = $acc->updateInforPerson($dataUpdate, $id);
 
         if($update){
+            $request->session()->flash('updateSuccess', 'Cập nhật thành công.');
             return redirect()->route('user.personalInformation',['id' => $id]);
         }else{
+            $request->session()->flash('updateError', 'Có lỗi xảy ra.Vui lòng thử lại.');
             return redirect()->route('user.personalInformation',['id' => $id]);
         }
     }
@@ -466,12 +489,15 @@ class UserController extends Controller
         $data['inforAcc'] = $inforAcc;
         $data['count'] = $count;
 
+        $data['messages'] = $request->session()->get('messages');
+        $data['requestSuccess'] = $request->session()->get('requestSuccess');
+        $data['requestError'] = $request->session()->get('requestError');
+
         return view('user/personal-request', $data);
     }
 
-    public function handleRequest(Request $request, RequestOwner $rq)
+    public function handleRequest(RequestIsOwner $request, RequestOwner $rq)
     {
-        // dd($request->all());
         $idOwner = $request->idOwner;
         $nameOwner = $request->nameOwner;
         $emaiOwner = $request->emailOwner;
@@ -498,8 +524,10 @@ class UserController extends Controller
         $requestOwner = $rq->requestOwner($dataRequest);
 
         if($requestOwner){
+            $request->session()->flash('requestSuccess', 'Gửi yêu cầu thành công.');
             return redirect()->route('user.personalRequest', ['id' => $idOwner]);
         }else{
+            $request->session()->flash('requestError', 'Có lỗi xảy ra.Vui lòng thử lại.');
             return redirect()->route('user.personalRequest', ['id' => $idOwner]);
         }
     }
@@ -549,8 +577,12 @@ class UserController extends Controller
     public function personalBooking(Request $request, $id)
     {
         $id = $request->id;
-        $booking = Booking::where('id_acc', $id)->get();
-        $booking = \json_decode(json_encode($booking), true);
+        $booking = Booking::where('id_acc', $id)->paginate(7);
+
+        $data['paginate'] = $booking;
+        $booking = json_decode(json_encode($booking),true);
+
+        $data['booking'] = $booking['data'] ?? [];
 
         $idBooking = Booking::where('id_acc', $id)->get()->pluck('id');
         $idBooking = \json_decode(json_encode($idBooking), true);
@@ -558,8 +590,9 @@ class UserController extends Controller
         $bookingDetail = DetailBooking::wherein('id_book', $idBooking)->get();
         $bookingDetail = \json_decode(json_encode($bookingDetail), true);
 
-        $data['booking'] = $booking;
         $data['bookingDetail'] = $bookingDetail;
+
+        $data['bookingSuccess'] = $request->session()->get('bookingSuccess');
 
         return view('user/personal-booking', $data);
     }
@@ -694,8 +727,39 @@ class UserController extends Controller
             }
         }
 
+        $data['messages'] = $request->session()->get('messages');
+        $data['bookingError'] = $request->session()->get('bookingError');
+
         return view('user.booking-page', $data);
     }
+
+    // public function listBooking(Request $request, Rooms $r, FeedbackRP $fb)
+    // {
+    //     $listRoom = $request->listRoom;
+    //     $listCheckin = $request->listCheckin;
+    //     $listCheckout = $request->listCheckout;
+
+    //     $request->session()->put('listRoom', $listRoom);
+    //     $request->session()->put('listCheckin', $listCheckin);
+    //     $request->session()->put('listCheckout', $listCheckout);
+
+    //     return response()->json([
+    //         'success' => true
+    //     ]);
+    // }
+
+    // public function viewListBooking(Request $request, Rooms $r)
+    // {
+    //     $room = $r->getRoomByListId(Session::get('listRoom'));
+    //     $room = json_decode(json_encode($room), true);
+
+    //     $data['room'] = $room;
+    //     dd($data['room']);
+    //     $data['listCheckin'] = Session::get('listCheckin');
+    //     $data['listCheckout'] = Session::get('listCheckout');
+
+    //     return view('user/list-booking', $data);
+    // }
 
     public function cancelBooking(Request $request)
     {
@@ -704,8 +768,11 @@ class UserController extends Controller
         return redirect()->route('homepage');
     }
 
-    public function paymentBooking(Request $request)
+    public function paymentBooking(RequestBooking $request)
     {
+        $data['inforBooking'] = $request->all();
+        $email = $request->emailCustomer;
+
         $book = new Booking;
         $book->id_acc = Session::get('idSession');
         $book->name = $request->nameCustomer;
@@ -733,11 +800,29 @@ class UserController extends Controller
 
             $detailBook->save();
 
-            $request->session()->forget('idRoom');
-            $request->session()->forget('checkin');
-            $request->session()->forget('checkout');
-        }
+            // Mail::send('user.mail',$data, function($message) use($email)
+            // {
+            //     // $message->from('leminhchinh1011@gmail.com','MyTripp');
 
-        return redirect()->route('user.personalBooking',['id' => Session::get('idSession')]);
+            //     $message->to($email,$email);
+
+            //     // $message->cc('leminhchinh1011@gmail.com','Le Minh Chinh');
+
+            //     $message->subject('Xác nhận đặt phòng tại MyTripp');
+
+            // });
+
+            if($detailBook->save()){
+                $request->session()->forget('idRoom');
+                $request->session()->forget('checkin');
+                $request->session()->forget('checkout');
+
+                $request->session()->flash('bookingSuccess', 'Đặt phòng thành công. Vui lòng chờ xác nhận từ quản lí khách sạn.');
+                return redirect()->route('user.personalBooking',['id' => Session::get('idSession')]);
+            }
+        }else{
+            $request->session()->flash('bookingError', 'Có lỗi xảy ra.Vui lòng thử lại.');
+            return redirect()->route('user.bookingPage');
+        }
     }
 }

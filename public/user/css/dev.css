@@ -899,7 +899,23 @@ button.filter-submit-room, button.filter-submit-rp {
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 30%  0 0;
+}
+
+.form-search-user {
+    width: 70%;
+}
+
+.form-icon-book {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.form-icon-book i.fas.fa-box {
+    color: #003580;
+    font-size: 30px;
 }
 
 .nav-search input.form-control {
@@ -1315,7 +1331,20 @@ input#psEmail {
 }
 
 .service-item > p{
-    font-size: 15px;
+    font-size: 16px;
+}
+
+p.count-room {
+    position: absolute;
+    color: #000;
+    padding: 0 0 0px 6px;
+    background: #fff;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    margin-top: 10px;
+    margin-left: 5px;
+    border: 1px solid #003580;
 }
 
 .sr__card_price.bui-spacer--large {
@@ -1464,4 +1493,18 @@ button.btn.btn-secondary.btn-lg.ps-button-cancel > a, button.btn.btn-secondary.b
 
 .booking-list-detail h3 {
     color: #b7c00e;
+}
+
+.active-table{
+    background: #fdf6ec;
+}
+
+.awaiting-request-enabled > button {
+    width: 100%;
+    margin: 0!important;
+}
+
+.approved-request-enabled > button {
+    width: 100%;
+    margin: 0!important;
 }

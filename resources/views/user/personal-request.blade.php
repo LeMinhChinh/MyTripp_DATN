@@ -10,6 +10,35 @@
             <p class="ps-infor-notify ps-infor-note ">Yêu cầu của bạn đang trong trạng thái chờ duyệt. Vui lòng đợi phản hồi từ chúng tôi. Xin cảm ơn!</p>
         @endif
     </div>
+    <div class="fix-top">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if ($messages)
+            <div class="alert alert-danger">
+                <h6>{{ $messages }}</h6>
+            </div>
+        @endif
+
+        @if ($requestSuccess)
+            <div class="alert alert-success">
+                <h6>{{ $requestSuccess }}</h6>
+            </div>
+        @endif
+
+        @if ($requestError)
+            <div class="alert alert-danger">
+                <h6>{{ $requestError }}</h6>
+            </div>
+        @endif
+    </div>
     <div class="personal-content-request fix-top">
         <form action="{{ route('user.handleRequest') }}" method="POST">
             @csrf

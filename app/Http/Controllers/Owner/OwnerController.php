@@ -11,6 +11,8 @@ use App\Models\RestingPlace;
 use App\Models\Rooms;
 use App\Models\TypeBed;
 use App\Models\Payment;
+use App\Models\Booking;
+use App\Models\DetailBooking;
 use Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -684,5 +686,38 @@ class OwnerController extends Controller
             return redirect()->route('owner.paymentPlan');
         }
 
+    }
+
+    public function requestBooking(Request $request, $id, Booking $book)
+    {
+        $rp = RestingPlace::where('id_acc',$id)->pluck('id')->first();
+
+        $inforRequest = $book->getDataRequest($rp);
+        $data['paginate'] = $inforRequest;
+        $inforRequest = json_decode(json_encode($inforRequest),true);
+
+        $data['inforRequest'] = $inforRequest['data'] ?? [];
+
+        $bookingDetail = DetailBooking::where('id_rp', $rp)->get();
+        $bookingDetail = \json_decode(json_encode($bookingDetail), true);
+
+        $data['bookingDetail'] = $bookingDetail;
+
+        return view('owner.request-booking', $data);
+    }
+
+    public function approvalBooking(Request $request, Booking $book)
+    {
+        $id = $request->id;
+
+        $status = Booking::where('id',$id)->pluck('status')->first();
+
+        $updateBooking = $book->updateBooking($id, $status);
+
+        if($updateBooking){
+            echo "Approval success";
+        }else{
+            echo "Approval fail";
+        }
     }
 }

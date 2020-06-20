@@ -4,6 +4,29 @@
 @section('content')
 <main>
     <div class="limiter">
+        <div class="container" style="padding-top: 20px">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if ($messages)
+                <div class="alert alert-danger">
+                    <h6>{{ $messages }}</h6>
+                </div>
+            @endif
+
+            @if ($registerError)
+                <div class="alert alert-danger">
+                    <h6>{{ $registerError }}</h6>
+                </div>
+            @endif
+        </div>
         <div class="container-login100">
             <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
                 <form class="login100-form validate-form" action="{{ route('handleRegister') }}" method="POST">

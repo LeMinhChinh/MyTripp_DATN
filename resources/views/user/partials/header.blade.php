@@ -99,19 +99,35 @@
             </div>
             <div class="col-lg-9">
                 <div class="nav-search">
-                    <form action="{{ route('user.search') }}">
-                        @csrf
-                    <div class="input-group">
-
-                            <input type="text" class="form-control" placeholder="Bạn muốn đến đâu? Hãy nhập địa điểm hoặc tên khách sạn" aria-label="Recipient's username" aria-describedby="basic-addon2" name="searchKeyword" id="searchKeyword">
-                            <div class="input-group-append">
-                            <button class="input-group-text btn btn-primary" id="basic-addon2">Tìm kiếm</button>
+                    <div class="form-search-user">
+                        <form action="{{ route('user.search') }}">
+                            @csrf
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Bạn muốn đến đâu? Hãy nhập địa điểm hoặc tên khách sạn" aria-label="Recipient's username" aria-describedby="basic-addon2" name="searchKeyword" id="searchKeyword">
+                                <div class="input-group-append">
+                                <button class="input-group-text btn btn-primary" id="basic-addon2">Tìm kiếm</button>
+                                </div>
                             </div>
-
+                        </form>
                     </div>
-                </form>
+                    <div class="form-icon-book">
+                        <a href="{{ route('user.bookingPage') }}" title="Booking list room" class="icon-book"><i class="fas fa-box"></i></a>
+                        <p title="Booking list room" class="booking-page hide" style="cursor: pointer;"><i class="fas fa-box"></i></p>
+                        <p class="count-room">
+                            {{-- @if($idBook == null)
+                                0
+                            @else
+                                {{ $countBook }}
+                            @endif --}}
+                            0
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('scripts')
+
+@endpush

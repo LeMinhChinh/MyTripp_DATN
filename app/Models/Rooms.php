@@ -35,9 +35,8 @@ class Rooms extends Model
 
     public function getDataRoomBooking($id, $child, $adult)
     {
-        // $data = DB::table('rooms as r')->whereNotIn('id', $id)->get();
         $data = DB::table('rooms as r')
-                    ->select('r.*','tb.name as name_bed','rp.name as rp','p.name as place','t.name as type', 'address')
+                    ->select('r.*','tb.name as name_bed','rp.name as rp','p.name as place','t.name as type', 'address','rp.id as idRp')
                     ->join('resting_places as rp','rp.id','=','r.id_rp')
                     ->join('place as p','p.id','=','rp.place')
                     ->join('type_rp as t','t.id','=','rp.type')
@@ -62,6 +61,18 @@ class Rooms extends Model
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
                     ->where('r.id',$id)
                     ->first();
+        return $data;
+    }
+
+    public function getRoomByListId($id)
+    {
+        $data =DB::table('rooms as r')
+                    ->select('r.*','rp.name as nameHotel','tb.name as namebed','tp.name as type','rate','address','rp.id as idRp')
+                    ->join('resting_places as rp','rp.id','=','r.id_rp')
+                    ->join('type_rp as tp','tp.id','=','rp.type')
+                    ->join('type_bed as tb','tb.id','=','r.type_bed')
+                    ->whereIn('r.id',$id)
+                    ->get();
         return $data;
     }
 

@@ -197,10 +197,6 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="room-btn-booking">
-                                                <button type="button" class="btn btn-primary">Thêm vào danh sách phòng</button>
-                                                <button type="button" class="btn btn-success">Đặt phòng ngay</button>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-9">
@@ -423,6 +419,27 @@
 
             todays = yyyys+'-'+mms+'-'+dds;
             $('#checkout').attr("min", todays);
+        })
+
+        $('.booking-now').click(function(){
+            var self = $(this);
+            var id = self.attr('id').trim();
+            var checkin = self.attr('data-checkin');
+            var checkout = self.attr('data-checkout');
+            console.log(id, checkin, checkout)
+
+            if($.isNumeric(id)){
+                $.ajax({
+                    url: "{{ route('user.bookingNow') }}",
+                    type: "POST",
+                    data: {id: id, checkin: checkin, checkout: checkout},
+                    success: function(data){
+                        if(data.success == true){
+                            window.location.href =  "{{ route('user.bookingPage') }}"
+                        }
+                    }
+                });
+            }
         })
     </script>
 @endpush

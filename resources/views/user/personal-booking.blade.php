@@ -6,6 +6,13 @@
         @if($booking == null)
         <h3>Bạn chưa có đơn đặt phòng nào</h3>
         @else
+            <div class="fix-top">
+                @if ($bookingSuccess)
+                    <div class="alert alert-success">
+                        <h6>{{ $bookingSuccess }}</h6>
+                    </div>
+                @endif
+            </div>
             <h3>Thông tin các đơn đặt phòng của bạn</h3>
             <table class="table table-hover fix-top">
                 <thead>
@@ -15,17 +22,19 @@
                         <th scope="col">Email</th>
                         <th scope="col">Địa chỉ</th>
                         <th scope="col">Tổng tiền</th>
+                        <th scope="col">Ghi chú</th>
                         <th scope="col">Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($booking as $value)
-                        <tr class="js-booking-{{ $value['id'] }}">
+                        <tr class="js-booking-{{ $value['id'] }} js-booking">
                             <td>{{ $value['name'] }}</td>
                             <td>{{ $value['phone'] }}</td>
                             <td>{{ $value['email'] }}</td>
                             <td>{{ $value['address'] }}</td>
                             <td>{{ number_format($value['total'] ,0 ,'.' ,'.').'' }}&#8363;</td>
+                            <td>{{ $value['note'] }}</td>
                             <td>
                                 @if( $value['status']  == 0)
                                     <div class="awaiting-request-enabled awaiting-{{ $value['id'] }}">
@@ -60,7 +69,7 @@
                     </thead>
                     <tbody>
                         @foreach ($bookingDetail as $value)
-                            <tr class="js-booking-detail-{{ $value['id'] }} hide" >
+                            <tr class="js-booking-detail-{{ $value['id_book'] }} hide js-booking-detail" >
                                 <td>{{ $value['name_rp'] }}</td>
                                 <td>{{ $value['name_room'] }}</td>
                                 <td>{{ $value['price'] }}</td>
@@ -71,6 +80,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="paginations-view">
+                    {{ $paginate->links() }}
+                </div>
             </div>
         @endif
     </div>
@@ -81,7 +93,10 @@
     $(function(){
         for(let i = 1; i<=100; i++){
             $('.js-booking-'+i).click(function(){
+                $('.js-booking').removeClass('active-table')
+                $(this).addClass('active-table')
                 $('.booking-list-detail').removeClass('hide');
+                $('.js-booking-detail').addClass('hide');
                 $('.js-booking-detail-'+i).removeClass('hide');
             })
         }
