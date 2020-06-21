@@ -141,7 +141,7 @@ class UserController extends Controller
             }
 
             if(Session::get('roleSession') === 2){
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.account');
             }
 
 
@@ -824,5 +824,86 @@ class UserController extends Controller
             $request->session()->flash('bookingError', 'Có lỗi xảy ra.Vui lòng thử lại.');
             return redirect()->route('user.bookingPage');
         }
+    }
+
+    public function filterDataRoom(Request $request,  DetailBooking $dt, Rooms $r)
+    {
+        $place = $request->place;
+        $adult = $request->adult;
+        $child = $request->child;
+        $oldAdult = $request->oldAdult;
+        $oldChild = $request->oldChild;
+        $checkin = $request->checkin;
+        $checkout = $request->checkout;
+        $oldCheckin = $request->oldCheckin;
+        $oldCheckout = $request->oldCheckout;
+        $price = $request->price;
+        $smoke = $request->smoke;
+        $tivi = $request->tivi;
+        $air = $request->air;
+        $phone = $request->phone;
+
+        if($adult == null){
+            $newAdult = $oldAdult;
+        }else{
+            $newAdult = $adult;
+        }
+
+        if($child == null){
+            $newChild = $oldChild;
+        }else{
+            $newChild = $child;
+        }
+
+        $query = DetailBooking::query();
+        if($checkin == null){
+            $query = $query->where('checkout','<=', $oldCheckin);
+        }else{
+            $query = $query->where('checkout','<=', $checkin);
+        }
+        if($checkout == null){
+            $query = $query->orwhere('checkin','>=',$oldCheckout);
+        }else{
+            $query = $query->orwhere('checkin','>=',$checkout);
+        }
+
+        $room = $query->get()->pluck('id');
+
+        $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
+        $roomNotBook = json_decode(json_encode($roomNotBook),true);
+
+        $dataRoomBooking = $r->filterDataRoomBooking($roomNotBook, $newChild, $newAdult, $price, $smoke, $tivi, $air, $phone, $place);
+        dd($dataRoomBooking);
+
+        $data['paginate'] = $dataRoomBooking;
+        $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
+
+        $data['dataRoomBooking'] = $dataRoomBooking['data'] ?? [];
+
+        $images = [];
+
+        foreach ($data['dataRoomBooking'] as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
+
+        $type = TypeBed::get();
+        $type = json_decode(json_encode($type), true);
+
+        $place = Place::get();
+        $place = json_decode(json_encode($place), true);
+
+        $data['images']  = $images;
+        $data['checkin']  = $checkin;
+        $data['checkout']  = $checkout;
+        $data['adult']  = $adult;
+        $data['child']  = $child;
+        $data['type']  = $type;
+        $data['place']  = $place;
+
+        return view('user.search-room', $data);
+
     }
 }

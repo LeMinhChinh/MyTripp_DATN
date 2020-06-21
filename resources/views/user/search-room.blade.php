@@ -16,13 +16,14 @@
                         </div>
                         <div class="r-filter-content">
                             <div class="booking-form">
-                                <form action="#">
+                                <form action="{{ route('user.filterDataRoom') }}" method="POST">
+                                    @csrf
                                     <div class="r-filter-time r-people fix-top">
                                         <div class="r-time-title r-title-1">
                                              <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-1 disabledIcon"></i><i class="fas fa-angle-down r-down-1"></i></p><p class="r-time-title-text">Địa điểm</p>
                                         </div>
                                         <div class="r-child r-people select-option">
-                                            <select id="beds" class="booking-input">
+                                            <select id="place" name="place" class="booking-input">
                                                 <option value="">Địa điểm</option>
                                                 @foreach ($place as $item)
                                                     <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
@@ -47,6 +48,18 @@
                                                 <i class="icon_calendar"></i>
                                             </div>
                                         </div>
+                                        <div class="r-time-content r-content-1 fix-top hide">
+                                            <div class="check-date">
+                                                <label for="date-in">Check in</label>
+                                                <input type="date" class="booking-input" name="oldCheckin" id="oldCheckin" value="{{ $checkin }}">
+                                                <i class="icon_calendar"></i>
+                                            </div>
+                                            <div class="check-date">
+                                                <label for="date-out">Check out</label>
+                                                <input type="date" class="booking-input" name="oldCheckout" id="oldCheckout" value="{{ $checkout }}">
+                                                <i class="icon_calendar"></i>
+                                            </div>
+                                        </div>
                                    </div>
                                    <hr class="fix-section">
                                     <div class="r-filter-need r-people">
@@ -56,15 +69,23 @@
                                         <div class="r-need-content r-content-2 fix-top">
                                             <div class="r-adult r-people">
                                                 <label for="guest">Số người lớn</label>
-                                                <input type="text" class="booking-input">
+                                                <input type="text" class="booking-input" name="adult" id="adult">
                                             </div>
                                             <div class="r-child r-people">
                                                 <label for="guest">Số trẻ con</label>
-                                                <input type="text" class="booking-input">
+                                                <input type="text" class="booking-input" name="child" id="child">
+                                            </div>
+                                            <div class="r-adult r-people hide">
+                                                <label for="guest">Số người lớn</label>
+                                                <input type="text" class="booking-input" name="oldAdult" id="oldAdult" value="{{ $adult }}">
+                                            </div>
+                                            <div class="r-child r-people hide">
+                                                <label for="guest">Số trẻ con</label>
+                                                <input type="text" class="booking-input" name="oldChild" id="oldChild" value="{{ $child }}">
                                             </div>
                                             <div class="r-child r-people select-option">
-                                                <label for="beds">Giường</label>
-                                                <select id="beds" class="booking-input">
+                                                <label for="bed">Giường</label>
+                                                <select id="bed" name="bed" class="booking-input">
                                                     <option value="">Loại giường</option>
                                                     @foreach ($type as $item)
                                                         <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
@@ -80,24 +101,24 @@
                                        </div>
                                         <div class="r-filter-convenient r-filter-price">
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck5" name="filterRate" value="4">
+                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck5" name="price" value="1">
                                                 <label class="form-check-label" for="exampleCheck5">0 - 500.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck6" name="filterRate" value="3">
+                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck6" name="price" value="2">
                                                 <label class="form-check-label" for="exampleCheck6">500.000 - 1.000.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck7" name="filterRate" value="2">
+                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck7" name="price" value="3">
                                                 <label class="form-check-label" for="exampleCheck7">1.000.000 - 2.000.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck8" name="filterRate" value="1">
+                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck8" name="price" value="4">
                                                 <label class="form-check-label" for="exampleCheck8">2.000.000 - 4.000.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck8" name="filterRate" value="1">
-                                                <label class="form-check-label" for="exampleCheck8">Từ 4.000.000 / đêm (VND)</label>
+                                                <input type="checkbox" class="form-check-input check-input-fb" id="exampleCheck9" name="price" value="5">
+                                                <label class="form-check-label" for="exampleCheck9">Từ 4.000.000 / đêm (VND)</label>
                                             </div>
                                         </div>
                                     </div>
@@ -111,45 +132,45 @@
                                                 <div class="r-child r-people">
                                                     <label for="guest">Phòng hút thuốc</label>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="smoke" value="1">
                                                         <label class="form-check-label" for="exampleCheck1">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Không</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck2" name="smoke" value="0">
+                                                        <label class="form-check-label" for="exampleCheck2">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Tivi</label>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Có</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck3" name="tivi" value="1">
+                                                        <label class="form-check-label" for="exampleCheck3">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Không</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck4" name="tivi" value="0">
+                                                        <label class="form-check-label" for="exampleCheck4">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Điều hòa</label>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Có</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck10" name="air" value="1">
+                                                        <label class="form-check-label" for="exampleCheck10">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Không</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck11" name="air" value="0">
+                                                        <label class="form-check-label" for="exampleCheck11">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Điện thoại</label>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Có</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck12" name="phone" value="1">
+                                                        <label class="form-check-label" for="exampleCheck12">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Không</label>
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck13" name="phone" value="0">
+                                                        <label class="form-check-label" for="exampleCheck13">Không</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,7 +221,7 @@
                                             </div>
                                             <div class="room-btn-booking">
                                                 <button type="button" class="btn btn-primary add-to-book" id={{ $value['id'] }} data-checkin="{{ $checkin }}" data-checkout="{{ $checkout }}" data-id="{{ $value['idRp'] }}" data-name="{{ $value['rp'] }}">Thêm vào danh sách phòng</button>
-                                                <button type="button" class="btn btn-success booking-now" id={{ $value['id'] }} data-checkin="{{ $checkin }}" data-checkout="{{ $checkout }}">Đặt phòng ngay</button>
+                                                <button type="button" class="btn btn-success booking-now" id={{ $value['id'] }} data-checkin="{{ $checkin }}" data-checkout="{{ $checkout }}" data-adult="{{ $adult }}" data-child="{{ $child }}">Đặt phòng ngay</button>
                                             </div>
                                         </div>
                                     </div>
@@ -331,6 +352,54 @@
                     }
                 });
             }
+        })
+        $(document).ready(function(){
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                    dd='0'+dd
+                }
+                if(mm<10){
+                    mm='0'+mm
+                }
+
+            today = yyyy+'-'+mm+'-'+dd;
+            $('#checkin').attr("min", today);
+
+            var todays = new Date();
+            var dds = todays.getDate()+1;
+            var mms = todays.getMonth()+1;
+            var yyyys = todays.getFullYear();
+            if(dds<10){
+                    dds='0'+dds
+                }
+                if(mms<10){
+                    mms='0'+mms
+                }
+
+            todays = yyyys+'-'+mms+'-'+dds;
+            $('#checkout').attr("min", todays);
+
+            var child = $('.booking-now').attr('data-child')
+            var adult = $('.booking-now').attr('data-adult')
+            var checkin = $('.booking-now').attr('data-checkin');
+            var checkout = $('.booking-now').attr('data-checkout');
+
+            $('.booking-input').change(function(){
+                var place = $(this).val()
+                console.log(place, child, adult, checkin, checkout)
+
+                $.ajax({
+                    url: "{{ route('user.filterDataRoom') }}",
+                    type: "POST",
+                    data: {place: place,child: child, adult: adult,  checkin: checkin, checkout: checkout},
+                    success: function(data){
+
+                    }
+                });
+            })
         })
     </script>
 @endpush

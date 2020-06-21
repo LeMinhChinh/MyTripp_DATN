@@ -262,3 +262,7 @@ img.logo-bank {
     width: 100px;
     height: 50px;
 }
+
+.owner-infor .form-group.ps-item-content {
+    display: block!important;
+}

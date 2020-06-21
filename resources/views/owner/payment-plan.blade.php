@@ -27,23 +27,40 @@
         <form action="{{  route('owner.handlepaymentPlan')}}" method="POST" >
             @csrf
             <h2 style="text-align: center; color:red">Payment plan</h2>
+            <div class="fix-top">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if ($paidError)
+                    <div class="alert alert-danger">
+                        <h6>{{ $paidError }}</h6>
+                    </div>
+                @endif
+            </div>
             <div class="form-group" style="display: none">
                 <label for="formGroupExampleInput">Id owner</label>
                 <input type="text" class="form-control" id="idOwner" name="idOwner" placeholder="Hotel name" value="{{ Session::get('idSession') }}">
             </div>
             <div class="form-group">
                 <label for="formGroupExampleInput2">Owner name</label>
-                <input type="text" class="form-control" id="nameOwner" name="nameOwner" placeholder="Owner name" value="{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Owner name" value="{{ Session::get('fnameSession') }} {{ Session::get('lnameSession') }}">
             </div>
             <div class="form-group single-lable">
                 <label for="formGroupExampleInput2">Payments</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline1" name="selectPayment" class="custom-control-input" value="0">
+                <input type="radio" id="customRadioInline1" name="payment" class="custom-control-input" value="0" @if(old('payment') === 0) checked @endif>
                 <label class="custom-control-label" for="customRadioInline1">Banking</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="customRadioInline2" name="selectPayment" class="custom-control-input" value="1">
+                <input type="radio" id="customRadioInline2" name="payment" class="custom-control-input" value="1"  @if(old('payment') == 1) checked @endif>
                 <label class="custom-control-label" for="customRadioInline2">Paypal</label>
             </div>
             <div class="show-select-bank hide">
@@ -51,7 +68,7 @@
                     <label for="formGroupExampleInput2">Select a bank</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline5" name="selectBank" class="custom-control-input" value="0">
+                    <input type="radio" id="customRadioInline5" name="bank" class="custom-control-input" value="0">
                     <label class="custom-control-label" for="customRadioInline5"><img class="logo-bank" src="{{ asset('user/img/Techcombank_logo.png')}}" alt=""></label>
                     <div class="select-techcombank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -59,7 +76,7 @@
                     </div>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline6" name="selectBank" class="custom-control-input" value="1">
+                    <input type="radio" id="customRadioInline6" name="bank" class="custom-control-input" value="1">
                     <label class="custom-control-label" for="customRadioInline6"><img class="logo-bank" src="{{ asset('user/img/Vietcombank_logo.jpg')}}" alt=""></label>
                     <div class="select-vietcombank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -67,7 +84,7 @@
                     </div>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline3" name="selectBank" class="custom-control-input" value="2">
+                    <input type="radio" id="customRadioInline3" name="bank" class="custom-control-input" value="2">
                     <label class="custom-control-label" for="customRadioInline3"><img class="logo-bank" src="{{ asset('user/img/Viettinbank_logo.png')}}" alt=""></label>
                     <div class="select-viettinbank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -75,7 +92,7 @@
                     </div>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="customRadioInline4" name="selectBank" class="custom-control-input" value="3">
+                    <input type="radio" id="customRadioInline4" name="bank" class="custom-control-input" value="3">
                     <label class="custom-control-label" for="customRadioInline4"><img class="logo-bank" src="{{ asset('user/img/agribank_logo.jpg')}}" alt=""></label>
                     <div class="select-agribank hide">
                         <p class="name-bank">Chủ tài khoản : Lê Minh Chinh</p>
@@ -92,7 +109,7 @@
 
 @push('scripts')
     <script>
-        $('input[name="selectPayment"]').change(function(){
+        $('input[name="payment"]').change(function(){
             var value = $(this).val()
             if(value == 0){
                 $('.show-select-bank').removeClass('hide')
@@ -101,7 +118,7 @@
             }
         })
 
-        $('input[name="selectBank"]').change(function(){
+        $('input[name="bank"]').change(function(){
             var value = $(this).val()
             if(value == 0){
                 $('.select-techcombank').removeClass('hide')

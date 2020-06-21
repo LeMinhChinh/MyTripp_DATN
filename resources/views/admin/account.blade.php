@@ -15,9 +15,9 @@
                     <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">
                     <select class="custom-select custom-select-sm mb-3 role-select-option" name="" id="">
                         <option value="">Filter role</option>
-                        <option value="2">Super Admin</option>
-                        <option value="1">Owner</option>
-                        <option value="0">Customer</option>
+                        <option value="2" @if($role == 2) selected @endif>Super Admin</option>
+                        <option value="1" @if($role == 1) selected @endif>Owner</option>
+                        <option value="0" @if($role == 0) selected @endif>Customer</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">
@@ -82,7 +82,7 @@
         </tbody>
     </table>
     <div class="paginations-view">
-        {{ $paginate->links() }}
+        {{ $paginate->appends(['keyword' => $keyword, 'role' => $role])->links() }}
     </div>
 @endsection
 

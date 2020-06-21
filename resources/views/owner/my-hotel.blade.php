@@ -154,6 +154,19 @@
                 @endforeach
             @endif --}}
             {{-- @if($count > 1) --}}
+            <div class="fix-top">
+                @if ($createSuccess)
+                    <div class="alert alert-success">
+                        <h6>{{ $createSuccess }}</h6>
+                    </div>
+                @endif
+
+                @if ($updateSuccess)
+                    <div class="alert alert-success">
+                        <h6>{{ $updateSuccess }}</h6>
+                    </div>
+                @endif
+            </div>
                 <div class="multiple-hotel">
                     <table class="table table-hover">
                         <thead>

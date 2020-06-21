@@ -16,6 +16,13 @@
         @endif
     @endif
     <div class="container">
+        <div class="fix-top">
+            @if ($paidSuccess)
+                <div class="alert alert-success">
+                    <h6>{{ $paidSuccess }}</h6>
+                </div>
+            @endif
+        </div>
         <div>
             <table class="table table-bordered">
                 <thead class="thead-light">

@@ -9,6 +9,25 @@
         <li class="breadcrumb-item active">Overview</li>
     </ol>
     <div class="owner-infor">
+        <div class="fix-top">
+            @if ($errorAvatar)
+                <div class="alert alert-danger">
+                    <h6>{{ $errorAvatar }}</h6>
+                </div>
+            @endif
+
+            @if ($updateSuccess)
+                <div class="alert alert-success">
+                    <h6>{{ $updateSuccess }}</h6>
+                </div>
+            @endif
+
+            @if ($updateError)
+                <div class="alert alert-danger">
+                    <h6>{{ $updateError }}</h6>
+                </div>
+            @endif
+        </div>
         <form action="{{  route('owner.handleUpdateInfomation',['id' => $inforAcc['id']]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">

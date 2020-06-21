@@ -16,6 +16,7 @@ use App\Models\DetailBooking;
 use Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\RequestCreateHotel;
 
 class OwnerController extends Controller
 {
@@ -35,6 +36,10 @@ class OwnerController extends Controller
         $inforAcc = \json_decode(\json_encode($inforAcc), true);
 
         $data['inforAcc'] = $inforAcc;
+
+        $data['errorAvatar'] = $request->session()->get('errorAvatar');
+        $data['updateSuccess'] = $request->session()->get('updateSuccess');
+        $data['updateError'] = $request->session()->get('updateError');
 
         return view('owner/information', $data);
     }
@@ -64,7 +69,7 @@ class OwnerController extends Controller
                         ['psAvatar' => $request->file('psAvatar')],
                         ['psAvatar' => 'required'],
                         [
-                            'required' => 'Vui lòng chọn ảnh'
+                            'required' => 'Please choose an image'
                         ]
                     );
 
@@ -77,7 +82,7 @@ class OwnerController extends Controller
                         $tmpName  = $_FILES['psAvatar']['tmp_name'];
                         $up = move_uploaded_file($tmpName, public_path() . '/user/uploads/avatar/' . $oldAvatar);
                         if(!$up){
-                            $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');
+                            $request->session()->flash('errorAvatar', 'Error uploading image to server');
                             return redirect()->route('owner.general-information',['id' => $id]);
                         }
                     }
@@ -101,8 +106,10 @@ class OwnerController extends Controller
         $update = $acc->updateInforPerson($dataUpdate, $id);
 
         if($update){
+            $request->session()->flash('updateSuccess', 'Update information success');
             return redirect()->route('owner.information',['id' => $id]);
         }else{
+            $request->session()->flash('updateError', 'An error occurred. Please try again');
             return redirect()->route('owner.information',['id' => $id]);
         }
     }
@@ -124,6 +131,9 @@ class OwnerController extends Controller
         $count = count($data['inforRP']);
         $data['count'] = $count;
 
+        $data['createSuccess'] = $request->session()->get('createSuccess');
+        $data['updateSuccess'] = $request->session()->get('updateSuccess');
+
         return view('owner/my-hotel', $data);
     }
 
@@ -138,29 +148,56 @@ class OwnerController extends Controller
         $data['type'] = $type;
         $data['place'] = $place;
 
+        $data['createError'] = $request->session()->get('createError');
+
         return view('owner/create-hotel', $data);
     }
 
     public function handleCreateHotel(Request $request, RestingPlace $rp)
     {
-        $name = $request->nameHotel;
-        $type = $request->input('typeHotel');
-        $place = $request->input('placeHotel');
-        $address = $request->addressHotel;
-        $email = $request->emailHotel;
-        $phone = $request->phoneHotel;
-        $rate = $request->rateHotel;
-        $wifi = $request->wifiHotel;
-        $pool = $request->poolHotel;
-        $parking = $request->parkingHotel;
-        $smoke = $request->smokeHotel;
-        $animal = $request->animalHotel;
-        $age = $request->ageHotel;
-        $ageLimit = $request->ageLimitHotel;
-        $checkin = $request->checkinHotel;
-        $checkout = $request->checkoutHotel;
-        $description = $request->descHotel;
-        $image = $request->imageHotel;
+        $name = $request->name;
+        $type = $request->type;
+        $place = $request->place;
+        $address = $request->address;
+        $email = $request->email;
+        $phone = $request->phone;
+        $rate = $request->rate;
+        $wifi = $request->wifi;
+        $pool = $request->pool;
+        $parking = $request->parking;
+        $smoke = $request->smoke;
+        $animal = $request->animal;
+        $age = $request->age;
+        $ageLimit = $request->ageLimit;
+        $checkin = $request->checkin;
+        $checkout = $request->checkout;
+        $description = $request->desc;
+        $image = $request->image;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'type' => 'required|not_in:0',
+            'place' => 'required|not_in:0',
+            'address' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|min:10',
+            'rate' => 'required|numeric',
+            'image' => 'required',
+            'wifi' => 'required|not_in:2',
+            'pool' => 'required|not_in:2',
+            'parking' => 'required|not_in:2',
+            'smoke' => 'required|not_in:2',
+            'animal' => 'required|not_in:2',
+            'age' => 'required|not_in:2',
+            'checkin' => 'required',
+            'checkout' => 'required',
+         ]);
+
+        if ($validator->fails()) {
+            return redirect(route('owner.createHotel'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         if($ageLimit == null){
             $newAge = $age;
@@ -176,17 +213,19 @@ class OwnerController extends Controller
             }else{
                 $status = 1;
             }
+        }else{
+            $status = 1;
         }
 
         $viewFile = '';
 
         if($image != null && count($image) > 0){
-            $uploads = $_FILES['imageHotel'];
+            $uploads = $_FILES['image'];
             if(isset($uploads)){
                 foreach ($uploads['error'] as $index => $item) {
                     if($item == 0){
                         $validatorAvatar = Validator::make(
-                            ['imageHotel' => $request->file('imageHotel')],
+                            ['imageHotel' => $request->file('image')],
                             ['imageHotel' => 'required'],
                             [
                                 'required' => 'Vui lòng chọn ảnh'
@@ -237,8 +276,10 @@ class OwnerController extends Controller
         $create = $rp->createHotel($dataHotel);
 
         if($create){
+            $request->session()->flash('createSuccess', 'Create hotel success');
             return redirect()->route('owner.myHotel',['id' => Session::get('idSession')]);
         }else{
+            $request->session()->flash('createError', 'An error occurred. Please try again');
             return redirect()->route('owner.createHotel');
         }
     }
@@ -260,29 +301,56 @@ class OwnerController extends Controller
         $data['inforRP'] = $inforRP;
         $data['count'] = $count;
 
+        $data['updateError'] = $request->session()->get('updateError');
+
         return view('owner/update-hotel', $data);
     }
 
     public function handleUpdateHotel(Request $request, $id, RestingPlace $rp)
     {
         $id = $request->id;
-        $name = $request->nameHotel;
-        $type = $request->input('typeHotel');
-        $place = $request->input('placeHotel');
-        $address = $request->addressHotel;
-        $email = $request->emailHotel;
-        $phone = $request->phoneHotel;
-        $rate = $request->rateHotel;
-        $wifi = $request->wifiHotel;
-        $pool = $request->poolHotel;
-        $parking = $request->parkingHotel;
-        $smoke = $request->smokeHotel;
-        $animal = $request->animalHotel;
-        $age = $request->ageHotel;
-        $checkin = $request->checkinHotel;
-        $checkout = $request->checkoutHotel;
-        $description = $request->descHotel;
-        $image = $request->imageHotel;
+        $name = $request->name;
+        $type = $request->type;
+        $place = $request->place;
+        $address = $request->address;
+        $email = $request->email;
+        $phone = $request->phone;
+        $rate = $request->rate;
+        $wifi = $request->wifi;
+        $pool = $request->pool;
+        $parking = $request->parking;
+        $smoke = $request->smoke;
+        $animal = $request->animal;
+        $age = $request->age;
+        $ageLimit = $request->ageLimit;
+        $checkin = $request->checkin;
+        $checkout = $request->checkout;
+        $description = $request->desc;
+        $image = $request->image;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'type' => 'required|not_in:0',
+            'place' => 'required|not_in:0',
+            'address' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|min:10',
+            'rate' => 'required|numeric',
+            'wifi' => 'required|not_in:2',
+            'pool' => 'required|not_in:2',
+            'parking' => 'required|not_in:2',
+            'smoke' => 'required|not_in:2',
+            'animal' => 'required|not_in:2',
+            'age' => 'required|not_in:2',
+            'checkin' => 'required',
+            'checkout' => 'required',
+         ]);
+
+        if ($validator->fails()) {
+            return redirect(route('owner.updateHotel',['id' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $oldImage = RestingPlace::where('id', $id)->pluck('image')->first();
         $oldImage = json_decode(json_encode($oldImage), true);
@@ -290,12 +358,12 @@ class OwnerController extends Controller
         $viewFile = '';
 
         if($image != null && count($image) > 0){
-            $uploads = $_FILES['imageHotel'];
+            $uploads = $_FILES['image'];
             if(isset($uploads)){
                 foreach ($uploads['error'] as $index => $item) {
                     if($item == 0){
                         $validatorAvatar = Validator::make(
-                            ['imageHotel' => $request->file('imageHotel')],
+                            ['imageHotel' => $request->file('image')],
                             ['imageHotel' => 'required'],
                             [
                                 'required' => 'Vui lòng chọn ảnh'
@@ -303,7 +371,7 @@ class OwnerController extends Controller
                         );
 
                         if($validatorAvatar->fails()){
-                            return redirect()->route('owner.createHotel')
+                            return redirect()->route('owner.updateHotel',['id' => $id])
                                             ->withErrors($validatorAvatar)
                                             ->withInput();
                                             dd("Error");
@@ -350,8 +418,10 @@ class OwnerController extends Controller
         $update = $rp->updateHotel($dataHotel, $id);
 
         if($update){
+            $request->session()->flash('updateSuccess', 'Update hotel success');
             return redirect()->route('owner.myHotel',['id' => Session::get('idSession')]);
         }else{
+            $request->session()->flash('updateSuccess', 'An error occurred. Please try again');
             return redirect()->route('owner.createHotel');
         }
     }
@@ -401,6 +471,8 @@ class OwnerController extends Controller
         $data['id'] = $id;
         $data['name'] = $name;
 
+        $data['updateSuccess'] = $request->session()->get('updateSuccess');
+
         return view('owner.room-hotel', $data);
     }
 
@@ -418,38 +490,64 @@ class OwnerController extends Controller
         $data['type'] = $type;
         $data['name'] = $name;
 
+        $data['createError'] = $request->session()->get('createError');
+        $data['createSuccess'] = $request->session()->get('createError');
+
         return view('owner.create-room', $data);
     }
 
     public function handleCreateRoom(Request $request, RestingPlace $rp, Rooms $room)
     {
-        $id = $request->idHotel;
-        $name = $request->nameRoom;
-        $price = $request->priceRoom;
-        $discount = $request->discountRoom;
-        $bed = $request->bedRoom;
-        $qtyBed = $request->qtyBedHotel;
-        $descBed = $request->descBedRoom;
-        $adult = $request->adultRoom;
-        $child = $request->childRoom;
-        $wifi = $request->wifiRoom;
-        $phone = $request->phoneRoom;
-        $smoke = $request->smokeRoom;
-        $televison = $request->tiviRoom;
-        $air = $request->airRoom;
-        $acreage = $request->acreageRoom;
-        $description = $request->descRoom;
-        $image = $request->imageRoom;
+        $id = $request->id;
+        $name = $request->name;
+        $price = $request->price;
+        $discount = $request->discount;
+        $bed = $request->bed;
+        $qtyBed = $request->quantity;
+        $descBed = $request->desc;
+        $adult = $request->adult;
+        $child = $request->child;
+        $wifi = $request->wifi;
+        $phone = $request->phone;
+        $smoke = $request->smoke;
+        $televison = $request->television;
+        $air = $request->aircondition;
+        $acreage = $request->acreage;
+        $description = $request->description;
+        $image = $request->image;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'bed' => 'required|not_in:0',
+            'quantity' => 'required|numeric',
+            'adult' => 'required|numeric',
+            'child' => 'required|numeric',
+            'image' => 'required',
+            'wifi' => 'required|not_in:2',
+            'phone' => 'required|not_in:2',
+            'smoke' => 'required|not_in:2',
+            'television' => 'required|not_in:2',
+            'aircondition' => 'required|not_in:2',
+            'acreage' => 'required|numeric',
+         ]);
+
+        if ($validator->fails()) {
+            return redirect(route('owner.createRoom',['id' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $viewFile = '';
 
         if($image != null && count($image) > 0){
-            $uploads = $_FILES['imageRoom'];
+            $uploads = $_FILES['image'];
             if(isset($uploads)){
                 foreach ($uploads['error'] as $index => $item) {
                     if($item == 0){
                         $validatorAvatar = Validator::make(
-                            ['imageRoom' => $request->file('imageRoom')],
+                            ['imageRoom' => $request->file('image')],
                             ['imageRoom' => 'required'],
                             [
                                 'required' => 'Vui lòng chọn ảnh'
@@ -498,8 +596,10 @@ class OwnerController extends Controller
         $create = $room->createRoom($dataRoom);
 
         if($create){
+            $request->session()->flash('createSuccess', 'Create room success');
             return redirect()->route('owner.createRoom',['id' => $id]);
         }else{
+            $request->session()->flash('createError', 'An error occurred. Please try again');
             return redirect()->route('owner.createRoom',['id' => $id]);
         }
     }
@@ -523,28 +623,52 @@ class OwnerController extends Controller
         $data['name_rp'] = $name_rp;
         $data['type'] = $type;
 
+        $data['updateError'] = $request->session()->get('updateError');
+
         return view('owner.update-room', $data);
     }
 
     public function handleUpdateRoom(Request $request, $id, RestingPlace $rp, Rooms $room)
     {
         $id = $request->id;
-        $name = $request->nameRoom;
-        $price = $request->priceRoom;
-        $discount = $request->discountRoom;
-        $bed = $request->bedRoom;
-        $qtyBed = $request->qtyBedHotel;
-        $descBed = $request->descBedRoom;
-        $adult = $request->adultRoom;
-        $child = $request->childRoom;
-        $wifi = $request->wifiRoom;
-        $phone = $request->phoneRoom;
-        $smoke = $request->smokeRoom;
-        $televison = $request->tiviRoom;
-        $air = $request->airRoom;
-        $acreage = $request->acreageRoom;
-        $description = $request->descRoom;
-        $image = $request->imageRoom;
+        $name = $request->name;
+        $price = $request->price;
+        $discount = $request->discount;
+        $bed = $request->bed;
+        $qtyBed = $request->quantity;
+        $descBed = $request->desc;
+        $adult = $request->adult;
+        $child = $request->child;
+        $wifi = $request->wifi;
+        $phone = $request->phone;
+        $smoke = $request->smoke;
+        $televison = $request->television;
+        $air = $request->aircondition;
+        $acreage = $request->acreage;
+        $description = $request->description;
+        $image = $request->image;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'discount' => 'required|numeric',
+            'bed' => 'required|not_in:0',
+            'quantity' => 'required|numeric',
+            'adult' => 'required|numeric',
+            'child' => 'required|numeric',
+            'wifi' => 'required|not_in:2',
+            'phone' => 'required|not_in:2',
+            'smoke' => 'required|not_in:2',
+            'television' => 'required|not_in:2',
+            'aircondition' => 'required|not_in:2',
+            'acreage' => 'required|numeric',
+         ]);
+
+        if ($validator->fails()) {
+            return redirect(route('owner.updateRoom',['id' => $id]))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $oldImage = Rooms::where('id', $id)->pluck('image')->first();
         $oldImage = json_decode(json_encode($oldImage), true);
@@ -613,8 +737,10 @@ class OwnerController extends Controller
         $update = $room->updateRoom($dataRoom, $id);
 
         if($update){
+            $request->session()->flash('updateSuccess', 'Update room success');
             return redirect()->route('owner.roomHotel',['id' => $id_rp]);
         }else{
+            $request->session()->flash('updateError', 'An error occurred. Please try again');
             return redirect()->route('owner.updateRoom',['id' => $id]);
         }
     }
@@ -646,7 +772,8 @@ class OwnerController extends Controller
         $data['status'] = $status;
         $data['payment'] = $payment;
 
-        // dd($data);
+        $data['paidSuccess'] = $request->session()->get('paidSuccess');
+
         return view('owner.pricing-plan', $data);
     }
 
@@ -658,15 +785,29 @@ class OwnerController extends Controller
         $data['payment'] = $payment;
         $data['status'] = $status;
 
+        $data['paidError'] = $request->session()->get('paidError');
+
         return view('owner.payment-plan', $data);
     }
 
     public function handlePaymentPlan(Request $request, Payment $pm)
     {
         $id = $request->idOwner;
-        $name = $request->nameOwner;
-        $payment = $request->selectPayment;
-        $bank = $request->selectBank;
+        $name = $request->name;
+        $payment = $request->payment;
+        $bank = $request->bank;
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'payment' => 'required',
+            'bank' => 'required',
+         ]);
+
+        if ($validator->fails()) {
+            return redirect(route('owner.paymentPlan'))
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $data = [
             'id_owner' => $id,
@@ -681,8 +822,10 @@ class OwnerController extends Controller
         $payment = $pm->createPayment($data);
 
         if($payment){
+            $request->session()->flash('paidSuccess', 'Paid success');
             return redirect()->route('owner.pricingPlan',['id' => Session::get('idSession')]);
         }else{
+            $request->session()->flash('paidError', 'An error occurred. Please try again');
             return redirect()->route('owner.paymentPlan');
         }
 

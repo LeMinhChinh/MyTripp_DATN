@@ -33,6 +33,8 @@ class AdminController extends Controller
         $dataAcc = json_decode(json_encode($dataAcc),true);
 
         $data['dataAcc'] = $dataAcc['data'] ?? [];
+        $data['role'] = $role;
+        $data['keyword'] = $keyword;
 
         return view('admin/account', $data);
     }
@@ -80,6 +82,9 @@ class AdminController extends Controller
         $dataRequest = json_decode(json_encode($dataRequest),true);
 
         $data['dataRequest'] = $dataRequest['data'] ?? [];
+
+        $data['keyword'] = $keyword;
+        $data['status'] = $status;
 
         return view('admin/request', $data);
     }

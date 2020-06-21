@@ -48,6 +48,13 @@
             <p class="ps-infor-notify">Currently you have not uploaded the room profile on the website. Please <a class="click-upload-hotel" href="{{  route('owner.createRoom',['id' => $id]) }}">upload now!</a></p>
         @else
             <p class="ps-infor-notify">Does your hotel have many rooms? <a class="click-upload-hotel" href="{{  route('owner.createRoom',['id' => $id]) }}">Upload more now!</a></p>
+            <div class="fix-top">
+                @if ($updateSuccess)
+                    <div class="alert alert-success">
+                        <h6>{{ $updateSuccess }}</h6>
+                    </div>
+                @endif
+            </div>
             <div class="multiple-hotel">
                 <table class="table table-hover">
                     <thead>

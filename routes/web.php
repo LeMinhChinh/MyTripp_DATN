@@ -54,6 +54,7 @@ Route::group([
     Route::post('filter-by-type','UserController@filterRPByType')->name('filterRPByType');
 
     Route::get('search-room','UserController@searchRoom')->name('searchRoom');
+    Route::post('filter-data-room','UserController@filterDataRoom')->name('filterDataRoom');
 
     Route::post('booking-now','UserController@bookingNow')->name('bookingNow');
     Route::get('booking-page','UserController@bookingPage')->name('bookingPage');
