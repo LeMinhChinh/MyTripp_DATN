@@ -15,16 +15,14 @@
             <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                 <div class="booking-form">
                     <h3>Bạn cần phòng trống?</h3>
-                    <form action="http://localhost:8000/user/search-room" method="GET">
+                    <form action="{{ route('user.searchRoom') }}" method="GET">
                         <div class="check-date">
                             <label for="date-in">Check in</label>
-                            {{-- <input type="datetime" class="date-input" id="date-in" placeholder="Thời gian nhận phòng" name="checkin"> --}}
                             <input type="date" name="checkin" id="checkin">
                             <i class="icon_calendar"></i>
                         </div>
                         <div class="check-date">
                             <label for="date-out">Check out</label>
-                            {{-- <input type="datetime" class="date-input" id="date-out"  placeholder="Thời gian trả phòng" name="checkout"> --}}
                             <input type="date" name="checkout" id="checkout">
                             <i class="icon_calendar"></i>
                         </div>

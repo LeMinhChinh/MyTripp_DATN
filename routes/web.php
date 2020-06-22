@@ -50,11 +50,10 @@ Route::group([
     Route::post('send-feedback','UserController@sendFeedBack')->name('sendFeedBack');
 
     Route::get('search','SearchController@search')->name('search');
-
-    Route::post('filter-by-type','UserController@filterRPByType')->name('filterRPByType');
+    Route::get('filter-data-search','UserController@filterDataSearch')->name('filterDataSearch');
 
     Route::get('search-room','UserController@searchRoom')->name('searchRoom');
-    Route::post('filter-data-room','UserController@filterDataRoom')->name('filterDataRoom');
+    Route::get('filter-data-room','UserController@filterDataRoom')->name('filterDataRoom');
 
     Route::post('booking-now','UserController@bookingNow')->name('bookingNow');
     Route::get('booking-page','UserController@bookingPage')->name('bookingPage');

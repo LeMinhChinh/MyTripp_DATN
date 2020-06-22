@@ -11,7 +11,7 @@ class SearchController extends UserController
 {
     public function search(Request $request, RestingPlace $rp)
     {
-        $keyword = $request->searchKeyword;
+        $keyword = $request->keyword;
         $keyword = trim($keyword);
 
         $inforListRP = $rp->getRPSearch($keyword);

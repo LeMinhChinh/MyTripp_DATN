@@ -597,45 +597,6 @@ class UserController extends Controller
         return view('user/personal-booking', $data);
     }
 
-    // Filter
-    // public function filterRPByType(Request $request, RestingPlace $rp)
-    // {
-    //     $rate = $request->rate;
-    //     $fb = $request->fb;
-
-    //     $inforListRP = $rp->filterRPByType(0,1,$rate,$fb);
-    //     dd($inforListRP);
-    //     $data['paginate'] = $inforListRP;
-    //     $inforListRP = \json_decode(\json_encode($inforListRP),true);
-    //     $inforListRP = $inforListRP['data'] ?? [];
-    //     $images = [];
-    //     dd( $inforListRP['data']);
-
-    //     foreach ($inforListRP as $key => $value) {
-    //         if(!empty($value['image'])){
-    //             $image = \explode(";", $value['image']);
-    //             array_push($images,$image);
-    //         }
-    //     }
-
-    //     $count = $rp->countFBListRP(0,1,$rate,$fb);
-    //     $count = \json_decode(\json_encode($count),true);
-
-    //     $place = Place::where('id', 1)->first();
-    //     $type = Type::where('id', 0)->first();
-    //     dd( $place, $type);
-
-    //     $data['inforListRP'] = $inforListRP;
-    //     $data['place'] = $place;
-    //     // $data['type'] = $type;
-    //     $data['images'] = $images;
-    //     $data['count'] = $count;
-
-
-
-    //     return view('user.partials.filter_room', $data);
-    // }
-
     public function searchRoom(Request $request, DetailBooking $dt, Rooms $r)
     {
         $checkin = $request->checkin;
@@ -674,8 +635,8 @@ class UserController extends Controller
         $type = TypeBed::get();
         $type = json_decode(json_encode($type), true);
 
-        $place = Place::get();
-        $place = json_decode(json_encode($place), true);
+        $places = Place::get();
+        $places = json_decode(json_encode($places), true);
 
         $data['images']  = $images;
         $data['checkin']  = $checkin;
@@ -683,7 +644,7 @@ class UserController extends Controller
         $data['adult']  = $adult;
         $data['child']  = $child;
         $data['type']  = $type;
-        $data['place']  = $place;
+        $data['places']  = $places;
 
         return view('user.search-room', $data);
     }
@@ -831,39 +792,21 @@ class UserController extends Controller
         $place = $request->place;
         $adult = $request->adult;
         $child = $request->child;
-        $oldAdult = $request->oldAdult;
-        $oldChild = $request->oldChild;
         $checkin = $request->checkin;
         $checkout = $request->checkout;
-        $oldCheckin = $request->oldCheckin;
-        $oldCheckout = $request->oldCheckout;
+        $wifi = $request->wifi;
         $price = $request->price;
         $smoke = $request->smoke;
         $tivi = $request->tivi;
         $air = $request->air;
         $phone = $request->phone;
-
-        if($adult == null){
-            $newAdult = $oldAdult;
-        }else{
-            $newAdult = $adult;
-        }
-
-        if($child == null){
-            $newChild = $oldChild;
-        }else{
-            $newChild = $child;
-        }
+        $bed = $request->bed;
 
         $query = DetailBooking::query();
         if($checkin == null){
-            $query = $query->where('checkout','<=', $oldCheckin);
-        }else{
             $query = $query->where('checkout','<=', $checkin);
         }
         if($checkout == null){
-            $query = $query->orwhere('checkin','>=',$oldCheckout);
-        }else{
             $query = $query->orwhere('checkin','>=',$checkout);
         }
 
@@ -872,8 +815,7 @@ class UserController extends Controller
         $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
         $roomNotBook = json_decode(json_encode($roomNotBook),true);
 
-        $dataRoomBooking = $r->filterDataRoomBooking($roomNotBook, $newChild, $newAdult, $price, $smoke, $tivi, $air, $phone, $place);
-        dd($dataRoomBooking);
+        $dataRoomBooking = $r->filterDataRoomBooking($roomNotBook, $child, $adult, $price, $wifi, $smoke, $tivi, $air, $phone, $place, $bed);
 
         $data['paginate'] = $dataRoomBooking;
         $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
@@ -892,18 +834,64 @@ class UserController extends Controller
         $type = TypeBed::get();
         $type = json_decode(json_encode($type), true);
 
-        $place = Place::get();
-        $place = json_decode(json_encode($place), true);
+        $places = Place::get();
+        $places = json_decode(json_encode($places), true);
 
         $data['images']  = $images;
+
+        $data['type']  = $type;
+        $data['places']  = $places;
+
         $data['checkin']  = $checkin;
         $data['checkout']  = $checkout;
         $data['adult']  = $adult;
         $data['child']  = $child;
-        $data['type']  = $type;
+
         $data['place']  = $place;
+        $data['wifi']  = $wifi;
+        $data['smoke']  = $smoke;
+        $data['tivi']  = $tivi;
+        $data['air']  = $air;
+        $data['phone']  = $phone;
+        $data['price']  = $price;
+        $data['bed'] = $bed;
 
-        return view('user.search-room', $data);
+        return view('user.filter_data_room', $data);
+    }
 
+    public function filterDataSearch(Request $request, RestingPlace $rp)
+    {
+        $rate = $request->rate;
+        $feedback = $request->feedback;
+        $price = $request->price;
+        $keyword = $request->keyword;
+
+        $inforListRP = $rp->filterDataSearch($keyword, $rate);
+        $data['paginate'] = $inforListRP;
+        $inforListRP = \json_decode(\json_encode($inforListRP),true);
+        $inforListRP = $inforListRP['data'] ?? [];
+
+        $images = [];
+
+        foreach ($inforListRP as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
+
+        $count = $rp->countFBFilterDataSearch($keyword, $rate);
+        $count = \json_decode(\json_encode($count),true);
+
+
+        $data['inforListRP'] = $inforListRP;
+        $data['keyword'] = $keyword;
+        $data['images'] = $images;
+        $data['count'] = $count;
+        $data['rate'] = $rate;
+
+        // dd($data);
+
+        return view('user.filter_data_search',$data);
     }
 }

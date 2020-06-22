@@ -1,5 +1,5 @@
 @extends('user/index')
-@section('title', "Search")
+@section('title', "Filter Data Search")
 
 @section('content')
 <main class="hotel-main">
@@ -26,23 +26,33 @@
                                     <div class="r-prices-content r-content-4">
                                         <div class="r-filter-convenient">
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck11" name="rate[]" value="1">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck11" name="rate[]" value="1" @foreach ($rate as $item)
+                                                    @if($item ==1) checked @endif
+                                                @endforeach>
                                                 <label class="form-check-label" for="exampleCheck11"><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck12" name="rate[]" value="2">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck12" name="rate[]" value="2" @foreach ($rate as $item)
+                                                    @if($item ==2) checked @endif
+                                                @endforeach>
                                                 <label class="form-check-label" for="exampleCheck12"><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck13" name="rate[]" value="3">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck13" name="rate[]" value="3" @foreach ($rate as $item)
+                                                    @if($item == 3) checked @endif
+                                                @endforeach>
                                                 <label class="form-check-label" for="exampleCheck13"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck14" name="rate[]" value="4">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck14" name="rate[]" value="4" @foreach ($rate as $item)
+                                                    @if($item ==4) checked @endif
+                                                @endforeach>
                                                 <label class="form-check-label" for="exampleCheck14"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck15" name="rate[]" value="5">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck15" name="rate[]" value="5" @foreach ($rate as $item)
+                                                    @if($item ==5) checked @endif
+                                                @endforeach>
                                                 <label class="form-check-label" for="exampleCheck15"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                         </div>
@@ -179,7 +189,7 @@
                                 </div>
                             @endforeach
                        </div>
-                       <div class="pagination-page fix-top">{!! $paginate->appends(['keyword' => $keyword])->links() !!}</div>
+                       <div class="pagination-page fix-top">{!! $paginate->appends(['keyword' => $keyword, 'rate' => $rate])->links() !!}</div>
                    </div>
                 </div>
             </div>

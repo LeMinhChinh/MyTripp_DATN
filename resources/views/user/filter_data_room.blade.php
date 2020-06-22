@@ -1,5 +1,5 @@
 @extends('user/index')
-@section('title', "Search room")
+@section('title', "Filter data room")
 
 @section('content')
     <main class="room-main">
@@ -25,7 +25,7 @@
                                             <select id="place" name="place" class="booking-input">
                                                 <option value="">Địa điểm</option>
                                                 @foreach ($places as $item)
-                                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                    <option value="{{ $item['id'] }}" @if($place == $item['id']) selected @endif>{{ $item['name'] }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -67,7 +67,7 @@
                                                 <select id="bed" name="bed" class="booking-input">
                                                     <option value="">Loại giường</option>
                                                     @foreach ($type as $item)
-                                                        <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                        <option value="{{ $item['id'] }}" @if($bed == $item['id']) selected @endif>{{ $item['name'] }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -80,23 +80,23 @@
                                        </div>
                                         <div class="r-filter-convenient r-filter-price">
                                             <div class="form-group form-check">
-                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck5" name="price" value="1">
+                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck5" name="price" value="1" @if($price == 1) checked @endif>
                                                 <label class="form-check-label" for="exampleCheck5">0 - 500.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck6" name="price" value="2">
+                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck6" name="price" value="2" @if($price == 2) checked @endif>
                                                 <label class="form-check-label" for="exampleCheck6">500.000 - 1.000.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck7" name="price" value="3">
+                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck7" name="price" value="3" @if($price == 3) checked @endif>
                                                 <label class="form-check-label" for="exampleCheck7">1.000.000 - 2.000.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck8" name="price" value="4">
+                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck8" name="price" value="4" @if($price == 4) checked @endif>
                                                 <label class="form-check-label" for="exampleCheck8">2.000.000 - 4.000.000 / đêm (VND)</label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck9" name="price" value="5">
+                                                <input type="radio" class="form-check-input check-input-fb" id="exampleCheck9" name="price" value="5" @if($price == 5) checked @endif>
                                                 <label class="form-check-label" for="exampleCheck9">Từ 4.000.000 / đêm (VND)</label>
                                             </div>
                                         </div>
@@ -111,55 +111,55 @@
                                                 <div class="r-child r-people">
                                                     <label for="guest">wifi</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="wifi" value="1">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="wifi" value="1" @if($wifi == 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck3">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="wifi" value="0">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="wifi" value="0" @if($wifi == 0 && $wifi != null) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck4">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Phòng hút thuốc</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck1" name="smoke" value="1">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck1" name="smoke" value="1" @if($smoke == 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck1">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck2" name="smoke" value="0">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck2" name="smoke" value="0" @if($smoke == 0 && $smoke != null) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck2">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Tivi</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="tivi" value="1">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="tivi" value="1" @if($tivi == 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck3">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="tivi" value="0">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="tivi" value="0" @if($tivi == 0 && $tivi != null) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck4">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Điều hòa</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck10" name="air" value="1">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck10" name="air" value="1" @if($air == 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck10">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck11" name="air" value="0">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck11" name="air" value="0" @if($air == 0 && $air != null) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck11">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Điện thoại</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck12" name="phone" value="1">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck12" name="phone" value="1" @if($phone == 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck12">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck13" name="phone" value="0">
+                                                        <input type="radio" class="form-check-input" id="exampleCheck13" name="phone" value="0" @if($phone == 0 && $phone != null) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck13">Không</label>
                                                     </div>
                                                 </div>
@@ -313,7 +313,7 @@
                             @endforeach
 
                         </div>
-                        <div class="pagination-page fix-top">{!! $paginate->appends(['checkin' => $checkin, 'checkout' => $checkout, 'adult' => $adult, 'child' => $child])->links() !!}</div>
+                        <div class="pagination-page fix-top">{!! $paginate->appends([ 'place' => $place, 'checkin' => $checkin, 'checkout' => $checkout, 'adult' => $adult, 'child' => $child,'wifi' => $wifi, 'smoke' => $smoke, 'tivi' => $tivi, 'air' => $air, 'phone' => $phone, 'price' => $price, 'bed' => $bed])->links() !!}</div>
                     </div>
                 </div>
             </div>

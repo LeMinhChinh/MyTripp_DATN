@@ -100,10 +100,9 @@
             <div class="col-lg-9">
                 <div class="nav-search">
                     <div class="form-search-user">
-                        <form action="{{ route('user.search') }}">
-                            @csrf
+                        <form action="{{ route('user.search') }}" method="GET">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Bạn muốn đến đâu? Hãy nhập địa điểm hoặc tên khách sạn" aria-label="Recipient's username" aria-describedby="basic-addon2" name="searchKeyword" id="searchKeyword">
+                                <input type="text" class="form-control" placeholder="Bạn muốn đến đâu? Hãy nhập địa điểm hoặc tên khách sạn" aria-label="Recipient's username" aria-describedby="basic-addon2" name="keyword" id="keyword" value="{{ $keyword }}">
                                 <div class="input-group-append">
                                 <button class="input-group-text btn btn-primary" id="basic-addon2">Tìm kiếm</button>
                                 </div>
