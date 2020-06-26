@@ -55,7 +55,7 @@
             </table>
 
             <div class="personal-content booking-list-detail fix-top hide">
-                <h3>Chi tiết đơn đặt phòng</h3>
+                <h3>Chi tiết đơn đặt phòng <span class="close-detail">x</span></h3>
                 <table class="table table-hover fix-top">
                     <thead>
                         <tr>
@@ -101,5 +101,11 @@
             })
         }
     });
+
+    $('.close-detail').click(function(){
+        $('.booking-list-detail').addClass('hide');
+        $('.js-booking').removeClass('active-table')
+    })
+
 </script>
 @endpush

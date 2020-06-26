@@ -21,9 +21,141 @@ use App\Http\Requests\RequestCreateHotel;
 class OwnerController extends Controller
 {
     //dashboard
-    public function dashboard(Request $request)
+    public function dashboard(Request $request, $id, DetailBooking $dt)
     {
-        return view('owner/dashboard');
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $hotel = $request->hotel;
+
+        if($hotel === 'all' | $hotel === null){
+            $idRP = RestingPlace::where('id_acc', $id)->pluck('id')->toArray();
+        }else{
+            $idRP = ['1'];
+        }
+        $rp = RestingPlace::where('id_acc', $id)->get();
+        $rp = json_decode(json_encode($rp), true);
+
+        $query = DetailBooking::query();
+        if($hotel == 'all' | $hotel === null){
+            $query = $query->wherein('id_rp',$idRP);
+        }else{
+            $query = $query->where('id_rp', $hotel);
+        }
+        $idBooking = $query->pluck('id_book')->toArray();
+        $idBooking = \array_unique($idBooking);
+
+        $query1 = Rooms::query();
+        // wherein('id_rp',$idRP)->pluck('id')->toArray();
+        if($hotel == 'all' | $hotel === null){
+            $query1 = $query1->wherein('id_rp',$idRP);
+        }else{
+            $query1 = $query1->where('id_rp', $hotel);
+        }
+        $idRoom = $query1->pluck('id')->toArray();
+        $idRoom = \array_unique($idRoom);
+
+        $priceBook = Booking::wherein('id',$idBooking)->pluck('total')->toArray();
+
+        $total = 0;
+        foreach ($priceBook as $value) {
+            $total += $value;
+        }
+
+        $totalT1 = $dt->getDashboardDetail($idRP, '2020-01-01','2020-01-30',$hotel);
+        $totalT1 = json_decode(json_encode($totalT1), true);
+        $priceT1 = 0;
+        foreach ($totalT1 as $value) {
+            $priceT1 += $value['total'];
+        }
+
+        $totalT2 = $dt->getDashboardDetail($idRP, '2020-02-01','2020-02-28',$hotel);
+        $totalT2 = json_decode(json_encode($totalT2), true);
+        $priceT2 = 0;
+        foreach ($totalT2 as $value) {
+            $priceT2 += $value['total'];
+        }
+
+        $totalT3 = $dt->getDashboardDetail($idRP, '2020-03-01','2020-03-31',$hotel);
+        $totalT3 = json_decode(json_encode($totalT3), true);
+        $priceT3 = 0;
+        foreach ($totalT3 as $value) {
+            $priceT3 += $value['total'];
+        }
+
+        $totalT4 = $dt->getDashboardDetail($idRP, '2020-04-01','2020-04-30',$hotel);
+        $totalT4 = json_decode(json_encode($totalT4), true);
+        $priceT4 = 0;
+        foreach ($totalT4 as $value) {
+            $priceT4 += $value['total'];
+        }
+
+        $totalT5 = $dt->getDashboardDetail($idRP, '2020-05-01','2020-05-31',$hotel);
+        $totalT5 = json_decode(json_encode($totalT5), true);
+        $priceT5 = 0;
+        foreach ($totalT5 as $value) {
+            $priceT5 += $value['total'];
+        }
+
+        $totalT6 = $dt->getDashboardDetail($idRP, '2020-06-01','2020-06-30',$hotel);
+        $totalT6 = json_decode(json_encode($totalT6), true);
+        $priceT6 = 0;
+        foreach ($totalT6 as $value) {
+            $priceT6 += $value['total'];
+        }
+
+        $totalT7 = $dt->getDashboardDetail($idRP, '2020-07-01','2020-07-31',$hotel);
+        $totalT7 = json_decode(json_encode($totalT7), true);
+        $priceT7 = 0;
+        foreach ($totalT7 as $value) {
+            $priceT7 += $value['total'];
+        }
+
+        $totalT8 = $dt->getDashboardDetail($idRP, '2020-08-01','2020-08-31',$hotel);
+        $totalT8 = json_decode(json_encode($totalT8), true);
+        $priceT8 = 0;
+        foreach ($totalT8 as $value) {
+            $priceT8 += $value['total'];
+        }
+
+        $totalT9 = $dt->getDashboardDetail($idRP, '2020-09-01','2020-09-30',$hotel);
+        $totalT9 = json_decode(json_encode($totalT9), true);
+        $priceT9 = 0;
+        foreach ($totalT9 as $value) {
+            $priceT9 += $value['total'];
+        }
+
+        $totalT10 = $dt->getDashboardDetail($idRP, '2020-10-01','2020-10-31',$hotel);
+        $totalT10 = json_decode(json_encode($totalT10), true);
+        $priceT10 = 0;
+        foreach ($totalT10 as $value) {
+            $priceT10 += $value['total'];
+        }
+
+        $totalT11 = $dt->getDashboardDetail($idRP, '2020-11-01','2020-11-30',$hotel);
+        $totalT11 = json_decode(json_encode($totalT11), true);
+        $priceT11 = 0;
+        foreach ($totalT11 as $value) {
+            $priceT11 += $value['total'];
+        }
+
+        $totalT12 = $dt->getDashboardDetail($idRP, '2020-12-01','2020-12-31',$hotel);
+        $totalT12 = json_decode(json_encode($totalT12), true);
+        $priceT12 = 0;
+        foreach ($totalT12 as $value) {
+            $priceT12 += $value['total'];
+        }
+
+        $totalMonth = [$priceT1,$priceT2,$priceT3,$priceT4,$priceT5,$priceT6,$priceT7,$priceT8,$priceT9,$priceT10,$priceT11,$priceT12];
+
+        $data['countBook'] = count($idBooking);
+        $data['countRP'] = count($idRP);
+        $data['total'] = $total;
+        $data['countRoom'] = count($idRoom);
+        $data['totalMonth'] = $totalMonth;
+        $data['rp'] = $rp;
+        $data['hotel'] = $hotel;
+
+        return view('owner/dashboard', $data);
     }
 
     //account
@@ -833,7 +965,7 @@ class OwnerController extends Controller
 
     public function requestBooking(Request $request, $id, Booking $book)
     {
-        $rp = RestingPlace::where('id_acc',$id)->pluck('id')->first();
+        $rp = RestingPlace::where('id_acc',$id)->pluck('id')->toArray();
 
         $inforRequest = $book->getDataRequest($rp);
         $data['paginate'] = $inforRequest;
@@ -841,7 +973,7 @@ class OwnerController extends Controller
 
         $data['inforRequest'] = $inforRequest['data'] ?? [];
 
-        $bookingDetail = DetailBooking::where('id_rp', $rp)->get();
+        $bookingDetail = DetailBooking::wherein('id_rp', $rp)->get();
         $bookingDetail = \json_decode(json_encode($bookingDetail), true);
 
         $data['bookingDetail'] = $bookingDetail;

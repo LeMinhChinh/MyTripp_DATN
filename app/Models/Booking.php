@@ -15,7 +15,7 @@ class Booking extends Model
         $data = DB::table('booking as b')
                     ->select('b.*')
                     ->join('detail_booking as dt','dt.id_book','=','b.id')
-                    ->where('dt.id_rp',$id)
+                    ->wherein('dt.id_rp',$id)
                     ->paginate(10);
         return $data;
     }

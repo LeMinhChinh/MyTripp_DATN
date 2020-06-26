@@ -40,7 +40,6 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                {{-- <th scope="col"></th> --}}
                 <th scope="col">Name</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Email</th>
@@ -54,12 +53,11 @@
         <tbody>
             @foreach ($inforRequest as $value)
                 <tr class="js-booking-{{ $value['id'] }} js-booking">
-                    {{-- <td><input type="checkbox" class="customCheck" id="customCheck-{{ $value['id'] }}" name="customCheck-{{ $value['id'] }}"></td> --}}
                     <td>{{ $value['name'] }}</td>
                     <td>{{ $value['phone'] }}</td>
                     <td>{{ $value['email'] }}</td>
                     <td>{{ $value['address'] }}</td>
-                    <td>{{ $value['total'] }}</td>
+                    <td>{{ number_format($value['total'],0 ,'.' ,'.').'' }}&#8363;</td>
                     <td>{{ $value['note'] }}</td>
                     <td>
                         @if( $value['status']  == 0)
@@ -84,7 +82,7 @@
     </table>
 
     <div class="personal-content booking-list-detail fix-top hide">
-        <h3>Chi tiết đơn đặt phòng</h3>
+        <h3>Chi tiết đơn đặt phòng <span class="close-detail">x</span></h3>
         <table class="table table-hover fix-top">
             <thead>
                 <tr>
@@ -99,7 +97,7 @@
                 @foreach ($bookingDetail as $value)
                     <tr class="js-booking-detail-{{ $value['id_book'] }} hide js-booking-detail" >
                         <td>{{ $value['name_room'] }}</td>
-                        <td>{{ $value['price'] }}</td>
+                        <td>{{ number_format($value['price'],0 ,'.' ,'.').'' }}&#8363;</td>
                         <td>{{ $value['discount'] }}</td>
                         <td>{{ $value['checkin'] }}</td>
                         <td>{{ $value['checkout'] }}</td>
@@ -119,13 +117,18 @@
             for(let i = 1; i<=100; i++){
                 $('.js-view-'+i).click(function(){
                     $('.js-booking').removeClass('active-table')
-                    $('.js-booking').addClass('active-table')
+                    $('.js-booking-'+i).addClass('active-table')
                     $('.booking-list-detail').removeClass('hide');
                     $('.js-booking-detail').addClass('hide');
                     $('.js-booking-detail-'+i).removeClass('hide');
                 })
             }
         });
+
+        $('.close-detail').click(function(){
+            $('.booking-list-detail').addClass('hide');
+            $('.js-booking').removeClass('active-table')
+        })
 
         $('.js-update-request').click(function(){
             var self = $(this)

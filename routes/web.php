@@ -94,7 +94,7 @@ Route::group([
     'namespace' => 'Owner',
     'middleware' => ['web', 'check.super.owner']
 ], function () {
-    Route::get('dashboard','OwnerController@dashboard')->name('dashboard');
+    Route::get('dashboard/{id}','OwnerController@dashboard')->name('dashboard');
 
     Route::get('general-information/{id}','OwnerController@information')->name('information');
     Route::post('update-general-information/{id}','OwnerController@handleUpdateInfomation')->name('handleUpdateInfomation');

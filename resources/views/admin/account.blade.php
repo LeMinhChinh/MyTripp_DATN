@@ -135,7 +135,6 @@
             $('#js-search').click(function(){
                 var keyword = $('#js-keyword').val().trim();
                 var role = $('.role-select-option').val()
-                console.log(keyword, role)
                 window.location.href =  "{{ route('admin.account') }}" + "?keyword=" + keyword + "&role="+ role;
             });
 

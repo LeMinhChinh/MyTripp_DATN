@@ -137,7 +137,7 @@ class UserController extends Controller
             }
 
             if(Session::get('roleSession') === 1){
-                return redirect()->route('owner.dashboard');
+                return redirect()->route('owner.dashboard',['id' => Session::get('idSession')]);
             }
 
             if(Session::get('roleSession') === 2){
