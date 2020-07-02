@@ -175,14 +175,12 @@
             $('.js-update-request').click(function(){
                 var self = $(this)
                 var id = self.attr('id').trim();
-                console.log(id)
 
                 $.ajax({
                     url: "{{ route('admin.updatePayment') }}",
                     type: "POST",
                     data: {id: id},
                     success: function(data){
-                        console.log(data)
                         if(data === 'Update payment fail') {
                             alert('Update payment fail');
                         }

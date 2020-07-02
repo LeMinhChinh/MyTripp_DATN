@@ -27,6 +27,7 @@ class Rooms extends Model
                     ->join('place as p','p.id','=','rp.place')
                     ->join('type_rp as t','t.id','=','rp.type')
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
+                    ->where('rp.publish', 1)
                     ->orderby('r.discount','DESC')
                     ->take(6)
                     ->get();
@@ -41,7 +42,8 @@ class Rooms extends Model
                     ->join('place as p','p.id','=','rp.place')
                     ->join('type_rp as t','t.id','=','rp.type')
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
-                    ->whereNotIn('r.id', $id);
+                    ->whereNotIn('r.id', $id)
+                    ->where('rp.publish', 1);
                     if($adult){
                         $data = $data->where('r.adult', $adult);
                     }
@@ -60,7 +62,8 @@ class Rooms extends Model
                     ->join('place as p','p.id','=','rp.place')
                     ->join('type_rp as t','t.id','=','rp.type')
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
-                    ->whereNotIn('r.id', $id);
+                    ->whereNotIn('r.id', $id)
+                    ->where('rp.publish', 1);
                     if($adult){
                         $data = $data->where('r.adult', $adult);
                     }
@@ -117,6 +120,7 @@ class Rooms extends Model
                     ->join('type_rp as tp','tp.id','=','rp.type')
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
                     ->where('r.id',$id)
+                    ->where('rp.publish', 1)
                     ->first();
         return $data;
     }
@@ -129,11 +133,12 @@ class Rooms extends Model
                     ->join('type_rp as tp','tp.id','=','rp.type')
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
                     ->whereIn('r.id',$id)
+                    ->where('rp.publish', 1)
                     ->get();
         return $data;
     }
 
-    // Admin
+    // Owner
 
     public function getInforRoomById($id, $keyword)
     {
@@ -177,7 +182,6 @@ class Rooms extends Model
         return $delete;
     }
 
-    // Owner
     public function deleteRoomByIdHotel($id)
     {
         $delete = DB::table('rooms');

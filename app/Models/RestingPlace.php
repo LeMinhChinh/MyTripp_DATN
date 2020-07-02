@@ -16,6 +16,7 @@ class RestingPlace extends Model
                     ->join('type_rp as trp', 'trp.id','=','rp.type')
                     ->join('place as p','p.id','=','rp.place')
                     ->where('rp.id', $id)
+                    ->where('rp.publish',1)
                     ->first();
         return $data;
     }
@@ -25,7 +26,8 @@ class RestingPlace extends Model
         $data = DB::table('resting_places as rp')
                     ->select('rp.*', 'p.name as pname', 'trp.name as tname')
                     ->join('type_rp as trp', 'trp.id','=','rp.type')
-                    ->join('place as p','p.id','=','rp.place');
+                    ->join('place as p','p.id','=','rp.place')
+                    ->where('rp.publish',1);
                     if($idt == 0){
                         $data = $data->where('rp.place',$idp);
                     }
@@ -41,7 +43,8 @@ class RestingPlace extends Model
         $data = DB::table('resting_places as rp')
                     ->select('rp.*', 'p.name as pname', 'trp.name as tname')
                     ->join('type_rp as trp', 'trp.id','=','rp.type')
-                    ->join('place as p','p.id','=','rp.place');
+                    ->join('place as p','p.id','=','rp.place')
+                    ->where('rp.publish',1);
                     if($idt == 0){
                         $data = $data->where('rp.place',$idp);
                     }
@@ -61,6 +64,7 @@ class RestingPlace extends Model
                     ->leftjoin('feedback_rp as fb','rp.id','=','fb.id_rp')
                     ->select(DB::raw('count(fb.id) as count_id, rp.id, sum(fb.emotion) as sum_emotion'))
                     ->groupby('rp.id')
+                    ->where('rp.publish',1)
                     ->get();
         return $data;
     }
@@ -70,6 +74,7 @@ class RestingPlace extends Model
         $data = DB::table('resting_places as rp')
                     ->leftjoin('feedback_rp as fb','rp.id','=','fb.id_rp')
                     ->select(DB::raw('count(fb.id) as count_id, rp.id, sum(fb.emotion) as sum_emotion'))
+                    ->where('rp.publish',1)
                     ->groupby('rp.id')
                     ->orderBy('sum_emotion','DESC')
                     ->take(4)
@@ -83,6 +88,7 @@ class RestingPlace extends Model
                     ->select('rp.*','trp.name as type_name')
                     ->join('type_rp as trp', 'trp.id','=','rp.type')
                     ->whereIn('rp.id',$id)
+                    ->where('rp.publish',1)
                     ->get();
         return $data;
     }
@@ -94,6 +100,7 @@ class RestingPlace extends Model
                     ->join('place as p','p.id','=','rp.place')
                     ->join('type_rp as trp','trp.id','=','rp.type')
                     ->where('rp.id',$id)
+                    ->where('rp.publish',1)
                     ->first();
         return $data;
     }
@@ -103,7 +110,8 @@ class RestingPlace extends Model
         $data = DB::table('resting_places as rp')
                     ->select('rp.*','p.name as pname', 'trp.name as tname')
                     ->join('place as p','p.id','=','rp.place')
-                    ->join('type_rp as trp', 'trp.id','=','rp.type');
+                    ->join('type_rp as trp', 'trp.id','=','rp.type')
+                    ->where('rp.publish',1);
                     if($keyword != null){
                         $data = $data->where('rp.name','like', '%'.$keyword.'%')
                                     ->orwhere('p.name','like', '%'.$keyword.'%');
@@ -117,7 +125,8 @@ class RestingPlace extends Model
         $data = DB::table('resting_places as rp')
                     ->select('rp.*','p.name as pname', 'trp.name as tname')
                     ->join('place as p','p.id','=','rp.place')
-                    ->join('type_rp as trp', 'trp.id','=','rp.type');
+                    ->join('type_rp as trp', 'trp.id','=','rp.type')
+                    ->where('rp.publish',1);
                     if($keyword != null){
                         $data = $data->where('rp.name','like', '%'.$keyword.'%')
                                     ->orwhere('p.name','like', '%'.$keyword.'%');
@@ -135,6 +144,7 @@ class RestingPlace extends Model
                     ->leftjoin('feedback_rp as fb','rp.id','=','fb.id_rp')
                     ->join('place as p','p.id','=','rp.place')
                     ->select(DB::raw('count(fb.id) as count_id, rp.id, sum(fb.emotion) as sum_emotion'))
+                    ->where('rp.publish',1)
                     ->groupby('rp.id');
                     if($keyword != null){
                         $data = $data->where('rp.name','like', '%'.$keyword.'%')
@@ -150,7 +160,8 @@ class RestingPlace extends Model
                     ->leftjoin('feedback_rp as fb','rp.id','=','fb.id_rp')
                     ->join('place as p','p.id','=','rp.place')
                     ->select(DB::raw('count(fb.id) as count_id, rp.id, sum(fb.emotion) as sum_emotion'))
-                    ->groupby('rp.id');
+                    ->groupby('rp.id')
+                    ->where('rp.publish',1);
                     if($keyword != null){
                         $data = $data->where('rp.name','like', '%'.$keyword.'%')
                                     ->orwhere('p.name','like', '%'.$keyword.'%');
@@ -162,7 +173,7 @@ class RestingPlace extends Model
         return $data;
     }
 
-    // Admin
+    // Owner
     public function createHotel($data)
     {
         DB::table('resting_places')->insert($data);
@@ -208,6 +219,40 @@ class RestingPlace extends Model
     {
         $update = DB::table('resting_places')
                     ->where('id_acc',$id)
+                    ->update($data);
+        return $update;
+    }
+
+    // Admin
+    public function getDataRestingPlaceByAdmin($keyword)
+    {
+        $data = DB::table('resting_places as rp')
+                    ->select('rp.id','rp.name','rp.address','rp.email','rp.phone','rp.publish','acc.surname','acc.name')
+                    ->join('account as acc','acc.id','=','rp.id_acc');
+                    if($keyword!= null){
+                        $data = $data->where('rp.name', 'like', '%'.$keyword.'%');
+                    }
+                    $data = $data->paginate(15);
+        return $data;
+    }
+
+    public function updateHotelByAdmin($id, $publish)
+    {
+        $update = DB::table('resting_places')
+                    ->where('id',$id);
+                    if($publish == 0){
+                        $update = $update->update(['publish' => 1]);
+                    }
+                    if($publish == 1){
+                        $update = $update->update(['publish' => 0]);
+                    }
+        return $update;
+    }
+
+    public function updateDataHotelByAdmin($id, $data)
+    {
+        $update = DB::table('resting_places')
+                    ->wherein('id',$id)
                     ->update($data);
         return $update;
     }

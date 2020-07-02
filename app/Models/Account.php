@@ -83,4 +83,17 @@ class Account extends Model
                     ->update($data);
         return $update;
     }
+
+    public function updateAccountByAdmin($id, $status)
+    {
+        $update = DB::table('account')
+                    ->where('id',$id);
+                    if($status == 0){
+                        $update = $update->update(['status' => 1]);
+                    }
+                    if($status == 1){
+                        $update = $update->update(['status' => 0]);
+                    }
+        return $update;
+    }
 }

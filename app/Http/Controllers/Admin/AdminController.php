@@ -13,18 +13,12 @@ use App\Models\RestingPlace;
 
 class AdminController extends Controller
 {
-    //dashboard
-    public function dashboard(Request $request)
-    {
-        return view('admin/dashboard');
-    }
-
     //account
     public function account(Request $request, Account $acc)
     {
         $keyword = $request->keyword;
         $keyword = \strip_tags($keyword);
-        $data['keyword'] = $keyword;
+        // $data['keyword'] = $keyword;
         $role = $request->role;
 
         $dataAcc = $acc->getDataAccount($keyword, $role);
@@ -42,7 +36,6 @@ class AdminController extends Controller
     public function deleteAccount(Request $request, Account $account, FeedbackRP $feedback)
     {
         $id = $request->id;
-        // $id = is_numeric($id) ? $id : 0;
 
         if($id > 0){
             $deleteAccount = $account->deleteAccountById($id);
@@ -65,6 +58,87 @@ class AdminController extends Controller
             }
         } else {
             echo "User not found";
+        }
+    }
+
+    public function updateAccount(Request $request, Account $acc, RestingPlace $rp)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $id = intval($id);
+
+        $status = Account::where('id',$id)->pluck('status')->first();
+        $ids = RestingPlace::where('id_acc',$id)->pluck('id')->toArray();
+
+        if($id > 0){
+            $updateAccount = $acc->updateAccountByAdmin($id, $status);
+            if($updateAccount){
+                $newStatus = Account::where('id',$id)->pluck('status')->first();
+                if($newStatus == 0){
+                    $dataHotel = [
+                        'publish' => 0
+                    ];
+                    $updateHotel = $rp->updateDataHotelByAdmin($ids, $dataHotel);
+
+                    if($updateHotel){
+                        echo "Update success";
+                    }else{
+                        echo "Update hotel fail";
+                    }
+                }
+
+                if($newStatus == 1){
+                    $dataHotel = [
+                        'publish' => 1
+                    ];
+
+                    $updateHotel = $rp->updateDataHotelByAdmin($ids, $dataHotel);
+
+                    if($updateHotel){
+                        echo "Update success";
+                    }else{
+                        echo "Update hotel fail";
+                    }
+                }
+            }else{
+                echo "Update account fail";
+            }
+        }
+    }
+
+    //hotel
+    public function hotel(Request $request, RestingPlace $rp)
+    {
+        $keyword = $request->keyword;
+        $keyword = \strip_tags($keyword);
+        $data['keyword'] = $keyword;
+
+        $dataRP = $rp->getDataRestingPlaceByAdmin($keyword);
+
+        $data['paginate'] = $dataRP;
+        $dataRP = json_decode(json_encode($dataRP),true);
+
+        $data['dataRP'] = $dataRP['data'] ?? [];
+        $data['keyword'] = $keyword;
+
+        return view('admin/hotel', $data);
+    }
+
+    public function updateHotel(Request $request, RestingPlace $rp)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $id = intval($id);
+
+        $publish = RestingPlace::where('id',$id)->pluck('publish')->first();
+
+        if($id > 0){
+            $updateHotel = $rp->updateHotelByAdmin($id, $publish);
+            if($updateHotel){
+                echo "Update success";
+            }else{
+                echo "Update fail";
+            }
         }
     }
 

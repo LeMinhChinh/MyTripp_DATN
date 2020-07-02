@@ -15,9 +15,9 @@
                     <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">
                     <select class="custom-select custom-select-sm mb-3 role-select-option" name="" id="">
                         <option value="">Filter role</option>
-                        <option value="2" @if($role == 2) selected @endif>Super Admin</option>
-                        <option value="1" @if($role == 1) selected @endif>Owner</option>
-                        <option value="0" @if($role == 0) selected @endif>Customer</option>
+                        <option value="2" @if($role === 2) selected @endif>Super Admin</option>
+                        <option value="1" @if($role === 1) selected @endif>Owner</option>
+                        <option value="0" @if($role === 0 && $role !== '') selected @endif>Customer</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">
@@ -41,9 +41,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">
-                    {{-- <input type="checkbox" id="customCheck" name="customCheck"> --}}
-                </th>
+                <th scope="col"></th>
                 <th scope="col">Id</th>
                 <th scope="col">Email</th>
                 <th scope="col">Username</th>
@@ -51,7 +49,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Role</th>
-                {{-- <th scope="col">Status</th> --}}
+                <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -70,10 +68,20 @@
                         @if( $value['role'] == 1)Owner @endif
                         @if( $value['role'] == 0)Customer @endif
                     </td>
-                    {{-- <td>
-                        @if($value['status'] == 1) Active @endif
-                        @if($value['status'] == 0) Deactive @endif
-                    </td> --}}
+                    <td>
+                        @if( $value['status']  == 0)
+                            <div class="awaiting-request-enabled awaiting-{{ $value['id'] }}">
+                                <button id="{{ $value['id'] }}" class="btn btn-primary js-update-request" @if($value['role'] ==2) disabled="disabled" @endif>Deactive</button>
+                                <button id="{{ $value['id'] }}" class="btn btn-success js-update-request" @if($value['role'] ==2) disabled="disabled" @endif>Active</button>
+                            </div>
+                        @endif
+                        @if( $value['status'] == 1)
+                            <div class="approved-request-enabled approved-{{ $value['id'] }}">
+                                <button id="{{ $value['id'] }}" class="btn btn-primary js-update-request" @if($value['role'] ==2) disabled="disabled" @endif>Deactive</button>
+                                <button id="{{ $value['id'] }}" class="btn btn-success js-update-request" @if($value['role'] ==2) disabled="disabled" @endif>Active</button>
+                            </div>
+                        @endif
+                    </td>
                     <td>
                         <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account" @if($value['role'] == 2) disabled="disabled" @endif>Delete</button>
                     </td>
@@ -163,6 +171,52 @@
                                 $('.js-account-'+id).hide();
                             })
                             alert('Delele success');
+                        }
+                    }
+                });
+            })
+
+            $('.js-update-request').click(function(){
+                var self = $(this)
+                var id = self.attr('id').trim();
+
+                $.ajax({
+                    url: "{{ route('admin.updateAccount') }}",
+                    type: "POST",
+                    data: {id: id},
+                    success: function(data){
+                        if(data === 'Update account fail') {
+                            alert('Update account fail');
+                        }
+                        if(data === 'Update hotel fail') {
+                            alert('Update hotel fail');
+                        }
+                        if(data === 'Update success') {
+                            if(self.hasClass('btn-primary')){
+                                self.addClass('hide')
+                                $('.awaiting-'+id+' .btn-success').addClass('show')
+                            }
+
+                            if(self.hasClass('btn-success')){
+                                if(self.hasClass('show')){
+                                    self.removeClass('show')
+                                    $('.awaiting-'+id+' .btn-primary').removeClass('hide')
+                                }
+                            }
+
+                            if(self.hasClass('btn-success')){
+                                self.addClass('hide')
+                                $('.approved-'+id+' .btn-primary').addClass('show')
+                            }
+
+                            if(self.hasClass('btn-primary')){
+                                if(self.hasClass('show')){
+                                    self.removeClass('show')
+                                    $('.approved-'+id+' .btn-success').removeClass('hide')
+                                }
+                            }
+
+                            alert('Update success');
                         }
                     }
                 });

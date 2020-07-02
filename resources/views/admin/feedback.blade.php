@@ -56,8 +56,14 @@
                     <td>{{ $value['reply'] }}</td>
                     <td>{{ $value['created_at'] }}</td>
                     <td>
-                        <button id="{{ $value['id'] }}" class="btn btn-primary js-reply-account" data-toggle="modal" data-target="#data-{{ $value['id'] }}">Reply</button>
-                        <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account">Delete</button>
+                        <div class="row">
+                            <div class="col-6">
+                                <button id="{{ $value['id'] }}" class="btn btn-primary js-reply-account" data-toggle="modal" data-target="#data-{{ $value['id'] }}">Reply</button>
+                            </div>
+                            <div class="col-6">
+                                <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account">Delete</button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <div class="modal fade" id="data-{{ $value['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

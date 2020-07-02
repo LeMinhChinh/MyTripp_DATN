@@ -312,3 +312,7 @@ p.total-booking-number {
 .close-detail{
     float: right; color: red; cursor: pointer;
 }
+
+table button {
+    width: 100%!important;
+}

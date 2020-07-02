@@ -889,8 +889,7 @@ class UserController extends Controller
         $data['images'] = $images;
         $data['count'] = $count;
         $data['rate'] = $rate;
-
-        // dd($data);
+        // dd($data['rate']);
 
         return view('user.filter_data_search',$data);
     }

@@ -70,10 +70,12 @@ Route::group([
     'namespace' => 'Admin',
     'middleware' => ['web', 'check.super.admin']
 ], function () {
-    Route::get('dashboard','AdminController@dashboard')->name('dashboard');
-
     Route::get('account','AdminController@account')->name('account');
     Route::post('delete-account','AdminController@deleteAccount')->name('deleteAccount');
+    Route::post('update-account','AdminController@updateAccount')->name('updateAccount');
+
+    Route::get('hotel','AdminController@hotel')->name('hotel');
+    Route::post('update-hotel','AdminController@updateHotel')->name('updateHotel');
 
     Route::get('request-owner','AdminController@request')->name('request');
     Route::post('delete-request','AdminController@deleteRequest')->name('deleteRequest');
@@ -105,6 +107,7 @@ Route::group([
     Route::get('view-hotel/{id}','OwnerController@updateHotel')->name('updateHotel');
     Route::post('handle-update-hotel/{id}','OwnerController@handleUpdateHotel')->name('handleUpdateHotel');
     Route::post('delete-hotel','OwnerController@deleteHotel')->name('deleteHotel');
+    Route::post('publish-hotel','OwnerController@publishHotel')->name('publishHotel');
 
     Route::get('my-room/{id}','OwnerController@roomHotel')->name('roomHotel');
     Route::get('create-room/{id}','OwnerController@createRoom')->name('createRoom');

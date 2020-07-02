@@ -11,7 +11,30 @@
         <div class="rp-content">
             <div class="row">
                 <div class="col-3">
-                    @include('user/partials/form')
+                    <div class="booking-form">
+                        <p class="bk-title">Tìm kiếm phòng trống từ {{ $inforRP['tname'] }} {{ $inforRP['name'] }}</p>
+                        <form action="{{ route('user.searchRoom') }}" method="GET" class="booking-form-content">
+                            <div class="check-date">
+                                <label for="date-in">Check In:</label>
+                                <input type="text" class="date-input booking-input" id="date-in" placeholder="Thời gian nhận phòng">
+                                <i class="icon_calendar"></i>
+                            </div>
+                            <div class="check-date">
+                                <label for="date-out">Check Out:</label>
+                                <input type="text" class="date-input booking-input" id="date-out" placeholder="Thời gian trả phòng">
+                                <i class="icon_calendar"></i>
+                            </div>
+                            <div class="r-adult r-people">
+                                <label for="guest">Số người lớn</label>
+                                <input type="text" class="booking-input" placeholder="Nhập vào số người lớn">
+                            </div>
+                            <div class="r-child r-people">
+                                <label for="guest">Số trẻ con</label>
+                                <input type="text" class="booking-input" placeholder="Nhập vào số trẻ con">
+                            </div>
+                            <button type="submit" class="form-submit">Tìm kiếm</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="col-9">
                     <div class="rp-menu">
@@ -28,10 +51,10 @@
                         <div class="rp-name">
                             <p><small>{{ $inforRP['tname'] }} </small>{{ $inforRP['name'] }} @for($i = 1; $i <= $inforRP['rate'] ; $i++) <span><i class="fa fa-star"></i></span> @endfor</p>
                         </div>
-                        <div class="rp-book">
+                        {{-- <div class="rp-book">
                             <span class="rp-wishlist"><i class="fa fa-heart"></i></span>
                             <button type="button" class="btn btn-primary">Danh sách phòng</button>
-                        </div>
+                        </div> --}}
                         <div class="clear-fix"></div>
                         <div class="rp-map">
                             <span class="glyphicon glyphicon-map-marker"></span><p>{{ $inforRP['address'] }} - <a href="" class="rp-click-map" data-toggle="modal" data-target="#popupMap">Xem trên bản đồ</a></p>

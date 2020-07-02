@@ -178,6 +178,8 @@
                                 <th scope="col">Address</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Phone</th>
+                                <th scope="col">Publish</th>
+                                <th scope="col">View</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -192,8 +194,30 @@
                                     <td>{{ $value['email'] }}</td>
                                     <td>{{ $value['phone'] }}</td>
                                     <td>
-                                        <button id="{{ $value['id'] }}" class="btn btn-success js-view" ><a href="{{ route('owner.updateHotel',['id' => $value['id']]) }}">Detail</a></button>
-                                        <button id="{{ $value['id'] }}" class="btn btn-info js-room" ><a href="{{ route('owner.roomHotel',['id' => $value['id']]) }}">Room</a></button>
+                                        @if( $value['publish']  == 0)
+                                            <div class="awaiting-request-enabled awaiting-{{ $value['id'] }}">
+                                                <button id="{{ $value['id'] }}" class="btn btn-primary js-update-request" style="background: #6c757d!important;border-color: #6c757d!important;">Unpublish</button>
+                                                <button id="{{ $value['id'] }}" class="btn btn-success js-update-request" style="background: #007bff!important;border-color: #007bff!important;">Publish</button>
+                                            </div>
+                                        @endif
+                                        @if( $value['publish'] == 1)
+                                            <div class="approved-request-enabled approved-{{ $value['id'] }}">
+                                                <button id="{{ $value['id'] }}" class="btn btn-primary js-update-request" style="background: #6c757d!important;border-color: #6c757d!important;">Unpublish</button>
+                                                <button id="{{ $value['id'] }}" class="btn btn-success js-update-request" style="background: #007bff!important;border-color: #007bff!important;">Publish</button>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button id="{{ $value['id'] }}" class="btn btn-success js-view" ><a href="{{ route('owner.updateHotel',['id' => $value['id']]) }}">Detail</a></button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button id="{{ $value['id'] }}" class="btn btn-info js-room" ><a href="{{ route('owner.roomHotel',['id' => $value['id']]) }}">Room</a></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
                                         <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account" >Delete</button>
                                     </td>
                                 </tr>
@@ -285,6 +309,49 @@
                                 $('.js-account-'+id).hide();
                             })
                             alert('Delele success');
+                        }
+                    }
+                });
+            })
+
+            $('.js-update-request').click(function(){
+                var self = $(this)
+                var id = self.attr('id').trim();
+
+                $.ajax({
+                    url: "{{ route('owner.publishHotel') }}",
+                    type: "POST",
+                    data: {id: id},
+                    success: function(data){
+                        if(data === 'Update fail') {
+                            alert('Update fail');
+                        }
+                        if(data === 'Update success') {
+                            if(self.hasClass('btn-primary')){
+                                self.addClass('hide')
+                                $('.awaiting-'+id+' .btn-success').addClass('show')
+                            }
+
+                            if(self.hasClass('btn-success')){
+                                if(self.hasClass('show')){
+                                    self.removeClass('show')
+                                    $('.awaiting-'+id+' .btn-primary').removeClass('hide')
+                                }
+                            }
+
+                            if(self.hasClass('btn-success')){
+                                self.addClass('hide')
+                                $('.approved-'+id+' .btn-primary').addClass('show')
+                            }
+
+                            if(self.hasClass('btn-primary')){
+                                if(self.hasClass('show')){
+                                    self.removeClass('show')
+                                    $('.approved-'+id+' .btn-success').removeClass('hide')
+                                }
+                            }
+
+                            alert('Update success');
                         }
                     }
                 });

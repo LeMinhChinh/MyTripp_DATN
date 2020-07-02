@@ -558,6 +558,24 @@ class OwnerController extends Controller
         }
     }
 
+    public function publishHotel(Request $request, RestingPlace $rp)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $id = intval($id);
+
+        $publish = RestingPlace::where('id',$id)->pluck('publish')->first();
+
+        if($id > 0){
+            $updateHotel = $rp->updateHotelByAdmin($id, $publish);
+            if($updateHotel){
+                echo "Update success";
+            }else{
+                echo "Update fail";
+            }
+        }
+    }
+
     public function deleteHotel(Request $request, Restingplace $rp, Rooms $room)
     {
         $id = $request->id;
