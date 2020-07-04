@@ -321,6 +321,7 @@ class UserController extends Controller
             $data['image'] = $image;
             $data['feedback'] = $feedback;
             $data['count'] = $count;
+            $data['id'] = $id;
             return view('user/restingplace', $data);
         }
     }
@@ -597,31 +598,39 @@ class UserController extends Controller
         return view('user/personal-booking', $data);
     }
 
-    public function searchRoom(Request $request, DetailBooking $dt, Rooms $r)
+    public function searchRoom(Request $request, DetailBooking $dt, Rooms $r, $id)
     {
         $checkin = $request->checkin;
         $checkout = $request->checkout;
         $adult = $request->adult;
         $child = $request->child;
+        $id = intval($request->id);
 
         $query = DetailBooking::query();
+        if($id > 0){
+            $query = $query->where('id_rp',$id);
+        }
         if($checkin){
             $query = $query->where('checkout','<=', $checkin);
         }
         if($checkout){
             $query = $query->orwhere('checkin','>=',$checkout);
         }
-        $room = $query->get()->pluck('id');
+        $room = $query->pluck('id');
+        // $room = $dt->getIdIsBook($checkin, $checkout, $id);
+        // dd($room);
 
         $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
         $roomNotBook = json_decode(json_encode($roomNotBook),true);
+        // dd($roomNotBook);
 
-        $dataRoomBooking = $r->getDataRoomBooking($roomNotBook, $child, $adult);
+        $dataRoomBooking = $r->getDataRoomBooking($roomNotBook, $child, $adult, $id);
 
         $data['paginate'] = $dataRoomBooking;
         $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
 
         $data['dataRoomBooking'] = $dataRoomBooking['data'] ?? [];
+        // dd( $data['dataRoomBooking']);
 
         $images = [];
 

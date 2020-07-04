@@ -15,7 +15,7 @@
             <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                 <div class="booking-form">
                     <h3>Bạn cần phòng trống?</h3>
-                    <form action="{{ route('user.searchRoom') }}" method="GET">
+                    <form action="{{ route('user.searchRoom',['id' => 0]) }}" method="GET">
                         <div class="check-date">
                             <label for="date-in">Check in</label>
                             <input type="date" name="checkin" id="checkin">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="check-date">
                             <label for="date-out">Check out</label>
-                            <input type="date" name="checkout" id="checkout">
+                            <input type="date" name="checkin" id="checkin">
                             <i class="icon_calendar"></i>
                         </div>
                         <div class="select-option">

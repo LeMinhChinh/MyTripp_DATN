@@ -34,7 +34,7 @@ class Rooms extends Model
         return $data;
     }
 
-    public function getDataRoomBooking($id, $child, $adult)
+    public function getDataRoomBooking($id, $child, $adult, $isId)
     {
         $data = DB::table('rooms as r')
                     ->select('r.*','tb.name as name_bed','rp.name as rp','p.name as place','t.name as type', 'address','rp.id as idRp')
@@ -44,6 +44,9 @@ class Rooms extends Model
                     ->join('type_bed as tb','tb.id','=','r.type_bed')
                     ->whereNotIn('r.id', $id)
                     ->where('rp.publish', 1);
+                    if($isId > 0){
+                        $data = $data->where('r.id_rp', $isId);
+                    }
                     if($adult){
                         $data = $data->where('r.adult', $adult);
                     }

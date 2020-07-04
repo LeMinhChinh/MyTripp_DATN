@@ -52,7 +52,7 @@ Route::group([
     Route::get('search','SearchController@search')->name('search');
     Route::get('filter-data-search','UserController@filterDataSearch')->name('filterDataSearch');
 
-    Route::get('search-room','UserController@searchRoom')->name('searchRoom');
+    Route::get('search-room/{id}','UserController@searchRoom')->name('searchRoom');
     Route::get('filter-data-room','UserController@filterDataRoom')->name('filterDataRoom');
 
     Route::post('booking-now','UserController@bookingNow')->name('bookingNow');
@@ -97,6 +97,7 @@ Route::group([
     'middleware' => ['web', 'check.super.owner']
 ], function () {
     Route::get('dashboard/{id}','OwnerController@dashboard')->name('dashboard');
+    Route::get('list-booking','OwnerController@listBooking')->name('listBooking');
 
     Route::get('general-information/{id}','OwnerController@information')->name('information');
     Route::post('update-general-information/{id}','OwnerController@handleUpdateInfomation')->name('handleUpdateInfomation');

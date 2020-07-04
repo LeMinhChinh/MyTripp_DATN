@@ -45,7 +45,6 @@ class OwnerController extends Controller
         $idBooking = \array_unique($idBooking);
 
         $query1 = Rooms::query();
-        // wherein('id_rp',$idRP)->pluck('id')->toArray();
         if($hotel == 'all' | $hotel === null){
             $query1 = $query1->wherein('id_rp',$idRP);
         }else{
@@ -156,6 +155,33 @@ class OwnerController extends Controller
         $data['hotel'] = $hotel;
 
         return view('owner/dashboard', $data);
+    }
+
+    public function listBooking(Request $request, DetailBooking $dt)
+    {
+        $keyword = $request->keyword;
+        $keyword = \strip_tags($keyword);
+        $hotel = $request->hotel;
+
+        if( $hotel == null){
+            $id_rp = Restingplace::where('id_acc',Session::get('idSession'))->pluck('id')->toArray();
+        }else{
+            $id_rp = intval($hotel);
+        }
+
+        $booking = $dt->getListBookingByOwner($id_rp, $keyword);
+        $data['paginate'] = $booking;
+        $booking = json_decode(json_encode($booking),true);
+
+        $rp = RestingPlace::where('id_acc',Session::get('idSession'))->get();
+        $rp = json_decode(json_encode($rp), true);
+
+        $data['booking'] = $booking['data'] ?? [];
+        $data['rp'] = $rp;
+        $data['keyword'] = $keyword;
+        $data['hotel'] = $hotel;
+
+        return view('owner.list-booking', $data);
     }
 
     //account

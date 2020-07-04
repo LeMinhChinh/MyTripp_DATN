@@ -269,6 +269,7 @@ img.logo-bank {
 
 .dashboard-total-booking{
     background: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
+    cursor: pointer;
 }
 
 .dashboard-total-revenue{
@@ -315,4 +316,10 @@ p.total-booking-number {
 
 table button {
     width: 100%!important;
+}
+
+.active-checkout,.table-hover tbody tr.active-checkout:hover{
+    color: #fff!important;
+    background-color: #5dce77!important;
+    border-color: #5dce77!important;
 }

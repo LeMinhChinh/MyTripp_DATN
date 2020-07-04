@@ -4,7 +4,7 @@
 @section('content')
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
+            <a href="{{ route('owner.dashboard',['id' => Session::get('idSession')]) }}">Dashboard</a>
         </li>
         <li class="breadcrumb-item active">Overview</li>
     </ol>
@@ -58,19 +58,6 @@
                                 @endforeach
                             </select>
                         </div>
-                        {{-- <div class="input-group mb-3">
-                            <select class="form-control" id="place" name="place">
-                                <option value="" selected>--- All hotel ---</option>
-                                @foreach ($rp as $item)
-                                    <option value="{{ $item['id'] }}">{{ $item['name'] }}-</option>
-                                @endforeach
-                            </select>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" id="js-search">
-                                <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div> --}}
                     </span>
                 </p>
            </div>
@@ -140,6 +127,11 @@
             var hotel = $(this).val()
             var owner = $('.id-owner').attr('data-id')
             window.location.href = "http://localhost:8000/owner/dashboard/"+owner+"?hotel="+hotel
+        })
+
+        $('.dashboard-total-booking').click(function(){
+            var owner = $('.id-owner').attr('data-id')
+            window.location.href = "http://localhost:8000/owner/list-booking"
         })
     })
     </script>

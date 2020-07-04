@@ -25,4 +25,35 @@ class DetailBooking extends Model
                     ->get();
         return $data;
     }
+
+    public function getListBookingByOwner($id, $keyword)
+    {
+        $data = DB::table('detail_booking as dt')
+                    ->select('dt.name_rp','dt.name_room','dt.checkin','dt.checkout','dt.id');
+                    if($keyword!= null){
+                        $data = $data->where('name_room', 'like', '%'.$keyword.'%');
+                    }
+                    if(is_numeric($id)){
+                        $data = $data->where('id_rp', $id);
+                    }else{
+                        $data = $data->wherein('id_rp', $id);
+                    }
+        return $data->paginate(15);
+    }
+
+    public function getIdIsBook($checkin, $checkout, $id)
+    {
+        $data = DB::table('detail_booking as dt')
+                    ->select('dt.id');
+                    if($id > 0){
+                        $data = $data->where('id_rp',$id);
+                    }
+                    if($checkin){
+                        $data = $data->where('checkout','<=', $checkin);
+                    }
+                    if($checkout){
+                        $data = $data->orwhere('checkin','>=',$checkout);
+                    }
+        return $data->get();
+    }
 }

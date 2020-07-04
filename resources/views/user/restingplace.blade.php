@@ -13,15 +13,15 @@
                 <div class="col-3">
                     <div class="booking-form">
                         <p class="bk-title">Tìm kiếm phòng trống từ {{ $inforRP['tname'] }} {{ $inforRP['name'] }}</p>
-                        <form action="{{ route('user.searchRoom') }}" method="GET" class="booking-form-content">
+                        <form action="{{ route('user.searchRoom',['id' => $id]) }}" method="GET" class="booking-form-content">
                             <div class="check-date">
-                                <label for="date-in">Check In:</label>
-                                <input type="text" class="date-input booking-input" id="date-in" placeholder="Thời gian nhận phòng">
+                                <label for="date-in">Check in</label>
+                                <input type="date" name="checkin" id="checkin">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="check-date">
-                                <label for="date-out">Check Out:</label>
-                                <input type="text" class="date-input booking-input" id="date-out" placeholder="Thời gian trả phòng">
+                                <label for="date-out">Check out</label>
+                                <input type="date" name="checkout" id="checkout">
                                 <i class="icon_calendar"></i>
                             </div>
                             <div class="r-adult r-people">
@@ -685,3 +685,37 @@
     </div>
 </main>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+            if(dd<10){
+                    dd='0'+dd
+                }
+                if(mm<10){
+                    mm='0'+mm
+                }
+
+            today = yyyy+'-'+mm+'-'+dd;
+            $('#checkin').attr("min", today);
+
+            var todays = new Date();
+            var dds = todays.getDate()+1;
+            var mms = todays.getMonth()+1;
+            var yyyys = todays.getFullYear();
+            if(dds<10){
+                    dds='0'+dds
+                }
+                if(mms<10){
+                    mms='0'+mms
+                }
+
+            todays = yyyys+'-'+mms+'-'+dds;
+            $('#checkout').attr("min", todays);
+        })
+    </script>
+@endpush
