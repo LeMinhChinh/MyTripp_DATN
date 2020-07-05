@@ -103,6 +103,7 @@
                         <form action="{{ route('user.search') }}" method="GET">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Bạn muốn đến đâu? Hãy nhập địa điểm hoặc tên khách sạn" aria-label="Recipient's username" aria-describedby="basic-addon2" name="keyword" id="keyword" value="{{ $keyword }}">
+                                <input type="hidden" name="rate">
                                 <div class="input-group-append">
                                 <button class="input-group-text btn btn-primary" id="basic-addon2">Tìm kiếm</button>
                                 </div>
@@ -110,8 +111,8 @@
                         </form>
                     </div>
                     <div class="form-icon-book">
-                        <a href="{{ route('user.bookingPage') }}" title="Booking list room" class="icon-book"><i class="fas fa-box"></i></a>
-                        <p title="Booking list room" class="booking-page hide" style="cursor: pointer;"><i class="fas fa-box"></i></p>
+                        <a href="{{ route('user.listBooking') }}" title="Booking list room" class="icon-book hide"><i class="fas fa-box"></i></a>
+                        <p title="Booking list room" class="booking-page" style="cursor: pointer;"><i class="fas fa-box"></i></p>
                         <p class="count-room">
                             {{-- @if($idBook == null)
                                 0
@@ -128,5 +129,60 @@
 </div>
 
 @push('scripts')
+    <script>
+        //header
+        $(document).ready(function(){
+            // var room = getCookie("list_id");
+            // var listRoom = room == '' ? [] : JSON.parse(room)
 
+            // var checkin = getCookie("list_checkin");
+            // var listCheckin = checkin == '' ? [] : JSON.parse(checkin)
+
+            // var checkout = getCookie("list_checkout");
+            // var listCheckout = checkout == '' ? [] : JSON.parse(checkout)
+
+            // if(listRoom.length && listCheckin.length && listCheckout.length){
+            //     $('.booking-page').addClass('show')
+            // }else{
+            //     $('.icon-book').addClass('show')
+            // }
+
+            $('.booking-page').click(function(){
+
+                var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
+
+                var listCheckin =  JSON.parse(localStorage.getItem('list_checkin')) || []
+
+                var listCheckout = JSON.parse(localStorage.getItem('list_checkout')) || []
+
+                $.ajax({
+                    url: "{{ route('user.listBooking') }}",
+                    type: "POST",
+                    data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
+                    success: function(data){
+                        if(data.success){
+                            if(data.success == true){
+                                window.location.href =  "{{ route('user.viewListBooking') }}"
+                            }
+                        }
+                    }
+                });
+            })
+        })
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
 @endpush

@@ -21,7 +21,7 @@ class RestingPlace extends Model
         return $data;
     }
 
-    public function getInforListRPByIdPlace($idp, $idt)
+    public function getInforListRPByIdPlace($idp, $idt, $rate)
     {
         $data = DB::table('resting_places as rp')
                     ->select('rp.*', 'p.name as pname', 'trp.name as tname')
@@ -34,7 +34,10 @@ class RestingPlace extends Model
                     if($idp == 0){
                         $data = $data->where('rp.type', $idt);
                     }
-                    $data = $data->paginate(6);
+                    if($rate !== null){
+                        $data = $data->wherein('rp.rate',$rate);
+                    }
+                    $data = $data->paginate(10);
         return $data;
     }
 
@@ -58,7 +61,8 @@ class RestingPlace extends Model
         return $data;
     }
 
-    public function countFBListRP($idp, $idt)
+    // public function countFBListRP($idp, $idt)
+    public function countFBListRP()
     {
         $data = DB::table('resting_places as rp')
                     ->leftjoin('feedback_rp as fb','rp.id','=','fb.id_rp')
@@ -105,7 +109,7 @@ class RestingPlace extends Model
         return $data;
     }
 
-    public function getRPSearch($keyword)
+    public function getRPSearch($keyword, $rate)
     {
         $data = DB::table('resting_places as rp')
                     ->select('rp.*','p.name as pname', 'trp.name as tname')
@@ -115,6 +119,9 @@ class RestingPlace extends Model
                     if($keyword != null){
                         $data = $data->where('rp.name','like', '%'.$keyword.'%')
                                     ->orwhere('p.name','like', '%'.$keyword.'%');
+                    }
+                    if($rate !== null){
+                        $data = $data->wherein('rp.rate',$rate);
                     }
                     $data = $data->paginate(10);
         return $data;
@@ -170,6 +177,21 @@ class RestingPlace extends Model
                         $data = $data->wherein('rp.rate',$rate);
                     }
                     $data = $data->get();
+        return $data;
+    }
+
+    public function getDataRPBooking($id, $rate)
+    {
+        $data = DB::table('resting_places as rp')
+                    ->select('rp.*', 'p.name as pname', 'trp.name as tname')
+                    ->join('type_rp as trp', 'trp.id','=','rp.type')
+                    ->join('place as p','p.id','=','rp.place')
+                    ->where('rp.publish',1)
+                    ->wherein('rp.id',$id);
+                    if($rate !== null){
+                        $data = $data->wherein('rp.rate',$rate);
+                    }
+                    $data = $data->paginate(10);
         return $data;
     }
 

@@ -1508,3 +1508,8 @@ button.btn.btn-secondary.btn-lg.ps-button-cancel > a, button.btn.btn-secondary.b
     width: 100%;
     margin: 0!important;
 }
+
+.booking-remove {
+    margin: 0 auto;
+    display: flex;
+}

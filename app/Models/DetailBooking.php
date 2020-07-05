@@ -41,19 +41,19 @@ class DetailBooking extends Model
         return $data->paginate(15);
     }
 
-    public function getIdIsBook($checkin, $checkout, $id)
-    {
-        $data = DB::table('detail_booking as dt')
-                    ->select('dt.id');
-                    if($id > 0){
-                        $data = $data->where('id_rp',$id);
-                    }
-                    if($checkin){
-                        $data = $data->where('checkout','<=', $checkin);
-                    }
-                    if($checkout){
-                        $data = $data->orwhere('checkin','>=',$checkout);
-                    }
-        return $data->get();
-    }
+    // public function getIdIsBook($checkin, $checkout, $id)
+    // {
+    //     $data = DB::table('detail_booking as dt')
+    //                 ->select('dt.id');
+    //                 if($id > 0){
+    //                     $data = $data->where('id_rp',$id);
+    //                 }
+    //                 if($checkin){
+    //                     $data = $data->where('checkout','<=', $checkin);
+    //                 }
+    //                 if($checkout){
+    //                     $data = $data->orwhere('checkin','>=',$checkout);
+    //                 }
+    //     return $data->get();
+    // }
 }

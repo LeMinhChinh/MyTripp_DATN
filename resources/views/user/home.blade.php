@@ -15,7 +15,10 @@
             <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                 <div class="booking-form">
                     <h3>Bạn cần phòng trống?</h3>
-                    <form action="{{ route('user.searchRoom',['id' => 0]) }}" method="GET">
+                    {{-- <form action="{{ route('user.searchRoom',['id' => 0]) }}" method="GET"> --}}
+                    <form action="{{ route('user.restingplaceBooking') }}" method="GET">
+                        <input type="hidden" name="rate" id="rate">
+                        <input type="hidden" name="id" id="id" value="0">
                         <div class="check-date">
                             <label for="date-in">Check in</label>
                             <input type="date" name="checkin" id="checkin">
@@ -23,7 +26,7 @@
                         </div>
                         <div class="check-date">
                             <label for="date-out">Check out</label>
-                            <input type="date" name="checkin" id="checkin">
+                            <input type="date" name="checkout" id="checkout">
                             <i class="icon_calendar"></i>
                         </div>
                         <div class="select-option">
@@ -417,27 +420,6 @@
 
             todays = yyyys+'-'+mms+'-'+dds;
             $('#checkout').attr("min", todays);
-        })
-
-        $('.booking-now').click(function(){
-            var self = $(this);
-            var id = self.attr('id').trim();
-            var checkin = self.attr('data-checkin');
-            var checkout = self.attr('data-checkout');
-            console.log(id, checkin, checkout)
-
-            if($.isNumeric(id)){
-                $.ajax({
-                    url: "{{ route('user.bookingNow') }}",
-                    type: "POST",
-                    data: {id: id, checkin: checkin, checkout: checkout},
-                    success: function(data){
-                        if(data.success == true){
-                            window.location.href =  "{{ route('user.bookingPage') }}"
-                        }
-                    }
-                });
-            }
         })
     </script>
 @endpush

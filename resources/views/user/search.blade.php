@@ -16,33 +16,42 @@
                     </div>
                     <div class="hotel-filter-content">
                         <div class="booking-form">
-                            <form action="{{ route('user.filterDataSearch') }}" method="GET">
-                                <input type="text" class="form-check-input check-input-rate" id="keyword" name="keyword" value="{{ $keyword }}" style="display: none">
+                            <form action="{{ route('user.search') }}" method="GET">
+                                <input type="hidden" id="keyword" name="keyword" value="{{ $keyword }}">
                                 <div class="r-filter-convenients r-people fix-top">
-
                                     <div class="r-prices-title r-title-4">
                                         <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-4 disabledIcon"></i><i class="fas fa-angle-down r-down-4"></i></p><p class="r-time-title-text">Đánh giá sao</p>
                                    </div>
                                     <div class="r-prices-content r-content-4">
                                         <div class="r-filter-convenient">
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck11" name="rate[]" value="1">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck11" name="rate[]" value="1" @if($rate !== null) @foreach ($rate as $item)
+                                                    @if($item ==1) checked @endif
+                                                @endforeach @endif>
                                                 <label class="form-check-label" for="exampleCheck11"><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck12" name="rate[]" value="2">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck12" name="rate[]" value="2" @if($rate !== null) @foreach ($rate as $item)
+                                                    @if($item ==2) checked @endif
+                                                @endforeach @endif>
                                                 <label class="form-check-label" for="exampleCheck12"><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck13" name="rate[]" value="3">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck13" name="rate[]" value="3" @if($rate !== null) @foreach ($rate as $item)
+                                                    @if($item ==3) checked @endif
+                                                @endforeach @endif>
                                                 <label class="form-check-label" for="exampleCheck13"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck14" name="rate[]" value="4">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck14" name="rate[]" value="4" @if($rate !== null) @foreach ($rate as $item)
+                                                    @if($item ==4) checked @endif
+                                                @endforeach @endif>
                                                 <label class="form-check-label" for="exampleCheck14"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck15" name="rate[]" value="5">
+                                                <input type="checkbox" class="form-check-input check-input-rate" id="exampleCheck15" name="rate[]" value="5" @if($rate !== null) @foreach ($rate as $item)
+                                                    @if($item ==5) checked @endif
+                                                @endforeach @endif>
                                                 <label class="form-check-label" for="exampleCheck15"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label>
                                             </div>
                                         </div>

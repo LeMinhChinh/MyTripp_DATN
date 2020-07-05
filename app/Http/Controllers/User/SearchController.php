@@ -13,8 +13,9 @@ class SearchController extends UserController
     {
         $keyword = $request->keyword;
         $keyword = trim($keyword);
+        $rate = $request->rate;
 
-        $inforListRP = $rp->getRPSearch($keyword);
+        $inforListRP = $rp->getRPSearch($keyword, $rate);
         $data['paginate'] = $inforListRP;
         $inforListRP = \json_decode(\json_encode($inforListRP),true);
         $inforListRP = $inforListRP['data'] ?? [];
@@ -36,6 +37,7 @@ class SearchController extends UserController
         $data['keyword'] = $keyword;
         $data['images'] = $images;
         $data['count'] = $count;
+        $data['rate'] = $rate;
 
         return view('user.search',$data);
     }

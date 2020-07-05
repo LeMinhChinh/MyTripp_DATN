@@ -52,6 +52,8 @@ Route::group([
     Route::get('search','SearchController@search')->name('search');
     Route::get('filter-data-search','UserController@filterDataSearch')->name('filterDataSearch');
 
+    Route::get('restingplace-booking','UserController@restingplaceBooking')->name('restingplaceBooking');
+
     Route::get('search-room/{id}','UserController@searchRoom')->name('searchRoom');
     Route::get('filter-data-room','UserController@filterDataRoom')->name('filterDataRoom');
 
@@ -60,8 +62,11 @@ Route::group([
     Route::get('cancel-booking','UserController@cancelBooking')->name('cancelBooking');
     Route::get('payment-booking','UserController@paymentBooking')->name('paymentBooking');
 
-    // Route::post('list-booking','UserController@listBooking')->name('listBooking');
-    // Route::get('view-list-booking','UserController@viewListBooking')->name('viewListBooking');
+    Route::post('list-booking','UserController@listBooking')->name('listBooking');
+    Route::get('view-list-booking','UserController@viewListBooking')->name('viewListBooking');
+    Route::post('remove-item-booking','UserController@removeItemBooking')->name('removeItemBooking');
+    Route::get('cancel-list-booking','UserController@cancelListBooking')->name('cancelListBooking');
+    Route::get('payment-list-booking','UserController@paymentListBooking')->name('paymentListBooking');
 });
 
 Route::group([

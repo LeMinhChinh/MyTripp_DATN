@@ -334,8 +334,14 @@ class UserController extends Controller
     {
         $idp = $request->idp;
         $idt = $request->idt;
+        if($request->rate){
+            $rate = $request->rate;
+        }else{
+            $rate = null;
+        }
 
-        $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt);
+        // dd($rate);
+        $inforListRP = $rp->getInforListRPByIdPlace($idp, $idt, $rate);
         $data['paginate'] = $inforListRP;
         $inforListRP = \json_decode(\json_encode($inforListRP),true);
         $inforListRP = $inforListRP['data'] ?? [];
@@ -354,14 +360,15 @@ class UserController extends Controller
         $place = Place::where('id',$idp)->first();
         $type = Type::where('id', $idt)->first();
 
-        if($inforListRP){
-            $data['inforListRP'] = $inforListRP;
-            $data['place'] = $place;
-            $data['type'] = $type;
-            $data['images'] = $images;
-            $data['count'] = $count;
-            return view('user.list-restingplace',$data);
-        }
+        $data['inforListRP'] = $inforListRP;
+        $data['place'] = $place;
+        $data['type'] = $type;
+        $data['images'] = $images;
+        $data['count'] = $count;
+        $data['idp'] = $idp;
+        $data['idt'] = $idt;
+        $data['rate'] = $rate;
+        return view('user.list-restingplace',$data);
     }
 
     public function reviewRestingPlace(Request $request, $idrp, $idacc, FeedbackRP $fb)
@@ -606,6 +613,54 @@ class UserController extends Controller
         $child = $request->child;
         $id = intval($request->id);
 
+        if($request->place){
+            $place = $request->place;
+        }else{
+            $place = null;
+        }
+
+        if($request->bed){
+            $bed = $request->bed;
+        }else{
+            $bed = null;
+        }
+
+        if($request->price){
+            $price = $request->price;
+        }else{
+            $price = null;
+        }
+
+        if($request->wifi){
+            $wifi = $request->wifi;
+        }else{
+            $wifi = null;
+        }
+
+        if($request->smoke){
+            $smoke = $request->smoke;
+        }else{
+            $smoke = null;
+        }
+
+        if($request->tivi){
+            $tivi = $request->tivi;
+        }else{
+            $tivi = null;
+        }
+
+        if($request->air){
+            $air = $request->air;
+        }else{
+            $air = null;
+        }
+
+        if($request->phone){
+            $phone = $request->phone;
+        }else{
+            $phone = null;
+        }
+
         $query = DetailBooking::query();
         if($id > 0){
             $query = $query->where('id_rp',$id);
@@ -617,20 +672,17 @@ class UserController extends Controller
             $query = $query->orwhere('checkin','>=',$checkout);
         }
         $room = $query->pluck('id');
-        // $room = $dt->getIdIsBook($checkin, $checkout, $id);
-        // dd($room);
 
         $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
         $roomNotBook = json_decode(json_encode($roomNotBook),true);
-        // dd($roomNotBook);
 
-        $dataRoomBooking = $r->getDataRoomBooking($roomNotBook, $child, $adult, $id);
+        // $dataRoomBooking = $r->getDataRoomBooking($roomNotBook, $child, $adult, $id);
+        $dataRoomBooking = $r->filterDataRoomBooking($roomNotBook, $child, $adult, $price, $wifi, $smoke, $tivi, $air, $phone, $place, $bed, $id);
 
         $data['paginate'] = $dataRoomBooking;
         $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
 
         $data['dataRoomBooking'] = $dataRoomBooking['data'] ?? [];
-        // dd( $data['dataRoomBooking']);
 
         $images = [];
 
@@ -655,7 +707,102 @@ class UserController extends Controller
         $data['type']  = $type;
         $data['places']  = $places;
 
+        $data['place']  = $place;
+        $data['wifi']  = $wifi;
+        $data['smoke']  = $smoke;
+        $data['tivi']  = $tivi;
+        $data['air']  = $air;
+        $data['phone']  = $phone;
+        $data['price']  = $price;
+        $data['bed'] = $bed;
+        $data['id'] = $id;
+
         return view('user.search-room', $data);
+    }
+
+    public function restingplaceBooking(Request $request, DetailBooking $dt, Rooms $r, RestingPlace $rp)
+    {
+        $checkin = $request->checkin;
+        $checkout = $request->checkout;
+        $adult = $request->adult;
+        $child = $request->child;
+        $rate = $request->rate;
+        $id = intval($request->id);
+        // dd($request->all());
+
+        $query = DetailBooking::query();
+        if($id > 0){
+            $query = $query->where('id_rp',$id);
+        }
+        if($checkin){
+            $query = $query->where('checkout','<=', $checkin);
+        }
+        if($checkout){
+            $query = $query->orwhere('checkin','>=',$checkout);
+        }
+        $room = $query->pluck('id');
+
+        $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
+        $roomNotBook = json_decode(json_encode($roomNotBook),true);
+
+        $dataRoomBooking = $r->getIdRPBooking($roomNotBook, $child, $adult, $id);
+        $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
+
+        $idRps = [];
+
+        foreach ($dataRoomBooking as $key => $value) {
+            $ids = $value['id_rp'];
+            array_push($idRps, $ids);
+        }
+        $idRps = array_unique($idRps);
+        // dd($idRps);
+
+        $inforListRP = $rp->getDataRPBooking($idRps, $rate);
+        $data['paginate'] = $inforListRP;
+        $inforListRP = json_decode(json_encode($inforListRP),true);
+
+        $data['inforListRP'] = $inforListRP['data'] ?? [];
+        // dd($data['dataRP']);
+
+        $images = [];
+
+        foreach ($data['inforListRP'] as $key => $value) {
+            if(!empty($value['image'])){
+                $image = \explode(";", $value['image']);
+                array_push($images,$image);
+            }
+        }
+
+        // $count = $rp->countFBListRP($idp, $idt);
+        $count = $rp->countFBListRP();
+        $count = \json_decode(\json_encode($count),true);
+
+        // $place = Place::where('id',$idp)->first();
+        // $type = Type::where('id', $idt)->first();
+
+        // $data['inforListRP'] = $inforListRP;
+        // $data['place'] = $place;
+        // $data['type'] = $type;
+        $data['images'] = $images;
+        $data['count'] = $count;
+
+        // $type = TypeBed::get();
+        // $type = json_decode(json_encode($type), true);
+
+        // $places = Place::get();
+        // $places = json_decode(json_encode($places), true);
+
+        $data['images']  = $images;
+        $data['checkin']  = $checkin;
+        $data['checkout']  = $checkout;
+        $data['adult']  = $adult;
+        $data['child']  = $child;
+        // $data['type']  = $type;
+        // $data['places']  = $places;
+        $data['id'] = $id;
+        $data['rate'] = $rate;
+
+        return view('user.restingplace-booking', $data);
     }
 
     public function bookingNow(Request $request)
@@ -673,7 +820,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function bookingPage(Request $request, Rooms $r, FeedbackRP $fb)
+    public function bookingPage(Request $request, Rooms $r, FeedbackRP $fb, RestingPlace $rp)
     {
         $room = $r->getRoomById(Session::get('idRoom'));
         $room = json_decode(json_encode($room), true);
@@ -682,8 +829,22 @@ class UserController extends Controller
         if(Session::get('idRoom')){
             $id = Rooms::where('id',Session::get('idRoom'))->pluck('id_rp')->first();
 
+            $inforRP = $rp->getInforRPById($id);
+            $inforRP = \json_decode(json_encode($inforRP), true);
+
             $feedback = $fb->getDataFeedback($id);
             $feedback = \json_decode(json_encode($feedback),true);
+
+            $images = [];
+
+            // foreach ($inforRP as $key => $value) {
+                if(!empty($inforRP['image'])){
+                    $image = \explode(";", $inforRP['image']);
+                    array_push($images,$image);
+                }
+            // }
+            $data['images'] = $images;
+            $data['inforRP'] = $inforRP;
 
             if($feedback){
                 $point = 0;
@@ -703,33 +864,118 @@ class UserController extends Controller
         return view('user.booking-page', $data);
     }
 
-    // public function listBooking(Request $request, Rooms $r, FeedbackRP $fb)
-    // {
-    //     $listRoom = $request->listRoom;
-    //     $listCheckin = $request->listCheckin;
-    //     $listCheckout = $request->listCheckout;
+    public function listBooking(Request $request)
+    {
+        $listRoom = $request->listRoom;
+        $listCheckin = $request->listCheckin;
+        $listCheckout = $request->listCheckout;
 
-    //     $request->session()->put('listRoom', $listRoom);
-    //     $request->session()->put('listCheckin', $listCheckin);
-    //     $request->session()->put('listCheckout', $listCheckout);
+        $request->session()->put('listRoom', $listRoom);
+        $request->session()->put('listCheckin', $listCheckin);
+        $request->session()->put('listCheckout', $listCheckout);
 
-    //     return response()->json([
-    //         'success' => true
-    //     ]);
-    // }
+        return response()->json([
+            'success' => true
+        ]);
+    }
 
-    // public function viewListBooking(Request $request, Rooms $r)
-    // {
-    //     $room = $r->getRoomByListId(Session::get('listRoom'));
-    //     $room = json_decode(json_encode($room), true);
+    public function viewListBooking(Request $request, Rooms $r, FeedbackRP $fb, RestingPlace $rp)
+    {
+        // dd(Session::get('listRoom'));
 
-    //     $data['room'] = $room;
-    //     dd($data['room']);
-    //     $data['listCheckin'] = Session::get('listCheckin');
-    //     $data['listCheckout'] = Session::get('listCheckout');
 
-    //     return view('user/list-booking', $data);
-    // }
+        if(Session::get('listRoom')){
+            $room = $r->getRoomByListId(Session::get('listRoom'));
+            $room = json_decode(json_encode($room), true);
+
+            $data['room'] = $room;
+
+            $id = Rooms::wherein('id',Session::get('listRoom'))->pluck('id_rp')->first();
+
+            $inforRP = $rp->getInforRPById($id);
+            $inforRP = \json_decode(json_encode($inforRP), true);
+
+            $images = [];
+
+            // foreach ($inforRP as $key => $value) {
+                if(!empty($inforRP['image'])){
+                    $image = \explode(";", $inforRP['image']);
+                    array_push($images,$image);
+                }
+            // }
+
+            $data['images'] = $images;
+            $data['inforRP'] = $inforRP;
+
+            $feedback = $fb->getDataFeedback($id);
+            $feedback = \json_decode(json_encode($feedback),true);
+
+            if($feedback){
+                $point = 0;
+                foreach ($feedback as $key => $value) {
+                $point += $value['emotion'];
+                }
+                $count = ($point/(count($feedback)*4))*10;
+                $data['count'] = $count;
+            }else{
+                $data['count'] = 0;
+            }
+
+
+            $total = 0;
+
+            foreach ($data['room'] as $value) {
+                $total += $value['price'] - ($value['price']*$value['discount']/100) + ($value['price']*10/100);
+            }
+
+            $data['listCheckin'] = Session::get('listCheckin');
+            $data['listCheckout'] = Session::get('listCheckout');
+            $data['total'] = $total;
+        }else{
+            $room = null;
+            $data['room'] = $room;
+        }
+
+        $data['messages'] = $request->session()->get('messages');
+        $data['bookingError'] = $request->session()->get('bookingError');
+
+        return view('user/list-booking', $data);
+    }
+
+    public function removeItemBooking(Request $request, Rooms $r)
+    {
+        $id = $request->id;
+        $id = intval($id);
+
+        $listId = Session::get('listRoom');
+
+        $request->session()->forget('listRoom');
+
+        unset($listId[array_search($id, $listId)]);
+
+        $request->session()->put('listRoom', $listId);
+
+        $room = $r->getRoomByListId(Session::get('listRoom'));
+        $room = json_decode(json_encode($room), true);
+
+        $data['room'] = $room;
+
+        $total = 0;
+
+        foreach ($data['room'] as $value) {
+            $total += $value['price'] - ($value['price']*$value['discount']/100) + ($value['price']*10/100);
+        }
+
+        $total = number_format($total,0 ,'.' ,'.').'';
+
+        return response()->json([
+            'total' => $total,
+            'success' => true,
+            'id' => $id,
+            'room' => $room,
+            'list_id' => $listId
+        ]);
+    }
 
     public function cancelBooking(Request $request)
     {
@@ -738,10 +984,19 @@ class UserController extends Controller
         return redirect()->route('homepage');
     }
 
+    public function cancelListBooking(Request $request)
+    {
+        $request->session()->forget('idRoom');
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
     public function paymentBooking(RequestBooking $request)
     {
-        $data['inforBooking'] = $request->all();
-        $email = $request->emailCustomer;
+        // $data['inforBooking'] = $request->all();
+        // $email = $request->emailCustomer;
 
         $book = new Booking;
         $book->id_acc = Session::get('idSession');
@@ -796,6 +1051,53 @@ class UserController extends Controller
         }
     }
 
+    public function paymentListBooking(Request $request)
+    {
+        // dd(Session::get('listRoom'));
+        $room = Rooms::wherein('id',Session::get('listRoom'))->get();
+        $room = json_decode(json_encode($room), true);
+        // dd($room);
+        $book = new Booking;
+        $book->id_acc = Session::get('idSession');
+        $book->name = $request->nameCustomer;
+        $book->phone = $request->phoneCustomer;
+        $book->email = $request->emailCustomer;
+        $book->address = $request->addressCustomer;
+        $book->payment = $request->selectPayment;
+        $book->bank = $request->selectBank;
+        $book->total = $request->totalPrice;
+        $book->status = 0;
+        $book->note = $request->noteCustomer;
+
+        $book->save();
+        if($book->save()){
+            foreach ($room as $key => $value) {
+                $detailBook = new DetailBooking;
+                $detailBook->id_book = $book->id;
+                $detailBook->id_rp = $request->idRp;
+                $detailBook->name_rp = $request->nameRp;
+                $detailBook->id_room = $value['id'];
+                $detailBook->name_room = $value['name'];
+                $detailBook->price = $value['price'];
+                $detailBook->discount = $value['discount'];
+                $detailBook->checkin = Session::get('checkin');
+                $detailBook->checkout = Session::get('checkout');
+
+                $detailBook->save();
+            }
+
+            $request->session()->forget('listRoom');
+            $request->session()->forget('listCheckin');
+            $request->session()->forget('listCheckin');
+
+            $request->session()->flash('bookingSuccess', 'Đặt phòng thành công. Vui lòng chờ xác nhận từ quản lí khách sạn.');
+            return redirect()->route('user.personalBooking',['id' => Session::get('idSession')]);
+        }else{
+            $request->session()->flash('bookingError', 'Có lỗi xảy ra.Vui lòng thử lại.');
+            return redirect()->route('user.viewListBooking');
+        }
+    }
+
     public function filterDataRoom(Request $request,  DetailBooking $dt, Rooms $r)
     {
         $place = $request->place;
@@ -810,8 +1112,12 @@ class UserController extends Controller
         $air = $request->air;
         $phone = $request->phone;
         $bed = $request->bed;
+        $id = $request->idRp;
 
         $query = DetailBooking::query();
+        if($id > 0){
+            $query = $query->where('id_rp',$id);
+        }
         if($checkin == null){
             $query = $query->where('checkout','<=', $checkin);
         }
@@ -824,7 +1130,7 @@ class UserController extends Controller
         $roomNotBook = DB::table('detail_booking')->whereNotIn('id', $room)->get()->pluck('id_room');
         $roomNotBook = json_decode(json_encode($roomNotBook),true);
 
-        $dataRoomBooking = $r->filterDataRoomBooking($roomNotBook, $child, $adult, $price, $wifi, $smoke, $tivi, $air, $phone, $place, $bed);
+        $dataRoomBooking = $r->filterDataRoomBooking($roomNotBook, $child, $adult, $price, $wifi, $smoke, $tivi, $air, $phone, $place, $bed, $id);
 
         $data['paginate'] = $dataRoomBooking;
         $dataRoomBooking = json_decode(json_encode($dataRoomBooking),true);
@@ -865,6 +1171,8 @@ class UserController extends Controller
         $data['price']  = $price;
         $data['bed'] = $bed;
 
+        $data['id'] = $id;
+
         return view('user.filter_data_room', $data);
     }
 
@@ -898,7 +1206,6 @@ class UserController extends Controller
         $data['images'] = $images;
         $data['count'] = $count;
         $data['rate'] = $rate;
-        // dd($data['rate']);
 
         return view('user.filter_data_search',$data);
     }

@@ -8,7 +8,7 @@ $(document).ready(function(){
         $('.rp-popup-map').addClass('rp-map-cancel');
     })
 
-    for(let i = 1; i <= 4; i++){
+    for(let i = 1; i <= 5; i++){
         $('.r-title-'+i).click(function(){
             if($('.r-down-'+i).hasClass('disabledIcon')){
                 $('.r-down-'+i).removeClass('disabledIcon')

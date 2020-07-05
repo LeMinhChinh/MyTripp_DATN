@@ -46,7 +46,9 @@
                             <div class="booking-detail-rp">
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="{{ asset('/user/uploads/resting_place/159863910.jpg')}}" alt="" class="booking-detail-imgrp">
+                                        @foreach($images as $k => $v)
+                                            <img src="{{ URL::to('/') }}/user/uploads/resting_place/{{ $v[0] }}" alt="" class="booking-detail-imgrp">
+                                        @endforeach
                                     </div>
                                     <div class="col-8">
                                         <div class="booking-detail-inforp">

@@ -107,5 +107,11 @@
         $('.js-booking').removeClass('active-table')
     })
 
+    $(document).ready(function(){
+        localStorage.removeItem('list_id')
+        localStorage.removeItem('list_checkin')
+        localStorage.removeItem('list_checkout')
+    })
+
 </script>
 @endpush
