@@ -15,9 +15,9 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">
                     <select class="custom-select custom-select-sm mb-3 status-select-option" name="" id="">
-                        <option value="">Filter Status</option>
-                        <option value="1" @if($status == 1) selected @endif>Approved</option>
-                        <option value="0" @if($status == 0) selected @endif>Awaiting approval</option>
+                        <option value="" @if($status == null) selected @endif>Filter Status</option>
+                        <option value="1" @if($status == "1") selected @endif>Approved</option>
+                        <option value="0" @if($status == "0") selected @endif>Awaiting approval</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">

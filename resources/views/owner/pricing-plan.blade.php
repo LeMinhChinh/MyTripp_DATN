@@ -91,7 +91,7 @@
                             </td>
                             <td>
                                 <div class="monthly-price">
-                                    <button type="button" class="btn" style="background: #00084b; color: #fff"><a href="{{ route('owner.paymentPlan') }}">Upgrade</a></button>
+                                    <button type="button" class="btn" style="background: #00084b; color: #fff; width: 25%!important"><a href="{{ route('owner.paymentPlan') }}">Upgrade</a></button>
                                 </div>
                             </td>
                         </tr>
@@ -101,7 +101,7 @@
                             <td></td>
                             <td>
                                 <div class="monthly-price">
-                                    <button type="button" class="btn " style="background: #00084b; color: #fff">Select</button>
+                                    <button type="button" class="btn " style="background: #00084b; color: #fff; width: 25%!important">Select</button>
                                 </div>
                             </td>
                             <td>

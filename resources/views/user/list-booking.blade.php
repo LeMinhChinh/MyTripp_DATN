@@ -184,7 +184,7 @@
                                 </div>
                             </form>
                         @else
-                            <h2 class="infor-request">Vui lòng đăng nhập để đặt phòng! <span><a href="" data-toggle="modal" data-target="#formLogin">Đăng nhập</a></span> ngay</h2>
+                        <h2 class="infor-request">Vui lòng <span><a href="" data-toggle="modal" data-target="#formLogin">đăng nhập</a></span> để đặt phòng hoặc <span style="color: red!important; cursor: pointer" class="cancel-list-booking">hủy</span> phòng vừa đăt. </h2>
                             <div class="modal fade" id="formLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">

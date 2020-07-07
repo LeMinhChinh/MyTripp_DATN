@@ -249,10 +249,12 @@ class RestingPlace extends Model
     public function getDataRestingPlaceByAdmin($keyword)
     {
         $data = DB::table('resting_places as rp')
-                    ->select('rp.id','rp.name','rp.address','rp.email','rp.phone','rp.publish','acc.surname','acc.name')
+                    ->select('rp.id','rp.name','rp.address','rp.email','rp.phone','rp.publish','acc.surname','acc.name as name_owner')
                     ->join('account as acc','acc.id','=','rp.id_acc');
                     if($keyword!= null){
-                        $data = $data->where('rp.name', 'like', '%'.$keyword.'%');
+                        $data = $data->where('rp.name', 'like', '%'.$keyword.'%')
+                                    ->orwhere('acc.name', 'like', '%'.$keyword.'%')
+                                    ->orwhere('acc.surname', 'like', '%'.$keyword.'%');
                     }
                     $data = $data->paginate(15);
         return $data;

@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                @include('user/partials/form')
+                {{-- @include('user/partials/form') --}}
             </div>
             <div class="col-9">
                 <ul class="nav nav-tabs">

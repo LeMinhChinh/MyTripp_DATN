@@ -728,7 +728,6 @@ class UserController extends Controller
         $child = $request->child;
         $rate = $request->rate;
         $id = intval($request->id);
-        // dd($request->all());
 
         $query = DetailBooking::query();
         if($id > 0){
@@ -986,7 +985,9 @@ class UserController extends Controller
 
     public function cancelListBooking(Request $request)
     {
-        $request->session()->forget('idRoom');
+        $request->session()->forget('listRoom');
+        $request->session()->forget('listCheckin');
+        $request->session()->forget('listCheckout');
 
         return response()->json([
             'success' => true

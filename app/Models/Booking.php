@@ -10,13 +10,28 @@ class Booking extends Model
     protected $table = 'booking';
 
     // Owner
-    public function getDataRequest($id)
+    public function getDataId($id)
+    {
+        $data = DB::table('booking as b')
+                    ->select('b.id')
+                    ->join('detail_booking as dt','dt.id_book','=','b.id')
+                    ->wherein('dt.id_rp',$id)
+                    ->get();
+        return $data;
+    }
+
+    public function getDataRequest($id, $keyword, $status)
     {
         $data = DB::table('booking as b')
                     ->select('b.*')
-                    ->join('detail_booking as dt','dt.id_book','=','b.id')
-                    ->wherein('dt.id_rp',$id)
-                    ->paginate(10);
+                    ->wherein('b.id',$id);
+                    if($keyword!= null){
+                        $data = $data->where('b.name', 'like', '%'.$keyword.'%');
+                    }
+                    if($status != null){
+                        $data = $data->where('b.status',$status);
+                    }
+                    $data = $data->paginate(10);
         return $data;
     }
 

@@ -40,7 +40,7 @@
 }
 
 p.bk-title {
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
     background-color: #e9f0fa;
     padding: 20px 0;
@@ -63,7 +63,7 @@ p.bk-title {
 
 .rp-menu ul li{
     display: inline-block;
-    padding: 10px 52px !important;
+    padding: 10px 46px !important;
     background-color: #e9f0fa;
     cursor: default;
     color: #6b6b6b;

@@ -20,12 +20,12 @@
                         <input type="hidden" name="rate" id="rate">
                         <input type="hidden" name="id" id="id" value="0">
                         <div class="check-date">
-                            <label for="date-in">Check in</label>
+                            <label for="date-in">Check in (*)</label>
                             <input type="date" name="checkin" id="checkin">
                             <i class="icon_calendar"></i>
                         </div>
                         <div class="check-date">
-                            <label for="date-out">Check out</label>
+                            <label for="date-out">Check out (*)</label>
                             <input type="date" name="checkout" id="checkout">
                             <i class="icon_calendar"></i>
                         </div>
@@ -37,7 +37,7 @@
                             <label for="room">Số trẻ con</label>
                             <input type="text" class="booking-input" placeholder="Nhập vào số trẻ con" name="child" id="child">
                         </div>
-                        <button type="submit">Tìm kiếm</button>
+                        <button type="button" class="search">Tìm kiếm</button>
                     </form>
                 </div>
             </div>
@@ -420,6 +420,84 @@
 
             todays = yyyys+'-'+mms+'-'+dds;
             $('#checkout').attr("min", todays);
+
+            oldCheckin = $('#checkin').val()
+            oldCheckout = $('#checkout').val()
+
+            $('#checkin').change(function(){
+                var checkin = $('#checkin').val()
+                var checkout = $('#checkout').val()
+
+                var yearCI = checkin.slice(0,4)
+                var monthCI = checkin.slice(5,7)
+                var dayCI = checkin.slice(8,10)
+
+                var newCI = new Date(yearCI, monthCI, dayCI)
+
+                var changeCI = newCI.getTime()
+
+                if(checkout !== ''){
+                    var yearCO = checkout.slice(0,4)
+                    var monthCO = checkout.slice(5,7)
+                    var dayCO = checkout.slice(8,10)
+
+                    var newCO = new Date(yearCO, monthCO, dayCO)
+
+                    var changeCO = newCO.getTime()
+                    if(changeCI > changeCO || changeCI == changeCO){
+                        alert("Ngày checkin phải trước ngày checkout. Vui lòng chọn lại")
+                        $('#checkin').val(oldCheckin)
+                    }
+                }
+            })
+
+            $('#checkout').change(function(){
+                var checkin = $('#checkin').val()
+                var checkout = $('#checkout').val()
+
+                var yearCO = checkout.slice(0,4)
+                var monthCO = checkout.slice(5,7)
+                var dayCO = checkout.slice(8,10)
+
+                var newCO = new Date(yearCO, monthCO, dayCO)
+
+                var changeCO = newCO.getTime()
+
+                if(checkin !== ''){
+                    var yearCI = checkin.slice(0,4)
+                    var monthCI = checkin.slice(5,7)
+                    var dayCI = checkin.slice(8,10)
+
+                    var newCI = new Date(yearCI, monthCI, dayCI)
+
+                    var changeCI = newCI.getTime()
+                    if(changeCI > changeCO || changeCI == changeCO){
+                        alert("Ngày checkout phải sau ngày checkin. Vui lòng chọn lại")
+                        $('#checkout').val(oldCheckout)
+                    }
+                }
+            })
+
+            $('.search').click(function(e){
+                var checkin = $('#checkin').val()
+                var checkout = $('#checkout').val()
+
+                if(checkin === '' && checkout === ''){
+                    alert('Vui lòng chọn thời gian checkin và checkout!')
+                }
+
+                if(checkin === '' && checkout !== ''){
+                    alert('Vui lòng chọn thời gian checkin!')
+                }
+
+                if(checkin !== '' && checkout === ''){
+                    alert('Vui lòng chọn thời gian checkout!')
+                }
+
+                if(checkin !== '' && checkout !== ''){
+                    $('.search').attr('type','submit')
+                }
+            })
         })
     </script>
 @endpush

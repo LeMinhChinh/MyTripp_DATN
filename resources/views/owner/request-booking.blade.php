@@ -12,11 +12,11 @@
         <div class="row">
             <div class="col-7">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control id-search-keyword" id="js-keyword" placeholder="Searching for...">
+                    <input type="text" class="form-control id-search-keyword" id="js-keyword" placeholder="Searching for..." value="{{ $keyword }}" data-id="{{ Session::get('idSession') }}">
                     <select class="custom-select custom-select-sm mb-3 role-select-option" name="" id="">
-                        <option value="">Filter status</option>
-                        <option value="1">Approved</option>
-                        <option value="0">Awaiting approval</option>
+                        <option value="" @if($status === null) selected @endif>Filter status</option>
+                        <option value="1" @if($status === "1") selected @endif>Approved</option>
+                        <option value="0" @if($status === "0") selected @endif>Awaiting approval</option>
                     </select>
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">
@@ -105,9 +105,9 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="paginations-view">
-            {{ $paginate->links() }}
-        </div>
+    </div>
+    <div class="paginations-view">
+        {{ $paginate->appends(['keyword' => $keyword, 'status' => $status])->links() }}
     </div>
 @endsection
 
@@ -129,6 +129,13 @@
             $('.booking-list-detail').addClass('hide');
             $('.js-booking').removeClass('active-table')
         })
+
+        $('#js-search').click(function(){
+            var keyword = $('#js-keyword').val().trim()
+            var status = $('.role-select-option').val()
+            var id = $('#js-keyword').attr('data-id')
+            window.location.href =  "http://localhost:8000/owner/request-booking/"+id+"?keyword=" + keyword + "&status="+ status;
+        });
 
         $('.js-update-request').click(function(){
             var self = $(this)

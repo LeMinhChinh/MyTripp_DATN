@@ -92,7 +92,7 @@
         </tbody>
     </table>
     <div class="paginations-view">
-        {{ $paginate->links() }}
+        {{ $paginate->appends(['keyword' => $keyword])->links() }}
     </div>
 @endsection
 

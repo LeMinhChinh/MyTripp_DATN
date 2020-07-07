@@ -132,21 +132,6 @@
     <script>
         //header
         $(document).ready(function(){
-            // var room = getCookie("list_id");
-            // var listRoom = room == '' ? [] : JSON.parse(room)
-
-            // var checkin = getCookie("list_checkin");
-            // var listCheckin = checkin == '' ? [] : JSON.parse(checkin)
-
-            // var checkout = getCookie("list_checkout");
-            // var listCheckout = checkout == '' ? [] : JSON.parse(checkout)
-
-            // if(listRoom.length && listCheckin.length && listCheckout.length){
-            //     $('.booking-page').addClass('show')
-            // }else{
-            //     $('.icon-book').addClass('show')
-            // }
-
             $('.booking-page').click(function(){
 
                 var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
@@ -154,19 +139,25 @@
                 var listCheckin =  JSON.parse(localStorage.getItem('list_checkin')) || []
 
                 var listCheckout = JSON.parse(localStorage.getItem('list_checkout')) || []
-
-                $.ajax({
-                    url: "{{ route('user.listBooking') }}",
-                    type: "POST",
-                    data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
-                    success: function(data){
-                        if(data.success){
-                            if(data.success == true){
-                                window.location.href =  "{{ route('user.viewListBooking') }}"
+                console.log(listRoom)
+                if(listRoom.length == 0){
+                    console.log(1)
+                    window.location.href =  "{{ route('user.bookingPage') }}"
+                }else{
+                    console.log(2)
+                    $.ajax({
+                        url: "{{ route('user.listBooking') }}",
+                        type: "POST",
+                        data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
+                        success: function(data){
+                            if(data.success){
+                                if(data.success == true){
+                                    window.location.href =  "{{ route('user.viewListBooking') }}"
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             })
         })
 

@@ -41,7 +41,7 @@
                 <tr class="js-account-{{ $value['id'] }}">
                     <td>{{ $value['id'] }}</td>
                     <td>{{ $value['name'] }}</td>
-                    <td>{{ $value['surname'] }}{{ $value['name'] }}</td>
+                    <td>{{ $value['surname'] }} {{ $value['name_owner'] }}</td>
                     <td>{{ $value['email'] }}</td>
                     <td>{{ $value['phone'] }}</td>
                     <td>{{ $value['address'] }}</td>

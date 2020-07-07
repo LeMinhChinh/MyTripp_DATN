@@ -84,15 +84,21 @@
                                 <td>{{ $value['adult'] }}</td>
                                 <td>{{ $value['child'] }}</td>
                                 <td>
-                                    <button id="{{ $value['id'] }}" class="btn btn-success js-view" ><a href="{{ route('owner.updateRoom',['id' => $value['id']]) }}">Detail</a></button>
-                                    <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account" >Delete</button>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button id="{{ $value['id'] }}" class="btn btn-success js-view" ><a href="{{ route('owner.updateRoom',['id' => $value['id']]) }}">Detail</a></button>
+                                        </div>
+                                        <div class="col-6">
+                                            <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account" >Delete</button>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="paginations-view">
-                    {{ $paginate->links() }}
+                    {{ $paginate->appends(['keyword' => $keyword])->links() }}
                 </div>
             </div>
         @endif

@@ -277,7 +277,6 @@ class OwnerController extends Controller
     {
         $keyword = $request->keyword;
         $keyword = \strip_tags($keyword);
-        $data['keyword'] = $keyword;
 
         $inforRP = $rp->getInforRPByIdOwner($id, $keyword);
 
@@ -288,6 +287,7 @@ class OwnerController extends Controller
 
         $count = count($data['inforRP']);
         $data['count'] = $count;
+        $data['keyword'] = $keyword;
 
         $data['createSuccess'] = $request->session()->get('createSuccess');
         $data['updateSuccess'] = $request->session()->get('updateSuccess');
@@ -646,6 +646,7 @@ class OwnerController extends Controller
         $data['count'] = count($data['inforRoom']);
         $data['id'] = $id;
         $data['name'] = $name;
+        $data['keyword'] = $keyword;
 
         $data['updateSuccess'] = $request->session()->get('updateSuccess');
 
@@ -1009,9 +1010,22 @@ class OwnerController extends Controller
 
     public function requestBooking(Request $request, $id, Booking $book)
     {
+        $keyword = $request->keyword;
+        $keyword = \strip_tags($keyword);
+        $status = $request->status;
+
         $rp = RestingPlace::where('id_acc',$id)->pluck('id')->toArray();
 
-        $inforRequest = $book->getDataRequest($rp);
+        $inforId = $book->getDataId($rp);
+        $inforId = json_decode(json_encode($inforId),true);
+
+        $arr_id = [];
+        foreach ($inforId as $key => $value) {
+            array_push($arr_id, $value['id']);
+        }
+        $arr_id = \array_unique($arr_id);
+
+        $inforRequest = $book->getDataRequest($arr_id, $keyword, $status);
         $data['paginate'] = $inforRequest;
         $inforRequest = json_decode(json_encode($inforRequest),true);
 
@@ -1021,6 +1035,9 @@ class OwnerController extends Controller
         $bookingDetail = \json_decode(json_encode($bookingDetail), true);
 
         $data['bookingDetail'] = $bookingDetail;
+
+        $data['keyword'] = $keyword;
+        $data['status'] = $status;
 
         return view('owner.request-booking', $data);
     }
