@@ -613,54 +613,55 @@ class UserController extends Controller
         $child = $request->child;
         $id = intval($request->id);
 
-        if($request->place){
+        if($request->place !== null){
             $place = $request->place;
         }else{
             $place = null;
         }
 
-        if($request->bed){
-            $bed = $request->bed;
+        if($request->bed !== null){
+            $bed = intval($request->bed);
         }else{
             $bed = null;
         }
 
-        if($request->price){
-            $price = $request->price;
+        if($request->price !== null){
+            $price = intval($request->price);
         }else{
             $price = null;
         }
 
-        if($request->wifi){
-            $wifi = $request->wifi;
+        if($request->wifi !== null){
+            $wifi = intval($request->wifi);
         }else{
             $wifi = null;
         }
 
-        if($request->smoke){
-            $smoke = $request->smoke;
+        if($request->smoke !== null){
+            $smoke = intval($request->smoke);
         }else{
             $smoke = null;
         }
 
-        if($request->tivi){
-            $tivi = $request->tivi;
+        if($request->tivi !== null){
+            $tivi = intval($request->tivi);
         }else{
             $tivi = null;
         }
 
-        if($request->air){
-            $air = $request->air;
+        if($request->air !== null){
+            $air = intval($request->air);
         }else{
             $air = null;
         }
 
-        if($request->phone){
-            $phone = $request->phone;
+        if($request->phone !== null){
+            $phone = intval($request->phone);
         }else{
             $phone = null;
         }
 
+        // dd($request->all());
         $query = DetailBooking::query();
         if($id > 0){
             $query = $query->where('id_rp',$id);
@@ -716,6 +717,7 @@ class UserController extends Controller
         $data['price']  = $price;
         $data['bed'] = $bed;
         $data['id'] = $id;
+        // dd($data);
 
         return view('user.search-room', $data);
     }
@@ -754,14 +756,27 @@ class UserController extends Controller
             array_push($idRps, $ids);
         }
         $idRps = array_unique($idRps);
-        // dd($idRps);
 
         $inforListRP = $rp->getDataRPBooking($idRps, $rate);
         $data['paginate'] = $inforListRP;
         $inforListRP = json_decode(json_encode($inforListRP),true);
 
         $data['inforListRP'] = $inforListRP['data'] ?? [];
-        // dd($data['dataRP']);
+
+
+        // dd($dataRoomBooking, $data['inforListRP']);
+
+
+        foreach ($data['inforListRP'] as $key => $value) {
+            $count = 0;
+            foreach ($dataRoomBooking as $k => $v) {
+                if($value['id'] == $v['id_rp']){
+                    $count += 1;
+                }
+                $value['count'] = $count;
+                $data['inforListRP'][$key] = $value;
+            }
+        }
 
         $images = [];
 
@@ -772,32 +787,17 @@ class UserController extends Controller
             }
         }
 
-        // $count = $rp->countFBListRP($idp, $idt);
         $count = $rp->countFBListRP();
         $count = \json_decode(\json_encode($count),true);
 
-        // $place = Place::where('id',$idp)->first();
-        // $type = Type::where('id', $idt)->first();
-
-        // $data['inforListRP'] = $inforListRP;
-        // $data['place'] = $place;
-        // $data['type'] = $type;
         $data['images'] = $images;
         $data['count'] = $count;
-
-        // $type = TypeBed::get();
-        // $type = json_decode(json_encode($type), true);
-
-        // $places = Place::get();
-        // $places = json_decode(json_encode($places), true);
 
         $data['images']  = $images;
         $data['checkin']  = $checkin;
         $data['checkout']  = $checkout;
         $data['adult']  = $adult;
         $data['child']  = $child;
-        // $data['type']  = $type;
-        // $data['places']  = $places;
         $data['id'] = $id;
         $data['rate'] = $rate;
 
@@ -880,9 +880,6 @@ class UserController extends Controller
 
     public function viewListBooking(Request $request, Rooms $r, FeedbackRP $fb, RestingPlace $rp)
     {
-        // dd(Session::get('listRoom'));
-
-
         if(Session::get('listRoom')){
             $room = $r->getRoomByListId(Session::get('listRoom'));
             $room = json_decode(json_encode($room), true);
@@ -954,6 +951,13 @@ class UserController extends Controller
 
         $request->session()->put('listRoom', $listId);
 
+        $newListId = Session::get('listRoom');
+
+        $newIds = [];
+        foreach ($newListId as $key => $value) {
+            array_push($newIds, $value);
+        }
+
         $room = $r->getRoomByListId(Session::get('listRoom'));
         $room = json_decode(json_encode($room), true);
 
@@ -972,7 +976,7 @@ class UserController extends Controller
             'success' => true,
             'id' => $id,
             'room' => $room,
-            'list_id' => $listId
+            'list_id' => $newIds
         ]);
     }
 
@@ -1054,10 +1058,34 @@ class UserController extends Controller
 
     public function paymentListBooking(Request $request)
     {
-        // dd(Session::get('listRoom'));
+        foreach (Session::get('listCheckin') as $key => $value) {
+            $checkin = $value;
+        }
+
+        foreach (Session::get('listCheckout') as $key => $value) {
+            $checkout = $value;
+        }
+
+        // $data['inforBooking'] = $request->all();
+        // $email = $request->emailCustomer;
+
+        // Mail::send('user.mail',$data, function($message) use($email)
+        // {
+        //     $message->from('stormshadow1110@gmail.com','MyTripp');
+
+        //     $message->to($email,$email);
+
+        //     // $message->cc('leminhchinh1011@gmail.com','Le Minh Chinh');
+
+        //     $message->subject('Xác nhận đặt phòng tại MyTripp');
+
+        // });
+
+        // return redirect()->route('homepage');
+
         $room = Rooms::wherein('id',Session::get('listRoom'))->get();
         $room = json_decode(json_encode($room), true);
-        // dd($room);
+
         $book = new Booking;
         $book->id_acc = Session::get('idSession');
         $book->name = $request->nameCustomer;
@@ -1081,15 +1109,27 @@ class UserController extends Controller
                 $detailBook->name_room = $value['name'];
                 $detailBook->price = $value['price'];
                 $detailBook->discount = $value['discount'];
-                $detailBook->checkin = Session::get('checkin');
-                $detailBook->checkout = Session::get('checkout');
+                $detailBook->checkin = $checkin;
+                $detailBook->checkout = $checkout;
 
                 $detailBook->save();
             }
 
             $request->session()->forget('listRoom');
             $request->session()->forget('listCheckin');
-            $request->session()->forget('listCheckin');
+            $request->session()->forget('listCheckout');
+
+            // Mail::send('user.mail',$data, function($message) use($email)
+            // {
+            //     $message->from('stormshadow1110@gmail.com','MyTripp');
+
+            //     $message->to($email,$email);
+
+            //     // $message->cc('leminhchinh1011@gmail.com','Le Minh Chinh');
+
+            //     $message->subject('Xác nhận đặt phòng tại MyTripp');
+
+            // });
 
             $request->session()->flash('bookingSuccess', 'Đặt phòng thành công. Vui lòng chờ xác nhận từ quản lí khách sạn.');
             return redirect()->route('user.personalBooking',['id' => Session::get('idSession')]);

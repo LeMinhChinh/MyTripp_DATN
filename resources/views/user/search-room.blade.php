@@ -28,7 +28,7 @@
                                                 <option value="">Địa điểm</option>
                                                 @if($type !== null)
                                                     @foreach ($places as $item)
-                                                        <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                        <option value="{{ $item['id'] }}" @if($item['id'] == $place) selected @endif>{{ $item['name'] }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -72,7 +72,7 @@
                                                     <option value="">Loại giường</option>
                                                     @if($type !== null)
                                                         @foreach ($type as $item)
-                                                            <option value="{{ $item['id'] }}">{{ $item['name'] }}</option>
+                                                            <option value="{{ $item['id'] }}" @if($item['id'] == $bed) selected @endif>{{ $item['name'] }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -117,55 +117,55 @@
                                                 <div class="r-child r-people">
                                                     <label for="guest">wifi</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="wifi" value="1" @if($wifi == 1) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="wifi" value="1" @if($wifi === 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck3">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="wifi" value="0" @if($wifi == 0 && $wifi != null) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="wifi" value="0" @if($wifi === 0) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck4">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Phòng hút thuốc</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck1" name="smoke" value="1" @if($smoke == 1) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck1" name="smoke" value="1" @if($smoke === 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck1">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck2" name="smoke" value="0" @if($smoke == 0 && $smoke != null) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck2" name="smoke" value="0" @if($smoke === 0) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck2">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Tivi</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck3" name="tivi" value="1" @if($tivi == 1) checked @endif>
-                                                        <label class="form-check-label" for="exampleCheck3">Có</label>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck15" name="tivi" value="1" @if($tivi === 1) checked @endif>
+                                                        <label class="form-check-label" for="exampleCheck15">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck4" name="tivi" value="0" @if($tivi == 0 && $tivi != null) checked @endif>
-                                                        <label class="form-check-label" for="exampleCheck4">Không</label>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck16" name="tivi" value="0" @if($tivi === 0) checked @endif>
+                                                        <label class="form-check-label" for="exampleCheck16">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Điều hòa</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck10" name="air" value="1" @if($air == 1) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck10" name="air" value="1" @if($air === 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck10">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck11" name="air" value="0" @if($air == 0 && $air != null) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck11" name="air" value="0" @if($air === 0) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck11">Không</label>
                                                     </div>
                                                 </div>
                                                 <div class="r-child r-people">
                                                     <label for="guest">Điện thoại</label>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck12" name="phone" value="1" @if($phone == 1) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck12" name="phone" value="1" @if($phone === 1) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck12">Có</label>
                                                     </div>
                                                     <div class="form-group form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleCheck13" name="phone" value="0" @if($phone == 0 && $phone != null) checked @endif>
+                                                        <input type="radio" class="form-check-input" id="exampleCheck13" name="phone" value="0" @if($phone === 0) checked @endif>
                                                         <label class="form-check-label" for="exampleCheck13">Không</label>
                                                     </div>
                                                 </div>
@@ -333,25 +333,70 @@
 @push('scripts')
     <script>
         $('.booking-now').click(function(){
+            // var self = $(this);
+            // var id = self.attr('id').trim();
+            // var checkin = self.attr('data-checkin');
+            // var checkout = self.attr('data-checkout');
+            // console.log(id, checkin, checkout)
+
+            // if($.isNumeric(id)){
+            //     $.ajax({
+            //         url: "{{ route('user.bookingNow') }}",
+            //         type: "POST",
+            //         data: {id: id, checkin: checkin, checkout: checkout},
+            //         success: function(data){
+            //             if(data.success == true){
+            //                 window.location.href =  "{{ route('user.bookingPage') }}"
+            //             }
+            //         }
+            //     });
+            // }
             var self = $(this);
             var id = self.attr('id').trim();
             var checkin = self.attr('data-checkin');
             var checkout = self.attr('data-checkout');
-            console.log(id, checkin, checkout)
 
-            if($.isNumeric(id)){
-                $.ajax({
-                    url: "{{ route('user.bookingNow') }}",
-                    type: "POST",
-                    data: {id: id, checkin: checkin, checkout: checkout},
-                    success: function(data){
+            // cookie room
+            var list_id = JSON.parse(localStorage.getItem('list_id')) || []
+
+            list_id.push(id);
+            var list_id = flattenUniq(list_id)
+            localStorage.setItem('list_id',JSON.stringify(list_id));
+
+            // cookie checkin
+            var list_checkin =  JSON.parse(localStorage.getItem('list_checkin')) || []
+
+            list_checkin.push(checkin);
+            var list_checkin = flattenUniq(list_checkin)
+            localStorage.setItem('list_checkin',JSON.stringify(list_checkin));
+
+            // cookie checkout
+            var list_checkout = JSON.parse(localStorage.getItem('list_checkout')) || []
+
+            list_checkout.push(checkout);
+            var list_checkout = flattenUniq(list_checkout)
+            localStorage.setItem('list_checkout',JSON.stringify(list_checkout));
+
+            var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
+
+            var listCheckin =  JSON.parse(localStorage.getItem('list_checkin')) || []
+
+            var listCheckout = JSON.parse(localStorage.getItem('list_checkout')) || []
+
+            $.ajax({
+                url: "{{ route('user.listBooking') }}",
+                type: "POST",
+                data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
+                success: function(data){
+                    if(data.success){
                         if(data.success == true){
-                            window.location.href =  "{{ route('user.bookingPage') }}"
+                            window.location.href =  "{{ route('user.viewListBooking') }}"
                         }
                     }
-                });
-            }
+                }
+            });
         })
+
         $(document).ready(function(){
             var today = new Date();
             var dd = today.getDate();
@@ -409,30 +454,11 @@
                 localStorage.setItem('list_checkout',JSON.stringify(list_checkout));
 
                 alert('Đã thêm phòng vừa chọn!')
+                var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
+                var count = listRoom.length
+                $('p.count-room').html(count)
             })
         })
-
-        function setCookie(cname, cvalue, exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires="+d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
 
         function flattenUniq(arrays) {
             var args = Array.prototype.slice.call(arguments);

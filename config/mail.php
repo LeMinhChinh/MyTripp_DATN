@@ -86,15 +86,15 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'leminhchinh1011@gmail.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'stormshadow1110@gmail.com'),
         'name' => env('MAIL_FROM_NAME', 'AdminLMC'),
     ],
 
     'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
-    'username' => ('leminhchinh1011@gmail.com'),
+    'username' => ('stormshadow1110@gmail.com'),
 
-    'password' => ('c10111998'),
+    'password' => ('bmnigmceytgxbexy'),
 
     'sendmail' => '/usr/sbin/sendmail -bs',
     'pretend' => false,

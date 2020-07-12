@@ -198,7 +198,7 @@
                                                     <input type="hidden" name="air">
                                                     <input type="hidden" name="phone">
 
-                                                    <button type="submit" class="form-submit btn btn-primary">6 phòng trống</button>
+                                                    <button type="submit" class="form-submit btn btn-primary">{{ $value['count'] }} phòng trống</button>
                                                 </form>
                                             </div>
                                         </div>

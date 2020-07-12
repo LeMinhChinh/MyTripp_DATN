@@ -249,6 +249,9 @@
 @push('scripts')
     <script>
         $(document).ready(function(){
+            var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
+            console.log(listRoom)
+
             $('.booking-remove').click(function(){
                 var self = $(this);
                 var id = self.attr('data-id').trim();
@@ -259,20 +262,31 @@
                     data: {id: id},
                     success: function(data){
                         if(data.success){
+                            console.log(data)
                             var listId = data.list_id
                             localStorage.removeItem('list_id')
 
                             localStorage.setItem('list_id',JSON.stringify(listId));
 
-                            $('.total-price').html(data.total)
-                            $('.booking-item-'+id).hide()
+                            var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
+
+                            if(listRoom.length > 0){
+                                $('.total-price').html(data.total)
+                                $('.booking-item-'+id).hide()
+                                $('p.count-room').html(listRoom.length)
+                            }else{
+                                localStorage.removeItem('list_id')
+                                localStorage.removeItem('list_checkin')
+                                localStorage.removeItem('list_checkout')
+
+                                window.location.href =  "{{ route('homepage') }}"
+                            }
                         }
                     }
                 });
             })
 
             $('.cancel-list-booking').click(function(){
-                console.log(12)
                 $.ajax({
                     url: "{{ route('user.cancelListBooking') }}",
                     type: "GET",

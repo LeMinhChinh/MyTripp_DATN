@@ -132,6 +132,10 @@
     <script>
         //header
         $(document).ready(function(){
+            var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
+            var count = listRoom.length
+            $('p.count-room').html(count)
+
             $('.booking-page').click(function(){
 
                 var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
@@ -139,41 +143,36 @@
                 var listCheckin =  JSON.parse(localStorage.getItem('list_checkin')) || []
 
                 var listCheckout = JSON.parse(localStorage.getItem('list_checkout')) || []
-                console.log(listRoom)
-                if(listRoom.length == 0){
-                    console.log(1)
-                    window.location.href =  "{{ route('user.bookingPage') }}"
-                }else{
-                    console.log(2)
-                    $.ajax({
-                        url: "{{ route('user.listBooking') }}",
-                        type: "POST",
-                        data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
-                        success: function(data){
-                            if(data.success){
-                                if(data.success == true){
-                                    window.location.href =  "{{ route('user.viewListBooking') }}"
-                                }
+
+                $.ajax({
+                    url: "{{ route('user.listBooking') }}",
+                    type: "POST",
+                    data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
+                    success: function(data){
+                        if(data.success){
+                            if(data.success == true){
+                                window.location.href =  "{{ route('user.viewListBooking') }}"
                             }
                         }
-                    });
-                }
+                    }
+                });
+                // if(listRoom.length == 0){
+                //     window.location.href =  "{{ route('user.bookingPage') }}"
+                // }else{
+                //     $.ajax({
+                //         url: "{{ route('user.listBooking') }}",
+                //         type: "POST",
+                //         data: {listRoom: listRoom, listCheckin: listCheckin, listCheckout: listCheckout},
+                //         success: function(data){
+                //             if(data.success){
+                //                 if(data.success == true){
+                //                     window.location.href =  "{{ route('user.viewListBooking') }}"
+                //                 }
+                //             }
+                //         }
+                //     });
+                // }
             })
         })
-
-        function getCookie(cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
     </script>
 @endpush

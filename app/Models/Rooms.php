@@ -79,6 +79,7 @@ class Rooms extends Model
 
     public function filterDataRoomBooking($id, $child, $adult, $price,$wifi, $smoke, $tivi, $air, $phone, $place, $bed, $isId)
     {
+        // dd($id, $child, $adult, $price,$wifi, $smoke, $tivi, $air, $phone, $place, $bed, $isId);
         $data = DB::table('rooms as r')
                     ->select('r.*','tb.name as name_bed','rp.name as rp','p.name as place','t.name as type', 'address','rp.id as idRp')
                     ->join('resting_places as rp','rp.id','=','r.id_rp')
