@@ -1513,3 +1513,8 @@ button.btn.btn-secondary.btn-lg.ps-button-cancel > a, button.btn.btn-secondary.b
     margin: 0 auto;
     display: flex;
 }
+
+.r-bookingplace-place ul.list{
+    height: 320px;
+    overflow-y: scroll!important;
+}

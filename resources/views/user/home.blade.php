@@ -18,6 +18,7 @@
                     {{-- <form action="{{ route('user.searchRoom',['id' => 0]) }}" method="GET"> --}}
                     <form action="{{ route('user.restingplaceBooking') }}" method="GET">
                         <input type="hidden" name="rate" id="rate">
+                        <input type="hidden" name="place" id="place">
                         <input type="hidden" name="id" id="id" value="0">
                         <div class="check-date">
                             <label for="date-in">Check in (*)</label>

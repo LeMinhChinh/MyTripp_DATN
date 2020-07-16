@@ -729,6 +729,7 @@ class UserController extends Controller
         $adult = $request->adult;
         $child = $request->child;
         $rate = $request->rate;
+        $place = $request->place;
         $id = intval($request->id);
 
         $query = DetailBooking::query();
@@ -757,15 +758,14 @@ class UserController extends Controller
         }
         $idRps = array_unique($idRps);
 
-        $inforListRP = $rp->getDataRPBooking($idRps, $rate);
+        $inforListRP = $rp->getDataRPBooking($idRps, $rate, $place);
         $data['paginate'] = $inforListRP;
         $inforListRP = json_decode(json_encode($inforListRP),true);
 
         $data['inforListRP'] = $inforListRP['data'] ?? [];
 
-
-        // dd($dataRoomBooking, $data['inforListRP']);
-
+        $places = Place::get();
+        $places = json_decode(json_encode($places), true);
 
         foreach ($data['inforListRP'] as $key => $value) {
             $count = 0;
@@ -800,6 +800,8 @@ class UserController extends Controller
         $data['child']  = $child;
         $data['id'] = $id;
         $data['rate'] = $rate;
+        $data['places'] = $places;
+        $data['place'] = $place;
 
         return view('user.restingplace-booking', $data);
     }
@@ -921,7 +923,7 @@ class UserController extends Controller
             $total = 0;
 
             foreach ($data['room'] as $value) {
-                $total += $value['price'] - ($value['price']*$value['discount']/100) + ($value['price']*10/100);
+                $total += $value['price'] - ($value['price']*$value['discount']/100);
             }
 
             $data['listCheckin'] = Session::get('listCheckin');
@@ -966,17 +968,25 @@ class UserController extends Controller
         $total = 0;
 
         foreach ($data['room'] as $value) {
-            $total += $value['price'] - ($value['price']*$value['discount']/100) + ($value['price']*10/100);
+            $total += $value['price'] - ($value['price']*$value['discount']/100);
         }
 
+        $gtgtTotal = $total*10/100;
+        $totalPrice = $total + $gtgtTotal;
+
         $total = number_format($total,0 ,'.' ,'.').'';
+        $gtgtTotal = number_format($gtgtTotal,0 ,'.' ,'.').'';
+        $totalPrices = number_format($totalPrice,0 ,'.' ,'.').'';
 
         return response()->json([
             'total' => $total,
             'success' => true,
             'id' => $id,
             'room' => $room,
-            'list_id' => $newIds
+            'list_id' => $newIds,
+            'gtgtTotal' =>$gtgtTotal,
+            'totalPrices' => $totalPrices,
+            'totalPrice' => $totalPrice
         ]);
     }
 
@@ -1056,7 +1066,7 @@ class UserController extends Controller
         }
     }
 
-    public function paymentListBooking(Request $request)
+    public function paymentListBooking(RequestBooking $request)
     {
         foreach (Session::get('listCheckin') as $key => $value) {
             $checkin = $value;

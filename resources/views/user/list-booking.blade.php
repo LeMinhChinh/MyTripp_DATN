@@ -37,7 +37,7 @@
                                         <p>Các tiện nghi : @if($item['wifi'] == 1) wifi miễn phí,  @endif @if($item['smoke'] == 1) có hút thuốc,  @endif @if($item['smoke'] == 0) không hút thuốc,  @endif @if($item['phone'] == 1) điện thoại,  @endif @if($item['television'] == 1) tivi,  @endif @if($item['air_conditioning'] == 1) điều hòa,  @endif </p>
 
                                         <p class="booking-detail-label fix-top">Giá phòng : <span class="booking-price">{{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</span></p>
-                                        <p class="booking-detail-label">10% thuế GTGT : <span class="booking-price">{{ number_format($item['price']*10/100 ,0 ,'.' ,'.').'' }}&#8363;</span></p>
+                                        {{-- <p class="booking-detail-label">10% thuế GTGT : <span class="booking-price">{{ number_format($item['price']*10/100 ,0 ,'.' ,'.').'' }}&#8363;</span></p> --}}
                                         <p class="booking-detail-label">Discount : <span class="booking-price">{{ $item['discount'] }}%</span></p>
                                         <button class="btn btn-danger booking-remove booking-remove-{{ $item['id'] }}" data-id={{ $item['id'] }}>Remove</button>
                                     </div>
@@ -49,7 +49,9 @@
                                 <h2>Thông tin về giá</h2>
                             </div>
                             <div class="booking-detail-footer">
-                                <h2 name="totalPrice">Tổng giá : <span class="booking-price total-price">{{ number_format($total,0 ,'.' ,'.').'' }}</span><span>&#8363;</span></h2>
+                                <h2 style="line-height: 1.7">Đơn giá : <span class="booking-price price">{{ number_format($total,0 ,'.' ,'.').'' }}</span><span>&#8363;</span></h2>
+                                <h2 style="line-height: 1.7">10% thuế GTGT : <span class="booking-price gtgt-price">{{ number_format($total*10/100 ,0 ,'.' ,'.').'' }}</span><span>&#8363;</span></h2>
+                                <h2 name="totalPrice" style="line-height: 1.7">Tổng giá : <span class="booking-price total-price">{{ number_format($total + $total*10/100,0 ,'.' ,'.').'' }}</span><span>&#8363;</span></h2>
                             </div>
                         </div>
                     </div>
@@ -104,7 +106,7 @@
                                 <h2 class="infor-request">Nhập thông tin của bạn!</h2>
                                 <div class="booking-detail-form fix-top">
                                     <div class="form-group" style="display: none">
-                                    <input type="text" class="form-control" id="totalPrice" name="totalPrice" placeholder="id" value="{{ $total }}">
+                                    <input type="text" class="form-control" id="totalPrice" name="totalPrice" placeholder="id" value="{{ $total+$total*10/100 }}">
                                         <input type="text" class="form-control" id="idRp" name="idRp" placeholder="id" value="{{ $inforRP['id'] }}">
                                         <input type="text" class="form-control" id="nameRp" name="nameRp" placeholder="id" value="{{ $inforRP['name'] }}">
                                     </div>
@@ -271,7 +273,10 @@
                             var listRoom = JSON.parse(localStorage.getItem('list_id')) || []
 
                             if(listRoom.length > 0){
-                                $('.total-price').html(data.total)
+                                $('.price').html(data.total)
+                                $('.gtgt-price').html(data.gtgtTotal)
+                                $('.total-price').html(data.totalPrices)
+                                $('#totalPrice').val(data.totalPrice)
                                 $('.booking-item-'+id).hide()
                                 $('p.count-room').html(listRoom.length)
                             }else{

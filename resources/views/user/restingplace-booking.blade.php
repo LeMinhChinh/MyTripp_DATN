@@ -21,6 +21,20 @@
                                 <input type="hidden" id="checkout" name="checkout" value="{{ $checkout }}">
                                 <input type="hidden" id="adult" name="adult" value="{{ $adult }}">
                                 <input type="hidden" id="child" name="child" value="{{ $child }}">
+                                <div class="r-filter-time r-people fix-top">
+                                    <div class="r-time-title r-title-5">
+                                            <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-5 disabledIcon"></i><i class="fas fa-angle-down r-down-5"></i></p><p class="r-time-title-text">Địa điểm</p>
+                                    </div>
+                                    <div class="r-child r-people r-content-5 select-option fix-top r-bookingplace-place">
+                                        <select id="place" name="place" class="booking-input">
+                                            <option value="">Địa điểm</option>
+                                                @foreach ($places as $item)
+                                                    <option value="{{ $item['id'] }}" @if($item['id'] == $place) selected @endif>{{ $item['name'] }}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr class="fix-section">
                                 <div class="r-filter-convenients r-people fix-top">
                                     <div class="r-prices-title r-title-4">
                                         <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-4 disabledIcon"></i><i class="fas fa-angle-down r-down-4"></i></p><p class="r-time-title-text">Đánh giá sao</p>
@@ -207,7 +221,7 @@
                             </div>
                         @endforeach
                    </div>
-                   <div class="pagination-page fix-top">{!! $paginate->appends(['checkin' => $checkin, 'checkout' => $checkout, 'adult' => $adult, 'child' => $child,'hotel' => $id,'rate' => $rate])->links() !!}</div>
+                   <div class="pagination-page fix-top">{!! $paginate->appends(['checkin' => $checkin, 'checkout' => $checkout, 'adult' => $adult, 'child' => $child,'hotel' => $id,'rate' => $rate,'place' => $place])->links() !!}</div>
                 </div>
             </div>
         </div>

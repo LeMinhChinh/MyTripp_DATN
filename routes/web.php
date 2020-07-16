@@ -63,7 +63,7 @@ Route::group([
     Route::get('payment-booking','UserController@paymentBooking')->name('paymentBooking');
 
     Route::post('list-booking','UserController@listBooking')->name('listBooking');
-    Route::get('view-list-booking','UserController@viewListBooking')->name('viewListBooking');
+    Route::get('page-booking','UserController@viewListBooking')->name('viewListBooking');
     Route::post('remove-item-booking','UserController@removeItemBooking')->name('removeItemBooking');
     Route::get('cancel-list-booking','UserController@cancelListBooking')->name('cancelListBooking');
     Route::get('payment-list-booking','UserController@paymentListBooking')->name('paymentListBooking');

@@ -47,7 +47,7 @@
                             </a>
                         </button>@endif
                         @if(Session::get('roleSession') === 2)<button class="btn btn-primary" id="menu-name">
-                            <a href="{{ route('admin.dashboard') }}">
+                            <a href="{{ route('admin.account') }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>
                                 @endif
@@ -61,7 +61,7 @@
                             </a>
                         </button>@endif
                         @if(Session::get('roleSession') === 1)<button class="btn btn-primary" id="menu-name">
-                            <a href="{{ route('owner.dashboard') }}">
+                            <a href="{{ route('owner.dashboard',['id' => Session::get('idSession')]) }}">
                                 @if (Session::get('genderSession') === 0)
                                     <i class="fas fa-female"></i>
                                 @endif

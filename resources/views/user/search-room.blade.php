@@ -19,7 +19,7 @@
                                 {{-- <form action="{{ route('user.filterDataRoom') }}" method="GET"> --}}
                                     <form action="{{ route('user.searchRoom',['id' => $id]) }}" method="GET">
                                     <input type="hidden" name="idRp" id="idRp" value="{{ $id }}">
-                                    <div class="r-filter-time r-people fix-top">
+                                    {{-- <div class="r-filter-time r-people fix-top">
                                         <div class="r-time-title r-title-5">
                                              <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-5 disabledIcon"></i><i class="fas fa-angle-down r-down-5"></i></p><p class="r-time-title-text">Địa điểm</p>
                                         </div>
@@ -34,7 +34,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <hr class="fix-section">
+                                    <hr class="fix-section"> --}}
                                    <div class="r-filter-time r-people fix-top">
                                        <div class="r-time-title r-title-1">
                                             <p class="r-time-title-icon"><i class="fas fa-angle-up r-up-1 disabledIcon"></i><i class="fas fa-angle-down r-down-1"></i></p><p class="r-time-title-text">Thời gian</p>

@@ -13,16 +13,31 @@ class DetailBooking extends Model
     {
         $data = DB::table('detail_booking as dt')
                     ->join('booking as b','b.id','=','dt.id_book')
-                    ->select('b.total');
-                    if($hotel === "all" | $hotel === null){
+                    ->select('dt.*','b.total','b.id as idBook');
+                    if($hotel === "all" || $hotel === null){
                         $data = $data->wherein('dt.id_rp', $id);
                     }else{
                         $data = $data->where('dt.id_rp', $hotel);
                     }
-                    $data = $data->where('dt.checkout','>=',$dateFrom)
-                    ->where('dt.checkout','<=',$dateTo)
-                    ->where('b.status', 1)
+                    $data = $data
+                            ->where('dt.checkout','>=',$dateFrom)
+                            ->where('dt.checkout','<=',$dateTo)
+                            ->where('b.status', 1)
                     ->get();
+        return $data;
+    }
+
+    public function getDashboardDetailAll($id, $hotel)
+    {
+        $data = DB::table('detail_booking as dt')
+                    ->join('booking as b','b.id','=','dt.id_book')
+                    ->select('dt.*','b.total','b.id as idBook');
+                    if($hotel === "all" || $hotel === null){
+                        $data = $data->wherein('dt.id_rp', $id);
+                    }else{
+                        $data = $data->where('dt.id_rp', $hotel);
+                    }
+                    $data = $data->get();
         return $data;
     }
 

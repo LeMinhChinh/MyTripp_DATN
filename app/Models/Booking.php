@@ -47,4 +47,18 @@ class Booking extends Model
                     }
         return $update;
     }
+
+    public function getDashboardDetailAll($id, $hotel)
+    {
+        $data = DB::table('booking as b')
+                    ->join('detail_booking as dt','b.id','=','dt.id_book')
+                    ->select('dt.*','b.total','b.id as idBook');
+                    if($hotel === "all" || $hotel === null){
+                        $data = $data->wherein('dt.id_rp', $id);
+                    }else{
+                        $data = $data->where('dt.id_rp', $hotel);
+                    }
+                    $data = $data->get();
+        return $data;
+    }
 }

@@ -42,7 +42,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                    <tr>
                         <td>
                             <div class="monthly-price">
                                 Monthly price
@@ -81,7 +81,7 @@
                         <tr>
                             <td>
                                 <div class="monthly-price">
-                                    Plan
+                                    Select Plan
                                 </div>
                             </td>
                             <td>
@@ -98,10 +98,14 @@
                     @endif
                     @if($status == 2)
                         <tr>
-                            <td></td>
                             <td>
                                 <div class="monthly-price">
-                                    <button type="button" class="btn " style="background: #00084b; color: #fff; width: 25%!important">Select</button>
+                                    Select Plan
+                                </div>
+                            </td>
+                            <td>
+                                <div class="monthly-price">
+                                    {{-- <button type="button" class="btn " style="background: #00084b; color: #fff; width: 25%!important">Select</button> --}}
                                 </div>
                             </td>
                             <td>

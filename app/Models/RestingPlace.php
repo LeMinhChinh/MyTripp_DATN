@@ -180,7 +180,7 @@ class RestingPlace extends Model
         return $data;
     }
 
-    public function getDataRPBooking($id, $rate)
+    public function getDataRPBooking($id, $rate, $place)
     {
         $data = DB::table('resting_places as rp')
                     ->select('rp.*', 'p.name as pname', 'trp.name as tname')
@@ -190,6 +190,9 @@ class RestingPlace extends Model
                     ->wherein('rp.id',$id);
                     if($rate !== null){
                         $data = $data->wherein('rp.rate',$rate);
+                    }
+                    if($place !== null){
+                        $data = $data->where('rp.place',$place);
                     }
                     $data = $data->paginate(10);
         return $data;
