@@ -100,28 +100,30 @@
             $('.js-delete-request').click(function() {
                 var self = $(this);
                 var id = self.attr('id').trim();
-                if($.isNumeric(id)){
-                    $.ajax({
-                        url: "{{ route('admin.deleteRequest') }}",
-                        type: "POST",
-                        data: {id: id},
-                        beforeSend: function(){
-                            self.text('Loading ...');
-                        },
-                        success: function(data){
-                            self.text('Delete');
-                            if(data === 'Request not found'){
-                                alert('Request not found')
+                if (confirm('Are you sure you want to delete request?')) {
+                    if($.isNumeric(id)){
+                        $.ajax({
+                            url: "{{ route('admin.deleteRequest') }}",
+                            type: "POST",
+                            data: {id: id},
+                            beforeSend: function(){
+                                self.text('Loading ...');
+                            },
+                            success: function(data){
+                                self.text('Delete');
+                                if(data === 'Request not found'){
+                                    alert('Request not found')
+                                }
+                                if(data === 'Delete fail') {
+                                    alert('Delete fail');
+                                }
+                                if(data === 'Delete success') {
+                                    $('.js-account-'+id).hide();
+                                    alert('Delele success');
+                                }
                             }
-                            if(data === 'Delete fail') {
-                                alert('Delete fail');
-                            }
-                            if(data === 'Delete success') {
-                                $('.js-account-'+id).hide();
-                                alert('Delele success');
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         });
@@ -147,26 +149,27 @@
                 var id = $('input.requestCheck:checked').map(function(){
                     return $(this).val();
                 }).toArray();
-                console.log(id)
-                $.ajax({
-                    url: "{{ route('admin.deleteRequest') }}",
-                    type: "POST",
-                    data: {id: id},
-                    success: function(data){
-                        if(data === 'Request not found'){
-                            alert('Request not found')
+                if (confirm('Are you sure you want to delete request?')) {
+                    $.ajax({
+                        url: "{{ route('admin.deleteRequest') }}",
+                        type: "POST",
+                        data: {id: id},
+                        success: function(data){
+                            if(data === 'Request not found'){
+                                alert('Request not found')
+                            }
+                            if(data === 'Delete fail') {
+                                alert('Delete fail');
+                            }
+                            if(data === 'Delete success') {
+                                $.each(id, function(index, id){
+                                    $('.js-account-'+id).hide();
+                                })
+                                alert('Delele success');
+                            }
                         }
-                        if(data === 'Delete fail') {
-                            alert('Delete fail');
-                        }
-                        if(data === 'Delete success') {
-                            $.each(id, function(index, id){
-                                $('.js-account-'+id).hide();
-                            })
-                            alert('Delele success');
-                        }
-                    }
-                });
+                    });
+                }
             })
 
             $('.js-update-request').click(function(){

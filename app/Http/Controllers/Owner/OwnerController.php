@@ -75,7 +75,7 @@ class OwnerController extends Controller
 
         $detailBooking = $dt->getDashboardDetailAll($idRP,$hotel);
         $detailBooking = json_decode(\json_encode($detailBooking),true);
-        // dd($detailBooking);
+
         foreach ($detailBooking as $key => $value) {
             if(strtotime(date($value['checkout'])) >= strtotime(date('2020-01-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-01-30'))){
                 $priceT1 += $value['price'] - ($value['price']*$value['discount']/100) + (($value['price'] - ($value['price']*$value['discount']/100))*10/100);
@@ -125,164 +125,6 @@ class OwnerController extends Controller
                 $priceT12 += $value['price'] - ($value['price']*$value['discount']/100) + (($value['price'] - ($value['price']*$value['discount']/100))*10/100);
             }
         }
-
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-01-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-01-30'))){
-        //         $priceT1 += $value['total'];
-        //     }
-        // }
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-02-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-02-28'))){
-        //         $priceT2 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-03-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-03-31'))){
-        //         $priceT3 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-04-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-04-30'))){
-        //         $priceT4 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-05-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-05-31'))){
-        //         $priceT5 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-06-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-06-30'))){
-        //         $priceT6 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-07-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-07-31'))){
-        //         $priceT7 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-08-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-08-31'))){
-        //         $priceT8 += $value['total'];
-        //     }
-        // }
-        // dd($priceT8, $priceT7);
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-09-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-09-30'))){
-        //         $priceT9 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-10-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-10-31'))){
-        //         $priceT10 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-11-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-11-30'))){
-        //         $priceT11 += $value['total'];
-        //     }
-        // }
-
-        // foreach ($detailBooking as $key => $value) {
-        //     if(strtotime(date($value['checkout'])) >= strtotime(date('2020-12-01')) && strtotime(date($value['checkout'])) <= strtotime(date('2020-12-31'))){
-        //         $priceT12 += $value['total'];
-        //     }
-        // }
-
-        // $totalT1 = $dt->getDashboardDetail($idRP, '2020-01-01','2020-01-30',$hotel);
-        // $totalT1 = json_decode(json_encode($totalT1), true);
-        // $priceT1 = 0;
-        // foreach ($totalT1 as $value) {
-        //     $priceT1 += $value['total'];
-        // }
-
-        // $totalT2 = $dt->getDashboardDetail($idRP, '2020-02-01','2020-02-28',$hotel);
-        // $totalT2 = json_decode(json_encode($totalT2), true);
-        // $priceT2 = 0;
-        // foreach ($totalT2 as $value) {
-        //     $priceT2 += $value['total'];
-        // }
-
-        // $totalT3 = $dt->getDashboardDetail($idRP, '2020-03-01','2020-03-31',$hotel);
-        // $totalT3 = json_decode(json_encode($totalT3), true);
-        // $priceT3 = 0;
-        // foreach ($totalT3 as $value) {
-        //     $priceT3 += $value['total'];
-        // }
-
-        // $totalT4 = $dt->getDashboardDetail($idRP, '2020-04-01','2020-04-30',$hotel);
-        // $totalT4 = json_decode(json_encode($totalT4), true);
-        // $priceT4 = 0;
-        // foreach ($totalT4 as $value) {
-        //     $priceT4 += $value['total'];
-        // }
-
-        // $totalT5 = $dt->getDashboardDetail($idRP, '2020-05-01','2020-05-31',$hotel);
-        // $totalT5 = json_decode(json_encode($totalT5), true);
-        // $priceT5 = 0;
-        // foreach ($totalT5 as $value) {
-        //     $priceT5 += $value['total'];
-        // }
-        // // strtotime(date('2020-06-01')),strtotime(date('2020-06-30')
-        // $totalT6 = $dt->getDashboardDetail($idRP, '2020-06-01','2020-06-30',$hotel);
-        // dd($totalT6);
-        // $totalT6 = json_decode(json_encode($totalT6), true);
-        // $priceT6 = 0;
-        // foreach ($totalT6 as $value) {
-        //     $priceT6 += $value['total'];
-        // }
-
-        // $totalT7 = $dt->getDashboardDetail($idRP, '2020-07-01','2020-07-31',$hotel);
-        // $totalT7 = json_decode(json_encode($totalT7), true);
-        // $priceT7 = 0;
-        // foreach ($totalT7 as $value) {
-        //     $priceT7 += $value['total'];
-        // }
-
-        // $totalT8 = $dt->getDashboardDetail($idRP, '2020-08-01','2020-08-31',$hotel);
-        // $totalT8 = json_decode(json_encode($totalT8), true);
-        // $priceT8 = 0;
-        // foreach ($totalT8 as $value) {
-        //     $priceT8 += $value['total'];
-        // }
-
-        // $totalT9 = $dt->getDashboardDetail($idRP, '2020-09-01','2020-09-30',$hotel);
-        // $totalT9 = json_decode(json_encode($totalT9), true);
-        // $priceT9 = 0;
-        // foreach ($totalT9 as $value) {
-        //     $priceT9 += $value['total'];
-        // }
-
-        // $totalT10 = $dt->getDashboardDetail($idRP, '2020-10-01','2020-10-31',$hotel);
-        // $totalT10 = json_decode(json_encode($totalT10), true);
-        // $priceT10 = 0;
-        // foreach ($totalT10 as $value) {
-        //     $priceT10 += $value['total'];
-        // }
-
-        // $totalT11 = $dt->getDashboardDetail($idRP, '2020-11-01','2020-11-30',$hotel);
-        // $totalT11 = json_decode(json_encode($totalT11), true);
-        // $priceT11 = 0;
-        // foreach ($totalT11 as $value) {
-        //     $priceT11 += $value['total'];
-        // }
-
-        // $totalT12 = $dt->getDashboardDetail($idRP, '2020-12-01','2020-12-31',$hotel);
-        // $totalT12 = json_decode(json_encode($totalT12), true);
-        // $priceT12 = 0;
-        // foreach ($totalT12 as $value) {
-        //     $priceT12 += $value['total'];
-        // }
 
         $totalMonth = [$priceT1,$priceT2,$priceT3,$priceT4,$priceT5,$priceT6,$priceT7,$priceT8,$priceT9,$priceT10,$priceT11,$priceT12];
 
@@ -474,6 +316,12 @@ class OwnerController extends Controller
         $description = $request->desc;
         $image = $request->image;
 
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for ($i = 0; $i < 5; $i++){
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required|not_in:0',
@@ -491,7 +339,7 @@ class OwnerController extends Controller
             'age' => 'required|not_in:2',
             'checkin' => 'required',
             'checkout' => 'required',
-         ]);
+        ]);
 
         if ($validator->fails()) {
             return redirect(route('owner.createHotel'))
@@ -540,6 +388,9 @@ class OwnerController extends Controller
                         }else{
                             $nameFile = $uploads['name'][$index];
                             $tmp_name = $uploads['tmp_name'][$index];
+
+                            $nameFile = $result.$nameFile;
+                            // dd($nameFile);
 
                             $flagUpload= move_uploaded_file($tmp_name,public_path() . '/user/uploads/resting_place/'.$nameFile);
 						    $viewFile .=($viewFile == '')? $nameFile: ';'.$nameFile;
@@ -744,6 +595,48 @@ class OwnerController extends Controller
         }
     }
 
+    public function checkDeleteHotel(Request $request, Restingplace $rp, Rooms $room){
+        $id = $request->id;
+
+        if($id > 0){
+            $detailBooking = DetailBooking::where('id_rp',$id)->get();
+            $detailBooking = json_decode(json_encode($detailBooking),true);
+
+            $checkout = '';
+
+            if(count($detailBooking) > 0){
+                $idBooking = 0;
+                $dateBooking = strtotime(date("Y-m-d"));
+
+                foreach ($detailBooking as $key => $value) {
+                    if(strtotime($value['checkout']) > $dateBooking){
+                        $dateBooking = strtotime($value['checkout']);
+                    }else{
+                        $dateBooking = $dateBooking;
+                    }
+                }
+
+                foreach ($detailBooking as $key => $value) {
+                    if(strtotime($value['checkout']) == $dateBooking){
+                        $checkout = $value['checkout'];
+                    }
+                }
+            }else{
+                $checkout = date("Y-m-d");
+            }
+
+            return response()->json([
+                'success' => true,
+                'checkout' => $checkout
+            ]);
+        }else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hotel not found'
+            ]);
+        }
+    }
+
     public function deleteHotel(Request $request, Restingplace $rp, Rooms $room)
     {
         $id = $request->id;
@@ -751,6 +644,7 @@ class OwnerController extends Controller
         if($id > 0){
             $idRoom = Rooms::where('id_rp',$id)->get();
             $idRoom = json_decode(json_encode($idRoom),true);
+
             if(count($idRoom) > 0){
                 $deleteRoom = $room->deleteRoomByIdHotel($id);
                 if($deleteRoom){
@@ -821,7 +715,7 @@ class OwnerController extends Controller
         $data['name'] = $name;
 
         $data['createError'] = $request->session()->get('createError');
-        $data['createSuccess'] = $request->session()->get('createError');
+        $data['createSuccess'] = $request->session()->get('createSuccess');
 
         return view('owner.create-room', $data);
     }
@@ -1087,7 +981,50 @@ class OwnerController extends Controller
                 echo "Delete fail";
             }
         } else {
-            echo "Hotel not found";
+            echo "Room not found";
+        }
+    }
+
+    public function checkDeleteRoom(Request $request, Rooms $room)
+    {
+        $id = $request->id;
+        $idRP = $request->idRP;
+
+        if($id > 0){
+            $detailBooking = DetailBooking::where('id_rp',$idRP)->where('id_room',$id)->get();
+            $detailBooking = json_decode(json_encode($detailBooking),true);
+            $checkout = '';
+
+            if(count($detailBooking) > 0){
+                $idBooking = 0;
+                $dateBooking = strtotime(date("Y-m-d"));
+
+                foreach ($detailBooking as $key => $value) {
+                    if(strtotime($value['checkout']) > $dateBooking){
+                        $dateBooking = strtotime($value['checkout']);
+                    }else{
+                        $dateBooking = $dateBooking;
+                    }
+                }
+
+                foreach ($detailBooking as $key => $value) {
+                    if(strtotime($value['checkout']) == $dateBooking){
+                        $checkout = $value['checkout'];
+                    }
+                }
+            }else{
+                $checkout = date("Y-m-d");
+            }
+
+            return response()->json([
+                'success' => true,
+                'checkout' => $checkout
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Room not found'
+            ]);
         }
     }
 

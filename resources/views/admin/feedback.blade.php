@@ -117,26 +117,27 @@
                 var id = $('input.customCheck:checked').map(function(){
                     return $(this).val();
                 }).toArray();
-                console.log(id)
-                $.ajax({
-                    url: "{{ route('admin.deleteFeedback') }}",
-                    type: "POST",
-                    data: {id: id},
-                    success: function(data){
-                        if(data === 'Feedback not found') {
-                            alert('Feedback not found');
+                if (confirm('Are you sure you want to delete request pricing?')) {
+                    $.ajax({
+                        url: "{{ route('admin.deleteFeedback') }}",
+                        type: "POST",
+                        data: {id: id},
+                        success: function(data){
+                            if(data === 'Feedback not found') {
+                                alert('Feedback not found');
+                            }
+                            if(data === 'Delete fail') {
+                                alert('Delete fail');
+                            }
+                            if(data === 'Delete success') {
+                                $.each(id, function(index, id){
+                                    $('.js-account-'+id).hide();
+                                })
+                                alert('Delele success');
+                            }
                         }
-                        if(data === 'Delete fail') {
-                            alert('Delete fail');
-                        }
-                        if(data === 'Delete success') {
-                            $.each(id, function(index, id){
-                                $('.js-account-'+id).hide();
-                            })
-                            alert('Delele success');
-                        }
-                    }
-                });
+                    });
+                }
             })
 
             $('.js-send-reply').click(function(){
@@ -171,24 +172,26 @@
             $('.js-delete-account').click(function() {
                 var self = $(this);
                 var id = self.attr('id').trim();
-                if($.isNumeric(id)){
-                    $.ajax({
-                        url: "{{ route('admin.deleteFeedback') }}",
-                        type: "POST",
-                        data: {id: id},
-                        beforeSend: function(){
-                            self.text('Loading ...');
-                        },
-                        success: function(data){
-                            if(data === 'Delete fail') {
-                                alert('Delete fail');
+                if (confirm('Are you sure you want to delete request pricing?')) {
+                    if($.isNumeric(id)){
+                        $.ajax({
+                            url: "{{ route('admin.deleteFeedback') }}",
+                            type: "POST",
+                            data: {id: id},
+                            beforeSend: function(){
+                                self.text('Loading ...');
+                            },
+                            success: function(data){
+                                if(data === 'Delete fail') {
+                                    alert('Delete fail');
+                                }
+                                if(data === 'Delete success') {
+                                    $('.js-account-'+id).hide();
+                                    alert('Delele success');
+                                }
                             }
-                            if(data === 'Delete success') {
-                                $('.js-account-'+id).hide();
-                                alert('Delele success');
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         });

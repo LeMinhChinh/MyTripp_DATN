@@ -113,6 +113,7 @@ Route::group([
     Route::get('view-hotel/{id}','OwnerController@updateHotel')->name('updateHotel');
     Route::post('handle-update-hotel/{id}','OwnerController@handleUpdateHotel')->name('handleUpdateHotel');
     Route::post('delete-hotel','OwnerController@deleteHotel')->name('deleteHotel');
+    Route::post('check-delete-hotel','OwnerController@checkDeleteHotel')->name('checkDeleteHotel');
     Route::post('publish-hotel','OwnerController@publishHotel')->name('publishHotel');
 
     Route::get('my-room/{id}','OwnerController@roomHotel')->name('roomHotel');
@@ -121,6 +122,7 @@ Route::group([
     Route::get('view-room/{id}','OwnerController@updateRoom')->name('updateRoom');
     Route::post('handle-update-room/{id}','OwnerController@handleUpdateRoom')->name('handleUpdateRoom');
     Route::post('delete-room','OwnerController@deleteRoom')->name('deleteRoom');
+    Route::post('check-delete-room','OwnerController@checkDeleteRoom')->name('checkDeleteRoom');
 
     Route::get('pricing-plan/{id}','OwnerController@pricingPlan')->name('pricingPlan');
     Route::get('payment-plan','OwnerController@paymentPlan')->name('paymentPlan');

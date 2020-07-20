@@ -37,6 +37,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th scope="col">Id Booking</th>
                 <th scope="col">Hotel</th>
                 <th scope="col">Room</th>
                 <th scope="col">Checkin</th>
@@ -46,6 +47,7 @@
         <tbody>
             @foreach ($booking as $value)
                 <tr>
+                    <td>{{ $value['id_book'] }}</td>
                     <td>{{ $value['name_rp'] }}</td>
                     <td>{{ $value['name_room'] }}</td>
                     <td>{{ $value['checkin'] }}</td>

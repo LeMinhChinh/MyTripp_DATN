@@ -17,13 +17,6 @@
             <div class="col-7">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control id-search-keyword" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}" data-id="{{ $id }}">
-                    {{-- <select class="custom-select custom-select-sm mb-3 role-select-option" name="" id="">
-                        <option value="">Filter role</option>
-                        <option value="2">Super Admin</option>
-                        <option value="1">Owner</option>
-                        <option value="0">Customer</option>
-
-                    </select> --}}
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button" id="js-search">
                         <i class="fas fa-search"></i>
@@ -59,7 +52,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            {{-- <th scope="col"></th> --}}
                             <th scope="col">Room</th>
                             <th scope="col">Price</th>
                             <th scope="col">Discount</th>
@@ -74,7 +67,7 @@
                     <tbody>
                         @foreach ($inforRoom as $value)
                             <tr class="js-account-{{ $value['id'] }}">
-                                <td><input type="checkbox" class="customCheck" id="customCheck-{{ $value['id'] }}" name="customCheck-{{ $value['id'] }}" value="{{ $value['id'] }}"></td>
+                                {{-- <td><input type="checkbox" class="customCheck" id="customCheck-{{ $value['id'] }}" name="customCheck-{{ $value['id'] }}" value="{{ $value['id'] }}"></td> --}}
                                 <td>{{ $value['name'] }}</td>
                                 <td>{{   number_format($value['price'], 0, '', ',')}}&#8363;</td>
                                 <td>{{ $value['discount'] }}%</td>
@@ -89,7 +82,7 @@
                                             <button id="{{ $value['id'] }}" class="btn btn-success js-view" ><a href="{{ route('owner.updateRoom',['id' => $value['id']]) }}">Detail</a></button>
                                         </div>
                                         <div class="col-6">
-                                            <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account" >Delete</button>
+                                            <button id="{{ $value['id'] }}" class="btn btn-danger js-delete-account" data-id={{ $id }}>Delete</button>
                                         </div>
                                     </div>
                                 </td>
@@ -110,30 +103,72 @@
         $(function(){
             $('.js-delete-account').click(function() {
                 var self = $(this);
-                var idAccount = self.attr('id').trim();
-                if($.isNumeric(idAccount)){
-                    $.ajax({
-                        url: "{{ route('owner.deleteRoom') }}",
-                        type: "POST",
-                        data: {id: idAccount},
-                        beforeSend: function(){
-                            self.text('Loading ...');
-                        },
-                        success: function(data){
-                            console.log(data)
-                            self.text('Delete');
-                            if(data === 'Hotel not found'){
-                                alert('Hotel not found')
+                var id = self.attr('id').trim();
+                var idRP = self.attr('data-id').trim();
+                if (confirm('Are you sure you want to delete room?')) {
+                    if($.isNumeric(id)){
+                        $.ajax({
+                            url: "{{ route('owner.checkDeleteRoom') }}",
+                            type: "POST",
+                            data: {id: id, idRP: idRP},
+                            beforeSend: function(){
+                                self.text('Loading ...');
+                            },
+                            success: function(data){
+                                if(data.success){
+                                    var today = new Date();
+                                    var dd = today.getDate();
+                                    var mm = today.getMonth()+1;
+                                    var yyyy = today.getFullYear();
+                                    if(dd<10){
+                                            dd='0'+dd
+                                        }
+                                        if(mm<10){
+                                            mm='0'+mm
+                                        }
+
+                                    today = new Date(yyyy, mm, dd)
+
+                                    var changeToday = today.getTime()
+
+                                    var yearCO = data.checkout.slice(0,4)
+                                    var monthCO = data.checkout.slice(5,7)
+                                    var dayCO = data.checkout.slice(8,10)
+
+                                    var newCO = new Date(yearCO, monthCO, dayCO)
+
+                                    var changeCO = newCO.getTime()
+
+                                    if(changeCO > changeToday){
+                                        alert("The room is being booked. Cannot be deleted!")
+                                        self.text('Delete');
+                                    }else{
+                                        $.ajax({
+                                            url: "{{ route('owner.deleteRoom') }}",
+                                            type: "POST",
+                                            data: {id: id},
+                                            beforeSend: function(){
+                                                self.text('Loading ...');
+                                            },
+                                            success: function(data){
+                                                self.text('Delete');
+                                                if(data === 'Room not found'){
+                                                    alert('Room not found')
+                                                }
+                                                if(data === 'Delete fail') {
+                                                    alert('Delete fail');
+                                                }
+                                                if(data === 'Delete success') {
+                                                    $('.js-account-'+id).hide();
+                                                    alert('Delele success');
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
                             }
-                            if(data === 'Delete fail') {
-                                alert('Delete fail');
-                            }
-                            if(data === 'Delete success') {
-                                $('.js-account-'+idAccount).hide();
-                                alert('Delele success');
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         });
@@ -154,31 +189,31 @@
                 window.location.href = "http://localhost:8000/owner/my-room/"+id+"?keyword="+keyword;
             });
 
-            $('.action-select').click(function(){
-                var id = $('input.customCheck:checked').map(function(){
-                    return $(this).val();
-                }).toArray();
-                console.log(id)
-                $.ajax({
-                    url: "{{ route('owner.deleteRoom') }}",
-                    type: "POST",
-                    data: {id: id},
-                    success: function(data){
-                        if(data === 'Hotel not found'){
-                            alert('Hotel not found')
-                        }
-                        if(data === 'Delete fail') {
-                            alert('Delete fail');
-                        }
-                        if(data === 'Delete success') {
-                            $.each(id, function(index, id){
-                                $('.js-account-'+id).hide();
-                            })
-                            alert('Delele success');
-                        }
-                    }
-                });
-            })
+            // $('.action-select').click(function(){
+            //     var id = $('input.customCheck:checked').map(function(){
+            //         return $(this).val();
+            //     }).toArray();
+            //     console.log(id)
+            //     $.ajax({
+            //         url: "{{ route('owner.deleteRoom') }}",
+            //         type: "POST",
+            //         data: {id: id},
+            //         success: function(data){
+            //             if(data === 'Hotel not found'){
+            //                 alert('Hotel not found')
+            //             }
+            //             if(data === 'Delete fail') {
+            //                 alert('Delete fail');
+            //             }
+            //             if(data === 'Delete success') {
+            //                 $.each(id, function(index, id){
+            //                     $('.js-account-'+id).hide();
+            //                 })
+            //                 alert('Delele success');
+            //             }
+            //         }
+            //     });
+            // })
         });
     </script>
 @endpush

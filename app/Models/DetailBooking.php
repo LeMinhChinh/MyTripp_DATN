@@ -44,7 +44,7 @@ class DetailBooking extends Model
     public function getListBookingByOwner($id, $keyword)
     {
         $data = DB::table('detail_booking as dt')
-                    ->select('dt.name_rp','dt.name_room','dt.checkin','dt.checkout','dt.id');
+                    ->select('dt.*');
                     if($keyword!= null){
                         $data = $data->where('name_room', 'like', '%'.$keyword.'%');
                     }

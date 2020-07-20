@@ -40,6 +40,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
+                <th scope="col">Id</th>
                 <th scope="col">Name</th>
                 <th scope="col">Phone</th>
                 <th scope="col">Email</th>
@@ -53,6 +54,7 @@
         <tbody>
             @foreach ($inforRequest as $value)
                 <tr class="js-booking-{{ $value['id'] }} js-booking">
+                    <td>{{ $value['id'] }}</td>
                     <td>{{ $value['name'] }}</td>
                     <td>{{ $value['phone'] }}</td>
                     <td>{{ $value['email'] }}</td>

@@ -100,32 +100,34 @@
             $('.js-delete-account').click(function() {
                 var self = $(this);
                 var idAccount = self.attr('id').trim();
-                if($.isNumeric(idAccount)){
-                    $.ajax({
-                        url: "{{ route('admin.deleteAccount') }}",
-                        type: "POST",
-                        data: {id: idAccount},
-                        beforeSend: function(){
-                            self.text('Loading ...');
-                        },
-                        success: function(data){
-                            console.log(data)
-                            self.text('Delete');
-                            if(data === 'User not found'){
-                                alert('User not found')
+                if (confirm('Are you sure you want to delete account?')) {
+                    if($.isNumeric(idAccount)){
+                        $.ajax({
+                            url: "{{ route('admin.deleteAccount') }}",
+                            type: "POST",
+                            data: {id: idAccount},
+                            beforeSend: function(){
+                                self.text('Loading ...');
+                            },
+                            success: function(data){
+                                console.log(data)
+                                self.text('Delete');
+                                if(data === 'User not found'){
+                                    alert('User not found')
+                                }
+                                if(data === 'Delete user error') {
+                                    alert('Delete user fail');
+                                }
+                                if(data === 'Delete feedback error') {
+                                    alert('Delete feedback fail');
+                                }
+                                if(data === 'Delete success') {
+                                    $('.js-account-'+idAccount).hide();
+                                    alert('Delele success');
+                                }
                             }
-                            if(data === 'Delete user error') {
-                                alert('Delete user fail');
-                            }
-                            if(data === 'Delete feedback error') {
-                                alert('Delete feedback fail');
-                            }
-                            if(data === 'Delete success') {
-                                $('.js-account-'+idAccount).hide();
-                                alert('Delele success');
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         });
@@ -150,30 +152,31 @@
                 var id = $('input.customCheck:checked').map(function(){
                     return $(this).val();
                 }).toArray();
-                console.log(id)
-                $.ajax({
-                    url: "{{ route('admin.deleteAccount') }}",
-                    type: "POST",
-                    data: {id: id},
-                    success: function(data){
-                        console.log(data)
-                        if(data === 'User not found'){
-                            alert('User not found')
+                if (confirm('Are you sure you want to delete account?')) {
+                    $.ajax({
+                        url: "{{ route('admin.deleteAccount') }}",
+                        type: "POST",
+                        data: {id: id},
+                        success: function(data){
+                            console.log(data)
+                            if(data === 'User not found'){
+                                alert('User not found')
+                            }
+                            if(data === 'Delete user error') {
+                                alert('Delete user fail');
+                            }
+                            if(data === 'Delete feedback error') {
+                                alert('Delete feedback fail');
+                            }
+                            if(data === 'Delete success') {
+                                $.each(id, function(index, id){
+                                    $('.js-account-'+id).hide();
+                                })
+                                alert('Delele success');
+                            }
                         }
-                        if(data === 'Delete user error') {
-                            alert('Delete user fail');
-                        }
-                        if(data === 'Delete feedback error') {
-                            alert('Delete feedback fail');
-                        }
-                        if(data === 'Delete success') {
-                            $.each(id, function(index, id){
-                                $('.js-account-'+id).hide();
-                            })
-                            alert('Delele success');
-                        }
-                    }
-                });
+                    });
+                }
             })
 
             $('.js-update-request').click(function(){
