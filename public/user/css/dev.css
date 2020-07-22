@@ -1518,3 +1518,6 @@ button.btn.btn-secondary.btn-lg.ps-button-cancel > a, button.btn.btn-secondary.b
     height: 320px;
     overflow-y: scroll!important;
 }
+.rp-item-desc {
+    padding-top: 70px;
+}

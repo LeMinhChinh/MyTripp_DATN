@@ -427,6 +427,13 @@ class UserController extends Controller
         $address = $request->psAddress;
         $avatar = $request->psAvatar;
 
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for ($i = 0; $i < 5; $i++){
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
+
         $oldAvatar = Account::where('id',$id)->pluck('avatar')->first();
         $oldAvatar = json_decode(json_encode($oldAvatar), true);
 
@@ -448,6 +455,9 @@ class UserController extends Controller
                     }else{
                         $oldAvatar = $_FILES['psAvatar']['name'];
                         $tmpName  = $_FILES['psAvatar']['tmp_name'];
+
+                        $oldAvatar = $result.$oldAvatar;
+
                         $up = move_uploaded_file($tmpName, public_path() . '/user/uploads/avatar/' . $oldAvatar);
                         if(!$up){
                             $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');

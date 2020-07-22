@@ -201,6 +201,12 @@ class OwnerController extends Controller
         $address = $request->psAddress;
         $avatar = $request->psAvatar;
 
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for ($i = 0; $i < 5; $i++){
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
         $oldAvatar = Account::where('id',$id)->pluck('avatar')->first();
         $oldAvatar = json_decode(json_encode($oldAvatar), true);
 
@@ -222,6 +228,8 @@ class OwnerController extends Controller
                     }else{
                         $oldAvatar = $_FILES['psAvatar']['name'];
                         $tmpName  = $_FILES['psAvatar']['tmp_name'];
+
+                        $oldAvatar = $result.$oldAvatar;
                         $up = move_uploaded_file($tmpName, public_path() . '/user/uploads/avatar/' . $oldAvatar);
                         if(!$up){
                             $request->session()->flash('errorAvatar', 'Error uploading image to server');
@@ -479,6 +487,12 @@ class OwnerController extends Controller
         $description = $request->desc;
         $image = $request->image;
 
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for ($i = 0; $i < 5; $i++){
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required|not_in:0',
@@ -529,6 +543,8 @@ class OwnerController extends Controller
                         }else{
                             $nameFile = $uploads['name'][$index];
                             $tmp_name = $uploads['tmp_name'][$index];
+
+                            $nameFile = $result.$nameFile;
 
                             $flagUpload= move_uploaded_file($tmp_name,public_path() . '/user/uploads/resting_place/'.$nameFile);
 						    $viewFile .=($viewFile == '')? $nameFile: ';'.$nameFile;
@@ -740,6 +756,12 @@ class OwnerController extends Controller
         $description = $request->description;
         $image = $request->image;
 
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for ($i = 0; $i < 5; $i++){
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required|numeric',
@@ -786,6 +808,8 @@ class OwnerController extends Controller
                         }else{
                             $nameFile = $uploads['name'][$index];
                             $tmp_name = $uploads['tmp_name'][$index];
+
+                            $nameFile = $result.$nameFile;
 
                             $flagUpload= move_uploaded_file($tmp_name,public_path() . '/user/uploads/room/'.$nameFile);
 						    $viewFile .=($viewFile == '')? $nameFile: ';'.$nameFile;
@@ -872,6 +896,12 @@ class OwnerController extends Controller
         $description = $request->description;
         $image = $request->image;
 
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $result = '';
+        for ($i = 0; $i < 5; $i++){
+            $result .= $characters[mt_rand(0, 61)];
+        }
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'price' => 'required|numeric',
@@ -903,20 +933,20 @@ class OwnerController extends Controller
         $viewFile = '';
 
         if($image != null && count($image) > 0){
-            $uploads = $_FILES['imageHotel'];
+            $uploads = $_FILES['image'];
             if(isset($uploads)){
                 foreach ($uploads['error'] as $index => $item) {
                     if($item == 0){
                         $validatorAvatar = Validator::make(
-                            ['imageHotel' => $request->file('imageHotel')],
-                            ['imageHotel' => 'required'],
+                            ['image' => $request->file('image')],
+                            ['image' => 'required'],
                             [
                                 'required' => 'Vui lòng chọn ảnh'
                             ]
                         );
 
                         if($validatorAvatar->fails()){
-                            return redirect()->route('owner.createHotel')
+                            return redirect()->route('owner.createRoom',['id' => $id])
                                             ->withErrors($validatorAvatar)
                                             ->withInput();
                                             dd("Error");
@@ -924,7 +954,9 @@ class OwnerController extends Controller
                             $nameFile = $uploads['name'][$index];
                             $tmp_name = $uploads['tmp_name'][$index];
 
-                            $flagUpload= move_uploaded_file($tmp_name,public_path() . '/user/uploads/resting_place/'.$nameFile);
+                            $nameFile = $result.$nameFile;
+
+                            $flagUpload= move_uploaded_file($tmp_name,public_path() . '/user/uploads/room/'.$nameFile);
 						    $viewFile .=($viewFile == '')? $nameFile: ';'.$nameFile;
                         }
                     }

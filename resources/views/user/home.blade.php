@@ -242,6 +242,10 @@
                                                     <span class="sr-only">Next</span>
                                                 </a>
                                             </div>
+                                            @if($item['description'])<div class="rp-item-desc">
+                                                <p class="rp-item-title-index">Tiện nghi : </p>
+                                                {!! $item['description'] !!}
+                                            </div>@endif
                                         </div>
                                     </div>
                                 </div>
